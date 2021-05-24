@@ -1,0 +1,53 @@
+@use '../tokens/sizes';
+@use '../tokens/colors';
+
+.paragraph {
+  font-family: Rubik, sans-serif;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.5em;
+  margin-bottom: sizes.$xs;
+}
+
+.mainTitle {
+  font-family: Rubik, Courier, sans-serif;
+  font-weight: 700;
+  letter-spacing: sizes.$xxs;
+  font-size: 2.6em;
+  line-height: 2.2em;
+  margin-bottom: sizes.$s;
+}
+
+.a {
+  color: colors.$green;
+
+  &:visited {
+    color: colors.$green;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:active {
+    font-weight: 600;
+  }
+}
+
+.h1 {
+  font-family: Rubik, sans-serif;
+  font-weight: 600;
+  font-size: 2.2em;
+  line-height: 2.4em;
+  margin-top: sizes.$m;
+  margin-bottom: sizes.$s;
+}
+
+.h2 {
+  font-family: Rubik, sans-serif;
+  font-weight: 600;
+  font-size: 1.3em;
+  line-height: 1.7em;
+  margin-top: sizes.$m;
+  margin-bottom: sizes.$xs;
+}

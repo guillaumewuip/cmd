@@ -1,0 +1,7 @@
+@use '../tokens/sizes';
+
+.iframe {
+  border: 0;
+  width: 100%;
+  margin: sizes.$xs 0;
+}
