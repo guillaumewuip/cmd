@@ -12,9 +12,14 @@
   grid-area: left;
 }
 
+.imageSection {
+  margin-bottom: sizes.$l;
+}
+
 .imageContainer {
   position: relative;
   width: 100%;
+  margin-bottom: sizes.$xs;
 
   &::after {
     content: "";
@@ -23,7 +28,26 @@
   }
 }
 
+.caption {
+  text-align: center
+}
+
+.metadata {
+  text-align: right;
+}
+
 .right {
   padding-left: sizes.$m;
   grid-area: right;
+}
+
+.header {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: auto min-content;
+}
+
+.date {
+  white-space: nowrap;
+  align-self: center;
 }

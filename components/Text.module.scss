@@ -7,6 +7,15 @@
   font-size: 1em;
   line-height: 1.5em;
   margin-bottom: sizes.$xs;
+  color: colors.$dark;
+}
+
+.small {
+  font-family: Rubik, sans-serif;
+  font-weight: 400;
+  font-size: 0.8em;
+  line-height: 1em;
+  color: colors.$grey;
 }
 
 .mainTitle {
@@ -16,6 +25,7 @@
   font-size: 2.6em;
   line-height: 2.2em;
   margin-bottom: sizes.$s;
+  color: colors.$dark;
 }
 
 .a {
@@ -41,6 +51,7 @@
   line-height: 2.4em;
   margin-top: sizes.$m;
   margin-bottom: sizes.$s;
+  color: colors.$dark;
 }
 
 .h2 {
@@ -50,4 +61,5 @@
   line-height: 1.7em;
   margin-top: sizes.$m;
   margin-bottom: sizes.$xs;
+  color: colors.$dark;
 }
