@@ -10,6 +10,7 @@ import * as Posts from '../../lib/posts'
 import * as Layout from '../../layout/Default'
 
 import * as Article from '../../components/Article'
+import {Centered, Link, Paragraph} from '../../components/Text';
 
 function Post({ post }: { post: Posts.PostInfos }) {
   const Content = dynamic(() => import(`../../_posts/${post.fullName}.mdx`))
@@ -21,10 +22,14 @@ function Post({ post }: { post: Posts.PostInfos }) {
 
 function Page({
   page,
-  posts
+  posts,
+  previous,
+  next,
 }: {
-  page: number,
+  page: string,
   posts: ReadonlyArray<Posts.PostInfos>,
+  previous: Option.Option<number>,
+  next: Option.Option<number>,
 }) {
 
   return (
@@ -36,6 +41,18 @@ function Page({
 
       <Layout.Wrapper>
         {pipe(posts, ReadonlyArrayFP.map(post => <Post key={post.metadata.title} post={post} />))}
+
+        {(Option.isSome(previous) || Option.isSome(next)) && (
+          <>
+            <Paragraph centered>
+              { Option.isSome(previous) && <Link href={`/posts/${previous.value}`}>← Les posts plus récents</Link> }
+            </Paragraph>
+
+            <Paragraph centered>
+              { Option.isSome(next) && <Link href={`/posts/${next.value}`}>Les posts plus vieux →</Link> }
+            </Paragraph>
+          </>
+        )}
       </Layout.Wrapper>
     </div>
   )
@@ -52,6 +69,9 @@ export async function getStaticProps({
 }) {
   const pageAsNumber = parseInt(page, 10)
 
+  const previous = Posts.previousPage(pageAsNumber)
+  const next = Posts.nextPage(pageAsNumber)
+
   const postsMetadata = await Posts.getPostInfosForPage(pageAsNumber - 1)
 
   if (Option.isNone(postsMetadata)) {
@@ -64,6 +84,8 @@ export async function getStaticProps({
     props: {
       page,
       posts: postsMetadata.value,
+      previous,
+      next
     },
   }
 }

@@ -39,11 +39,11 @@ export function getPostFilenamesForPage(page: number): Option.Option<ReadonlyArr
 }
 
 export function previousPage(page: number) {
-  return page === 0 ? Option.none : Option.some(`${page - 1}`)
+  return page === 1 ? Option.none : Option.some(`${page - 1}`);
 }
 
 export function nextPage(page: number) {
-  return page === numberOfPages - 1 ? Option.none : Option.some(`${page + 1}`)
+  return (page === numberOfPages) ? Option.none : Option.some(`${page + 1}`);
 }
 
 export type PostInfos = Readonly<{
