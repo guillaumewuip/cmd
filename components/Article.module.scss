@@ -5,6 +5,7 @@
   grid-template-columns: 33% 67%;
   grid-template-areas: "left right";
   padding: sizes.$l 0;
+  margin-bottom: sizes.$l;
 }
 
 .left {
@@ -30,10 +31,6 @@
 
 .caption {
   text-align: center
-}
-
-.metadata {
-  text-align: right;
 }
 
 .right {

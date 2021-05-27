@@ -74,11 +74,12 @@ export function Youtube({
   const src = `https://www.youtube.com/embed/${id}`;
 
   return (
-    <iframe
-      className={styles.iframe}
-      src={src}
-      height="450"
-      seamless
-    />
+    <div className={styles.youtubeWrapper}>
+      <iframe
+        className={styles.iframe}
+        src={src}
+        seamless
+      />
+    </div>
   )
 }

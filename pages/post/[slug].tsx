@@ -1,19 +1,18 @@
-import fs from 'fs'
-import path from 'path'
 import dynamic from 'next/dynamic'
-
 import Head from 'next/head'
 
-import { format as formatDate } from 'date-fns'
+import { pipe } from 'fp-ts/function';
+import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 
 import * as Metadata from '../../lib/postMetadata'
 import * as Filename from '../../lib/postFilename'
+import * as Posts from '../../lib/posts'
 
 import * as Layout from '../../layout/Default'
 
 import * as Article from '../../components/Article'
 
-function BlogPostPage({
+function Page({
   slug,
   metadata,
   createdAt,
@@ -32,50 +31,39 @@ function BlogPostPage({
       </Head>
 
       <Layout.Wrapper>
-        <Article.Wrapper>
-          <Article.Column>
-            <Article.Image src={metadata.image.src} alt={metadata.image.alt} caption={metadata.image.caption} />
-          </Article.Column>
-
-          <Article.Content>
-            <Article.Header title={metadata.title} date={createdAt} />
-            <Content />
-          </Article.Content>
-        </Article.Wrapper>
+        <Article.Article metadata={metadata} createdAt={createdAt} content={<Content />} />
       </Layout.Wrapper>
     </div>
   )
 }
 
 export async function getStaticProps({ params: { slug } }: { params: { slug: string }}) {
-  const { metadata } = await import(`../../_posts/${slug}.mdx`)
-
-  const date = Filename.dateFromFilename(slug)
+  const { metadata, createdAt } = await Posts.getPostInfosFromFullname(slug)
 
   return {
     props: {
-      slug: slug,
+      slug,
       metadata,
-      createdAt: formatDate(date, 'dd-MM-Y'),
+      createdAt,
     },
   }
 }
 
 export async function getStaticPaths() {
-  const postsDirectory = path.join(process.cwd(), '_posts')
-  const mdxFiles = fs.readdirSync(postsDirectory)
+  const filenames = Posts.getPostFilenames()
 
-  const paths = mdxFiles
-    .map(filename => ({
+  const paths = pipe(
+    filenames,
+    ReadonlyArrayFP.map(filename => ({
       slug: Filename.fullNameFromFilename(filename),
       date: Filename.dateFromFilename(filename),
-    }))
-    .sort((data1, data2) => data1.date.getDate() - data2.date.getDate())
-    .map(data => ({
+    })),
+    ReadonlyArrayFP.map(data => ({
       params: {
         slug: data.slug
       }
     }))
+  )
 
   return {
     paths,
@@ -83,4 +71,4 @@ export async function getStaticPaths() {
   }
 }
 
-export default BlogPostPage
+export default Page

@@ -1,9 +1,12 @@
+import { ReactNode } from 'react'
 import NextImage from 'next/image'
+
+import * as PostMetadata from '../lib/postMetadata'
 
 import styles from './Article.module.scss'
 import { H1, Small } from './Text'
 
-export function Wrapper({ children }: { children: React.ReactNode }) {
+function Wrapper({ children }: { children: React.ReactNode }) {
   return (
     <article className={styles.article}>
       {children}
@@ -11,7 +14,7 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function Column({ children }: { children: React.ReactNode }) {
+function Column({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.left}>
       {children}
@@ -19,7 +22,7 @@ export function Column({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function Image({ src, alt, caption }: { src: string, alt: string, caption?: string }) {
+function Image({ src, alt, caption }: { src: string, alt: string, caption?: string }) {
   return (
     <div className={styles.imageSection}>
       <div className={styles.imageContainer}>
@@ -30,15 +33,7 @@ export function Image({ src, alt, caption }: { src: string, alt: string, caption
   );
 }
 
-export function Metadata({ children }: { children: React.ReactNode }) {
-  return (
-    <div className={styles.metadata}>
-      {children}
-    </div>
-  )
-}
-
-export function Content({ children }: { children: React.ReactNode }) {
+function Content({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.right}>
       {children}
@@ -46,7 +41,7 @@ export function Content({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function Header({ title, date }: { title: string, date: string }) {
+function Header({ title, date }: { title: string, date: string }) {
   return (
     <div className={styles.header}>
       <div className={styles.title}>
@@ -56,5 +51,28 @@ export function Header({ title, date }: { title: string, date: string }) {
         <Small>{date}</Small>
       </div>
     </div>
+  )
+}
+
+export function Article({
+  metadata,
+  createdAt,
+  content,
+}: {
+  metadata: PostMetadata.PostMetadata,
+  createdAt: string,
+  content: ReactNode,
+}) {
+  return (
+    <Wrapper>
+      <Column>
+        <Image src={metadata.image.src} alt={metadata.image.alt} caption={metadata.image.caption} />
+      </Column>
+
+      <Content>
+        <Header title={metadata.title} date={createdAt} />
+          {content}
+      </Content>
+    </Wrapper>
   )
 }
