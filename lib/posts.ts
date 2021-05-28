@@ -14,17 +14,23 @@ import * as Filename from './postFilename'
 import * as Metadata from './postMetadata';
 
 const postsDirectory = path.join(process.cwd(), '_posts')
-const filenames = fs.readdirSync(postsDirectory)
+const filenames = pipe(
+  fs.readdirSync(postsDirectory),
+  ReadonlyArrayFP.sort(Ord.reverse(Ord.contramap<Date, string>(Filename.dateFromFilename)(DateFP.Ord))),
+)
 
 const pageSize = 10;
 
 const pages = pipe(
   filenames,
-  ReadonlyArrayFP.sort(Ord.reverse(Ord.contramap<Date, string>(Filename.dateFromFilename)(DateFP.Ord))),
   ReadonlyArrayFP.chunksOf(pageSize),
 )
 
 const numberOfPages = ReadonlyArrayFP.size(pages)
+
+export function getLastPostFilename(): string {
+  return filenames[0]
+}
 
 export function getPostFilenames(): ReadonlyArray<string> {
   return filenames

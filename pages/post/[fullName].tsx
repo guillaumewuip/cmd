@@ -13,15 +13,15 @@ import * as Layout from '../../layout/Default'
 import * as Article from '../../components/Article'
 
 function Page({
-  slug,
+  fullName,
   metadata,
   createdAt,
 }: {
-  slug: string,
+  fullName: string,
   metadata: Metadata.PostMetadata,
   createdAt: string,
 }) {
-  const Content = dynamic(() => import(`../../_posts/${slug}.mdx`))
+  const Content = dynamic(() => import(`../../_posts/${fullName}.mdx`))
 
   return (
     <div>
@@ -37,12 +37,12 @@ function Page({
   )
 }
 
-export async function getStaticProps({ params: { slug } }: { params: { slug: string }}) {
-  const { metadata, createdAt } = await Posts.getPostInfosFromFullname(slug)
+export async function getStaticProps({ params: { fullName } }: { params: { fullName: string }}) {
+  const { metadata, createdAt } = await Posts.getPostInfosFromFullname(fullName)
 
   return {
     props: {
-      slug,
+      fullName,
       metadata,
       createdAt,
     },
@@ -55,12 +55,8 @@ export async function getStaticPaths() {
   const paths = pipe(
     filenames,
     ReadonlyArrayFP.map(filename => ({
-      slug: Filename.fullNameFromFilename(filename),
-      date: Filename.dateFromFilename(filename),
-    })),
-    ReadonlyArrayFP.map(data => ({
       params: {
-        slug: data.slug
+        fullName: Filename.fullNameFromFilename(filename),
       }
     }))
   )
