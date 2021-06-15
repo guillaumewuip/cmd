@@ -4,7 +4,7 @@ import NextImage from 'next/image'
 import * as PostMetadata from '../lib/postMetadata'
 
 import styles from './Article.module.scss'
-import { H1, Small } from './Text'
+import { Small } from './Text'
 
 function Wrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -41,19 +41,6 @@ function Content({ children }: { children: React.ReactNode }) {
   )
 }
 
-function Header({ title, date }: { title: string, date: string }) {
-  return (
-    <div className={styles.header}>
-      <div className={styles.title}>
-        <H1>{title}</H1>
-      </div>
-      <div className={styles.date}>
-        <Small>{date}</Small>
-      </div>
-    </div>
-  )
-}
-
 export function Article({
   metadata,
   createdAt,
@@ -70,8 +57,11 @@ export function Article({
       </Column>
 
       <Content>
-        <Header title={metadata.title} date={createdAt} />
-          {content}
+        {content}
+
+        <div className={styles.metadata}>
+          <Small>Publié le {createdAt}</Small>
+        </div>
       </Content>
     </Wrapper>
   )

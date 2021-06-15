@@ -2,7 +2,7 @@ import '../styles/globals.scss'
 
 import { MDXProvider } from '@mdx-js/react'
 
-import { H1, H2, Link, Paragraph } from '../components/Text'
+import { H1, H2, Link, Paragraph, Code } from '../components/Text'
 import { Hr } from '../components/Hr'
 
 const mdComponents = {
@@ -11,6 +11,7 @@ const mdComponents = {
   a: props => <Link {...props} />,
   p: props => <Paragraph {...props} />,
   hr: () => <Hr  />,
+  code: props => <Code {...props} />,
 }
 
 function MyApp({ Component, pageProps }) {

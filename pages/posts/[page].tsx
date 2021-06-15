@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
 
 import { pipe } from 'fp-ts/function';
@@ -9,14 +8,14 @@ import * as Posts from '../../lib/posts'
 
 import * as Layout from '../../layout/Default'
 
-import * as Article from '../../components/Article'
-import {Centered, Link, Paragraph} from '../../components/Text';
+import { Header } from '../../components/Header'
+import { H2 } from '../../components/Text'
+import { Link, Paragraph} from '../../components/Text';
 
 function Post({ post }: { post: Posts.PostInfos }) {
-  const Content = dynamic(() => import(`../../_posts/${post.fullName}.mdx`))
 
   return (
-    <Article.Article metadata={post.metadata} createdAt={post.createdAt} content={<Content />} />
+    <H2><Link href={`/post/${post.fullName}`}>{post.metadata.title}</Link></H2>
   )
 }
 
@@ -40,6 +39,8 @@ function Page({
       </Head>
 
       <Layout.Wrapper>
+        <Header />
+
         {pipe(posts, ReadonlyArrayFP.map(post => <Post key={post.metadata.title} post={post} />))}
 
         {(Option.isSome(previous) || Option.isSome(next)) && (

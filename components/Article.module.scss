@@ -38,13 +38,8 @@
   grid-area: right;
 }
 
-.header {
+.metadata {
   width: 100%;
-  display: inline-grid;
-  grid-template-columns: auto min-content;
+  margin-top: sizes.$s;
 }
 
-.date {
-  white-space: nowrap;
-  align-self: center;
-}

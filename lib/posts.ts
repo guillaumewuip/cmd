@@ -5,8 +5,8 @@ import { format as formatDate } from 'date-fns'
 
 import { pipe } from 'fp-ts/function';
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray'
-import * as Option from 'fp-ts/lib/Option';
-import * as Task from 'fp-ts/lib/Task';
+import * as Option from 'fp-ts/Option';
+import * as Task from 'fp-ts/Task';
 import * as Ord from 'fp-ts/Ord';
 import * as DateFP from 'fp-ts/Date';
 
@@ -27,10 +27,6 @@ const pages = pipe(
 )
 
 const numberOfPages = ReadonlyArrayFP.size(pages)
-
-export function getLastPostFilename(): string {
-  return filenames[0]
-}
 
 export function getPostFilenames(): ReadonlyArray<string> {
   return filenames
@@ -62,7 +58,7 @@ export async function getPostInfosFromFullname(fullName: string): Promise<PostIn
   const { metadata } = await import(`../_posts/${fullName}.mdx`)
 
   const date = Filename.dateFromFilename(fullName)
-  const createdAt = formatDate(date, 'dd-MM-Y')
+  const createdAt = formatDate(date, 'dd/MM/Y')
 
   return {
     fullName,
@@ -70,6 +66,23 @@ export async function getPostInfosFromFullname(fullName: string): Promise<PostIn
     createdAt,
   }
 }
+
+export async function getLastPostInfos(): Promise<PostInfos> {
+  const filename = filenames[0]
+  const fullName = Filename.fullNameFromFilename(filename)
+
+  return getPostInfosFromFullname(fullName)
+}
+
+export async function getPreviousPostInfos(): Promise<ReadonlyArray<PostInfos>> {
+  return pipe(
+    filenames,
+    ReadonlyArrayFP.map(Filename.fullNameFromFilename),
+    ReadonlyArrayFP.map(filename => () => getPostInfosFromFullname(filename)),
+    Task.sequenceArray,
+  )()
+}
+
 
 export async function getPostInfosForPage(index: number): Promise<Option.Option<ReadonlyArray<PostInfos>>> {
   const page = pipe(

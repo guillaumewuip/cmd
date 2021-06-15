@@ -67,3 +67,15 @@
 .centered {
   text-align: center;
 }
+
+.inverted {
+  color: colors.$white;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.code {
+  font-family: Courier, monospace;
+}
