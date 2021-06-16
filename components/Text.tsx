@@ -31,8 +31,8 @@ export function Small({ children } : { children: React.ReactNode }) {
   return <p className={styles.small}>{children}</p>
 }
 
-export function MainTitle({ children } : { children: string }) {
-  return <h1 className={styles.mainTitle}>{children}</h1>
+export function MainTitle() {
+  return <h1 className={styles.mainTitle}>cerfeuil et musique douce</h1>
 }
 
 export function Link({ href, children } : { href: string, children: string }) {

@@ -1,13 +1,20 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 
+import { pipe } from 'fp-ts/function'
+import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
+
 import * as Posts from '../lib/posts'
+import * as RSS from '../lib/rss'
 
 import * as Layout from '../layout/Default'
 
 import * as Article from '../components/Article'
 
-import { MainTitle, Paragraph, Code, H2 } from '../components/Text'
+import { Paragraph, Code, H2 } from '../components/Text'
+import { Header } from '../components/Header'
+import { Footer } from '../components/Footer'
+import { Hr } from '../components/Hr'
 import { Mosaic } from '../components/ArticleMosaic'
 
 export default function Home({
@@ -28,7 +35,7 @@ export default function Home({
 
       <Layout.Wrapper>
         <Layout.SmallSection>
-          <MainTitle>cerfeuil et musique douce</MainTitle>
+          <Header />
           <Paragraph>
             Tu comprends, je suis mon meilleur modèle car on est tous capables de donner des informations à chacun et c'est une sensation réelle qui se produit si on veut ! Tu vas te dire : J'aurais jamais cru que le karaté guy pouvait parler comme ça !
           </Paragraph>
@@ -43,9 +50,20 @@ export default function Home({
         <Article.Article metadata={lastCmd.metadata} createdAt={lastCmd.createdAt} content={<PostContent />} />
 
         <Layout.SmallSection>
-          <H2>Toutes les <Code>cmd</Code> passées listées bien comme il faut ici même, voilà :</H2>
+          <H2>Toutes les <Code>cmd</Code> passées listées bien comme il faut ici même :</H2>
 
           <Mosaic posts={previousCmds} />
+
+          <Hr />
+
+          <Paragraph>
+            Voilà, c'est tout pour aujourd'hui, merci d'être passé !
+            <br /><br />
+
+            - Guillaume
+          </Paragraph>
+
+          <Footer />
         </Layout.SmallSection>
       </Layout.Wrapper>
     </div>
@@ -53,13 +71,18 @@ export default function Home({
 }
 
 export async function getStaticProps() {
+  await RSS.generateFeeds()
+
   const lastCmd = await Posts.getLastPostInfos()
-  const previousCmds = await Posts.getPreviousPostInfos()
+  const previousCmds = await Posts.getAllPostInfos()
 
   return {
     props: {
-      lastCmd,
-      previousCmds,
+      lastCmd: lastCmd.infos,
+      previousCmds: pipe(
+        previousCmds,
+        ReadonlyArrayFP.map(post => post.infos)
+      ),
     },
   }
 }

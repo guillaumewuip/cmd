@@ -1,15 +1,13 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 
-import { pipe } from 'fp-ts/function';
-import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
-
 import * as Metadata from '../../lib/postMetadata'
-import * as Filename from '../../lib/postFilename'
 import * as Posts from '../../lib/posts'
 
 import * as Layout from '../../layout/Default'
 
+import { Header } from '../../components/Header'
+import { Footer } from '../../components/Footer'
 import * as Article from '../../components/Article'
 
 function Page({
@@ -31,14 +29,16 @@ function Page({
       </Head>
 
       <Layout.Wrapper>
+        <Header />
         <Article.Article metadata={metadata} createdAt={createdAt} content={<Content />} />
+        <Footer />
       </Layout.Wrapper>
     </div>
   )
 }
 
 export async function getStaticProps({ params: { fullName } }: { params: { fullName: string }}) {
-  const { metadata, createdAt } = await Posts.getPostInfosFromFullname(fullName)
+  const { infos: { metadata, createdAt } } = await Posts.getPostInfosFromFullname(fullName)
 
   return {
     props: {
@@ -50,16 +50,7 @@ export async function getStaticProps({ params: { fullName } }: { params: { fullN
 }
 
 export async function getStaticPaths() {
-  const filenames = Posts.getPostFilenames()
-
-  const paths = pipe(
-    filenames,
-    ReadonlyArrayFP.map(filename => ({
-      params: {
-        fullName: Filename.fullNameFromFilename(filename),
-      }
-    }))
-  )
+  const paths = Posts.getAllPostsPaths()
 
   return {
     paths,

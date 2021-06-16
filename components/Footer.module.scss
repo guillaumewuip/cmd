@@ -1,0 +1,6 @@
+@use '../tokens/sizes';
+
+.footer {
+  margin-top: sizes.$m;
+  text-align: center;
+}
