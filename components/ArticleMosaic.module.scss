@@ -1,14 +1,19 @@
 @use '../tokens/sizes';
 @use '../tokens/colors';
+@use '../tokens/breakpoints';
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(auto-fit, auto);
   column-gap: sizes.$m;
   row-gap: sizes.$m;
 
   margin: sizes.$s 0;
+
+  @include breakpoints.for-desktop-only {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
 .article {
@@ -37,6 +42,7 @@
 
 .title {
   position: absolute;
+  text-align: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

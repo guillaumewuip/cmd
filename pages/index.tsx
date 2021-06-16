@@ -17,6 +17,8 @@ import { Footer } from '../components/Footer'
 import { Hr } from '../components/Hr'
 import { Mosaic } from '../components/ArticleMosaic'
 
+import * as Metadata from '../metadata'
+
 export default function Home({
   lastCmd,
   previousCmds,
@@ -29,8 +31,36 @@ export default function Home({
   return (
     <div>
       <Head>
-        <title>cmd - cerfeuil et musique douce</title>
+        <title>{Metadata.site.name}</title>
         <link rel="icon" href="/favicon.ico" />
+
+        <meta name="author" content={Metadata.author.name} />
+        <meta name="description" content={Metadata.description} />
+
+        <meta name="twitter:creator" content={Metadata.author.twitter.id} />
+        <meta name="twitter:description" content={Metadata.description} />
+        <meta name="twitter:card" content="summary" />
+        <meta property="twitter:title" content={Metadata.site.name} />
+
+        <meta property="og:site_name" content={Metadata.site.name} />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:url" content={Metadata.site.url} />
+        <meta property="og:description" content={Metadata.description} />
+
+        <link rel="canonical" href={Metadata.site.url} />
+
+        <script type="application/ld+json">
+          {'{'}
+            "@type": "WebSite",
+            "@context": "https://schema.org"
+            "headline": "{Metadata.site.name}",
+            "description": "{Metadata.description}",
+            "url": "{Metadata.site.url}",
+            "name": "{Metadata.site.name}",
+          {'}'}
+        </script>
+
+        <link type="application/atom+xml" rel="alternate" href="https://cmd.wuips.com/rss/feed.xml" title={Metadata.site.name} />
       </Head>
 
       <Layout.Wrapper>

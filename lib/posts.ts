@@ -10,6 +10,7 @@ import * as Ord from 'fp-ts/Ord';
 import * as DateFP from 'fp-ts/Date';
 
 import * as Metadata from './postMetadata';
+import * as SiteMetadata from '../metadata';
 
 const postsDirectory = path.join(process.cwd(), '_posts')
 
@@ -79,7 +80,7 @@ export async function getPostInfosFromFullname(fullName: string): Promise<Post> 
   const date = dateFromFilename(fullName)
   const createdAt = formatDate(date, 'dd/MM/Y')
 
-  const url = `http://cmd.wuips.com/posts/${fullName}`
+  const url = `${SiteMetadata.site.url}/posts/${fullName}`
 
   return {
     rawCreatedAt: date,

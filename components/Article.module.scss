@@ -1,16 +1,29 @@
 @use '../tokens/sizes';
+@use '../tokens/breakpoints';
 
 .article {
   display: grid;
-  grid-template-columns: 33% 67%;
-  grid-template-areas: "left right";
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "top"
+    "bottom";
   padding: sizes.$l 0;
   margin-bottom: sizes.$l;
+
+  @include breakpoints.for-desktop-only {
+    grid-template-columns: 33% 67%;
+    grid-template-areas: "left right";
+  }
 }
 
 .left {
-  padding-right: sizes.$m;
-  grid-area: left;
+  grid-area: top;
+
+  @include breakpoints.for-desktop-only {
+    padding-right: sizes.$m;
+    grid-area: left;
+  }
 }
 
 .imageSection {
@@ -34,8 +47,13 @@
 }
 
 .right {
-  padding-left: sizes.$m;
-  grid-area: right;
+  grid-area: bottom;
+
+  @include breakpoints.for-desktop-only {
+    padding-top: sizes.$m;
+    padding-left: sizes.$m;
+    grid-area: right;
+  }
 }
 
 .metadata {

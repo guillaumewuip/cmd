@@ -4,8 +4,8 @@
 .paragraph {
   font-family: Rubik, sans-serif;
   font-weight: 400;
-  font-size: 1em;
-  line-height: 1.5em;
+  font-size: 1rem;
+  line-height: 1.5rem;
   margin-bottom: sizes.$xs;
   color: colors.$dark;
 }
@@ -13,8 +13,8 @@
 .small {
   font-family: Rubik, sans-serif;
   font-weight: 400;
-  font-size: 0.8em;
-  line-height: 1em;
+  font-size: 0.8rem;
+  line-height: 1rem;
   color: colors.$grey;
 }
 
@@ -22,8 +22,8 @@
   font-family: Rubik, Courier, sans-serif;
   font-weight: 700;
   letter-spacing: sizes.$xxs;
-  font-size: 2.6em;
-  line-height: 2.2em;
+  font-size: 2.6rem;
+  line-height: 1.2rem;
   margin-bottom: sizes.$s;
   color: colors.$dark;
 }
@@ -47,20 +47,20 @@
 .h1 {
   font-family: Rubik, sans-serif;
   font-weight: 600;
-  font-size: 2.2em;
-  line-height: 2.4em;
+  font-size: 2.2rem;
+  line-height: 1.2rem;
   margin-top: sizes.$m;
-  margin-bottom: sizes.$s;
+  margin-bottom: sizes.$l;
   color: colors.$dark;
 }
 
 .h2 {
   font-family: Rubik, sans-serif;
   font-weight: 600;
-  font-size: 1.3em;
-  line-height: 1.7em;
-  margin-top: sizes.$m;
-  margin-bottom: sizes.$xs;
+  font-size: 1.3rem;
+  line-height: 1.2rem;
+  margin-top: sizes.$l;
+  margin-bottom: sizes.$s;
   color: colors.$dark;
 }
 
