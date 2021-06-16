@@ -1,0 +1,10 @@
+@use '../tokens/colors';
+
+.link {
+  color: colors.$dark;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

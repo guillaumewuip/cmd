@@ -32,7 +32,7 @@ export default function Home({
     <div>
       <Head>
         <title>{Metadata.site.name}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
 
         <meta name="author" content={Metadata.author.name} />
         <meta name="description" content={Metadata.description} />

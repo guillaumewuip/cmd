@@ -26,8 +26,8 @@ function Page({
   return (
     <div>
       <Head>
-        <title>{metadata.title} - cerfeuil et musique douce</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{metadata.title} - {SiteMetadata.site.name}</title>
+        <link rel="icon" href="/favicon.png" />
 
         <meta name="author" content={SiteMetadata.author.name} />
         <meta name="description" content={metadata.description} />
