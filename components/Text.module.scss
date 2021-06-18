@@ -60,8 +60,18 @@
   font-size: 1.3rem;
   line-height: 1.5rem;
   margin-top: sizes.$l;
-  margin-bottom: sizes.$s;
+  margin-bottom: sizes.$xs;
   color: colors.$dark;
+}
+
+.h3 {
+  font-family: Rubik, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.1rem;
+  margin-top: 0;
+  margin-bottom: sizes.$s;
+  color: colors.$grey;
 }
 
 .centered {
