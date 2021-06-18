@@ -67,11 +67,11 @@ export default function Home({
         <Layout.SmallSection>
           <Header />
           <Paragraph>
-            Hello ! Et bienvenue sur cerfeuil et musique douce a.k.a. <Code>cmd</Code> pour les intimes. Ici je vais tenter de partager régulière la musique que je découvre au au quotidien.
+            Hello ! Et bienvenue sur cerfeuil et musique douce a.k.a. <Code>cmd</Code> pour les intimes. Ici je tente de partager régulièrement la bonne musique que je découvre au quotidien sur les internets et ailleurs.
           </Paragraph>
 
           <Paragraph>
-            Principalement de l'électro, de l'ambient, de la techno, de l'experimental mais aussi du funk, de la synth-pop, de la disco, du rock, etc. Bref, un peu toute musique chouette que je déniche à droite à gauche. À déguster avec une bonne part de <Link href="https://www.instagram.com/mmpsev/">tarte au cerfeuil</Link>, bien goulûment.
+            On y trouve principalement de l'électro, de l'ambient, de la techno, de l'experimental mais aussi du funk, de la synth-pop, de la disco, du rock, etc. Bref, un peu toute musique chouette dénichée à droite à gauche. À déguster avec une bonne part de <Link href="https://www.instagram.com/mmpsev/">tarte au cerfeuil</Link>, bien goulûment.
           </Paragraph>
 
           <Paragraph>Sans plus attendre, la dernière <Code>cmd</Code> :</Paragraph>
