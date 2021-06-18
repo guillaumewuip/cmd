@@ -11,7 +11,7 @@ import * as Layout from '../layout/Default'
 
 import * as Article from '../components/Article'
 
-import { Paragraph, Code, H2 } from '../components/Text'
+import { Paragraph, Code, H2, Link } from '../components/Text'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { Hr } from '../components/Hr'
@@ -67,11 +67,11 @@ export default function Home({
         <Layout.SmallSection>
           <Header />
           <Paragraph>
-            Tu comprends, je suis mon meilleur modèle car on est tous capables de donner des informations à chacun et c'est une sensation réelle qui se produit si on veut ! Tu vas te dire : J'aurais jamais cru que le karaté guy pouvait parler comme ça !
+            Hello ! Et bienvenue sur cerfeuil et musique douce a.k.a. <Code>cmd</Code> pour les intimes. Ici je vais tenter de partager régulière la musique que je découvre au au quotidien.
           </Paragraph>
 
           <Paragraph>
-            Quand tu fais le calcul, je suis mon meilleur modèle car on est tous capables de donner des informations à chacun et c'est très, très beau d'avoir son propre moi-même ! Tu vas te dire : J'aurais jamais cru que le karaté guy pouvait parler comme ça !
+            Principalement de l'électro, de l'ambient, de la techno, de l'experimental mais aussi du funk, de la synth-pop, de la disco, du rock, etc. Bref, un peu toute musique chouette que je déniche à droite à gauche. À déguster avec une bonne part de <Link href="https://www.instagram.com/mmpsev/">tarte au cerfeuil</Link>, bien goulûment.
           </Paragraph>
 
           <Paragraph>Sans plus attendre, la dernière <Code>cmd</Code> :</Paragraph>
@@ -90,7 +90,7 @@ export default function Home({
             Voilà, c'est tout pour aujourd'hui, merci d'être passé !
             <br /><br />
 
-            - Guillaume
+            Guillaume
           </Paragraph>
 
           <Footer />
