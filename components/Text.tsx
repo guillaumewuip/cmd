@@ -47,6 +47,10 @@ export function H2({ children } : { children: React.ReactNode }) {
   return <h2 className={styles.h2}>{children}</h2>
 }
 
+export function H3({ children } : { children: React.ReactNode }) {
+  return <h3 className={styles.h3}>{children}</h3>
+}
+
 export function Code({ children } : { children: React.ReactNode }) {
   return <code className={styles.code}>{children}</code>
 }
