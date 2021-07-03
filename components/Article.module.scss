@@ -6,14 +6,27 @@
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-template-areas:
+    "title"
     "top"
     "bottom";
+
   padding: sizes.$l 0;
   margin-bottom: sizes.$l;
 
   @include breakpoints.for-desktop-only {
     grid-template-columns: 33% 67%;
-    grid-template-areas: "left right";
+    grid-template-areas:
+      "left title"
+      "left right";
+  }
+}
+
+.title {
+  grid-area: title;
+
+  @include breakpoints.for-desktop-only {
+    padding-top: sizes.$m;
+    padding-left: sizes.$m;
   }
 }
 
@@ -50,7 +63,6 @@
   grid-area: bottom;
 
   @include breakpoints.for-desktop-only {
-    padding-top: sizes.$m;
     padding-left: sizes.$m;
     grid-area: right;
   }
