@@ -26,6 +26,12 @@ function Page({
   const url = `${SiteMetadata.site.url}/post/${fullName}`
   const imageUrl = `${SiteMetadata.site.url}${metadata.image.src}`
 
+  const twitterDesc = metadata.description.length > 200
+    ? metadata.description.substring(0, 197) + '...'
+    : metadata.description
+
+  const title = `${metadata.title} - ${SiteMetadata.site.name}`
+
   return (
     <div>
       <Head>
@@ -35,13 +41,13 @@ function Page({
         <meta name="author" content={SiteMetadata.author.name} />
         <meta name="description" content={metadata.description} />
 
+        <meta property="twitter:title" content={title} />
+        <meta name="twitter:description" content={twitterDesc} />
         <meta name="twitter:creator" content={SiteMetadata.author.twitter.id} />
-        <meta name="twitter:description" content={SiteMetadata.description} />
-        <meta name="twitter:card" content="summary" />
-        <meta property="twitter:title" content={SiteMetadata.site.name} />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={imageUrl} />
 
-        <meta property="og:title" content={metadata.title} />
+        <meta property="og:title" content={title} />
         <meta property="og:site_name" content={SiteMetadata.site.name} />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:url" content={url} />
@@ -53,7 +59,7 @@ function Page({
           {'{'}
             "@type": "WebSite",
             "@context": "https://schema.org"
-            "headline": "{metadata.title}",
+            "headline": "{title}",
             "description": "{metadata.description}",
             "url": "{url}",
             "name": "{SiteMetadata.site.name}",

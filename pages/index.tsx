@@ -39,11 +39,11 @@ export default function Home({
         <meta name="author" content={Metadata.author.name} />
         <meta name="description" content={Metadata.description} />
 
-        <meta name="twitter:creator" content={Metadata.author.twitter.id} />
-        <meta name="twitter:description" content={Metadata.description} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:image" content={lastCmd.metadata.image.src} />
         <meta property="twitter:title" content={Metadata.site.name} />
+        <meta name="twitter:description" content={Metadata.description} />
+        <meta name="twitter:creator" content={Metadata.author.twitter.id} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:image" content={imageUrl} />
 
         <meta property="og:title" content={Metadata.site.name} />
         <meta property="og:site_name" content={Metadata.site.name} />
