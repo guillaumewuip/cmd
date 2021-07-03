@@ -10,6 +10,7 @@ const siteURL = "http://cmd.wuips.com"
 
 const author = {
   name: "Guillaume",
+  email: "guillaume@wuips.com",
   link: "https://twitter.com/guillaumewuip",
 };
 
@@ -43,9 +44,6 @@ export async function generateFeeds() {
         id: infos.url,
         link: infos.url,
         description: infos.metadata.description,
-        author: [
-          author
-        ],
         date: rawCreatedAt,
         image: `${siteURL}${infos.metadata.image.src}`
       })
