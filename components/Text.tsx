@@ -1,3 +1,4 @@
+import Typewriter from 'typewriter-effect';
 import classnames from 'classnames'
 
 import styles from './Text.module.scss'
@@ -32,7 +33,24 @@ export function Small({ children } : { children: React.ReactNode }) {
 }
 
 export function MainTitle() {
-  return <h1 className={styles.mainTitle}>cerfeuil et musique douce</h1>
+  return (
+    <h1 className={styles.mainTitle} aria-label="cerfeuil et musique douce">
+      <Typewriter
+        options={{
+          loop: true
+        }}
+        onInit={(typewriter) => {
+          typewriter
+            .typeString('cerfeuil et musique douce')
+            .pauseFor(5000)
+            .deleteAll()
+            .typeString('cmd')
+            .pauseFor(20000)
+            .start();
+        }}
+      />
+      </h1>
+  )
 }
 
 export function Link({ href, children } : { href: string, children: string }) {
