@@ -28,7 +28,7 @@ export default function Home({
 }) {
   const PostContent = dynamic(() => import(`../_posts/${lastCmd.fullName}.mdx`))
 
-  const imageUrl = `${Metadata.site.url}/post/${lastCmd.metadata.image.src}`
+  const imageUrl = `${Metadata.site.url}${lastCmd.metadata.image.src}`
 
   return (
     <div>

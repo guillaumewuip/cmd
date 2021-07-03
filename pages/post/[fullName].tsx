@@ -24,7 +24,7 @@ function Page({
   const Content = dynamic(() => import(`../../_posts/${fullName}.mdx`))
 
   const url = `${SiteMetadata.site.url}/post/${fullName}`
-  const imageUrl = `${SiteMetadata.site.url}/post/${metadata.image.src}`
+  const imageUrl = `${SiteMetadata.site.url}${metadata.image.src}`
 
   return (
     <div>
