@@ -9,8 +9,7 @@ import * as Posts from './posts'
 const siteURL = "http://cmd.wuips.com"
 
 const author = {
-  name: "Guillaume Clochard",
-  email: "guillaume@wuips.com",
+  name: "Guillaume",
   link: "https://twitter.com/guillaumewuip",
 };
 
