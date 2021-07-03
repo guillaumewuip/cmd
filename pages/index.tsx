@@ -28,6 +28,8 @@ export default function Home({
 }) {
   const PostContent = dynamic(() => import(`../_posts/${lastCmd.fullName}.mdx`))
 
+  const imageUrl = `${Metadata.site.url}/post/${lastCmd.metadata.image.src}`
+
   return (
     <div>
       <Head>
@@ -48,10 +50,8 @@ export default function Home({
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:url" content={Metadata.site.url} />
         <meta property="og:description" content={Metadata.description} />
-        <meta property="og:image" content={lastCmd.metadata.image.src} />
+        <meta property="og:image" content={imageUrl} />
         <meta property="og:type" content="website" />
-
-        <link rel="canonical" href={Metadata.site.url} />
 
         <script type="application/ld+json">
           {'{'}

@@ -23,6 +23,9 @@ function Page({
 }) {
   const Content = dynamic(() => import(`../../_posts/${fullName}.mdx`))
 
+  const url = `${SiteMetadata.site.url}/post/${fullName}`
+  const imageUrl = `${SiteMetadata.site.url}/post/${metadata.image.src}`
+
   return (
     <div>
       <Head>
@@ -36,25 +39,23 @@ function Page({
         <meta name="twitter:description" content={SiteMetadata.description} />
         <meta name="twitter:card" content="summary" />
         <meta property="twitter:title" content={SiteMetadata.site.name} />
-        <meta name="twitter:image" content={metadata.image.src} />
+        <meta name="twitter:image" content={imageUrl} />
 
         <meta property="og:title" content={metadata.title} />
         <meta property="og:site_name" content={SiteMetadata.site.name} />
         <meta property="og:locale" content="fr_FR" />
-        <meta property="og:url" content={SiteMetadata.site.url} />
+        <meta property="og:url" content={url} />
         <meta property="og:description" content={metadata.description} />
-        <meta property="og:image" content={metadata.image.src} />
+        <meta property="og:image" content={imageUrl} />
         <meta property="og:type" content="article" />
-
-        <link rel="canonical" href={`${SiteMetadata.site.url}/post/${fullName}`} />
 
         <script type="application/ld+json">
           {'{'}
             "@type": "WebSite",
             "@context": "https://schema.org"
             "headline": "{metadata.title}",
-            "description": "{SiteMetadata.description}",
-            "url": "{SiteMetadata.site.url}",
+            "description": "{metadata.description}",
+            "url": "{url}",
             "name": "{SiteMetadata.site.name}",
           {'}'}
         </script>
