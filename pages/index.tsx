@@ -40,12 +40,16 @@ export default function Home({
         <meta name="twitter:creator" content={Metadata.author.twitter.id} />
         <meta name="twitter:description" content={Metadata.description} />
         <meta name="twitter:card" content="summary" />
+        <meta name="twitter:image" content={lastCmd.metadata.image.src} />
         <meta property="twitter:title" content={Metadata.site.name} />
 
+        <meta property="og:title" content={Metadata.site.name} />
         <meta property="og:site_name" content={Metadata.site.name} />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:url" content={Metadata.site.url} />
         <meta property="og:description" content={Metadata.description} />
+        <meta property="og:image" content={lastCmd.metadata.image.src} />
+        <meta property="og:type" content="website" />
 
         <link rel="canonical" href={Metadata.site.url} />
 

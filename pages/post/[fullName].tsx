@@ -43,6 +43,8 @@ function Page({
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:url" content={SiteMetadata.site.url} />
         <meta property="og:description" content={metadata.description} />
+        <meta property="og:image" content={metadata.image.src} />
+        <meta property="og:type" content="article" />
 
         <link rel="canonical" href={`${SiteMetadata.site.url}/post/${fullName}`} />
 
