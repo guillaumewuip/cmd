@@ -71,14 +71,14 @@ export default function Home({
         <Layout.SmallSection>
           <Header />
           <Paragraph>
-            Hello ! Et bienvenue sur cerfeuil et musique douce a.k.a. <Code>cmd</Code> pour les intimes. Ici je tente de partager régulièrement la bonne musique que je découvre au quotidien sur les internets et ailleurs.
+            Hello ! Et bienvenue sur cerfeuil et musique douce a.k.a. <Code>cmd</Code> pour les intimes. Ici je partage régulièrement la bonne musique que je découvre au quotidien sur les internets et ailleurs (et oui, parfois en vrai avec de vrais gens et de vrais sons, c'est incroyable).
           </Paragraph>
 
           <Paragraph>
-            On y trouve principalement de l'électro, de l'ambient, de la techno, de l'experimental mais aussi du funk, de la synth-pop, de la disco, du rock, etc. Bref, un peu toute musique chouette dénichée à droite à gauche. À déguster avec une bonne part de <Link href="https://www.instagram.com/mmpsev/">tarte au cerfeuil</Link>, bien goulûment.
+            On y trouve principalement de l'électro, de l'ambient, de la techno, de l'experimental mais aussi du funk, de la synth-pop, de la disco, du rock, etc. Bref, un peu toute musique chouette dénichée à droite à gauche. À déguster avec une bonne part de <Link href="https://www.instagram.com/mmpsev/">tarte au cerfeuil</Link> (d'où le nom), bien goulûment.
           </Paragraph>
 
-          <Paragraph>Sans plus attendre, la dernière <Code>cmd</Code> :</Paragraph>
+          <Paragraph>Sans plus attendre, la dernière <Code>cmd</Code>, vous m'en direz des nouvelles :</Paragraph>
         </Layout.SmallSection>
 
         <Article.Article metadata={lastCmd.metadata} createdAt={lastCmd.createdAt} content={<PostContent />} />
