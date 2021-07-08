@@ -75,7 +75,7 @@ export default function Home({
           </Paragraph>
 
           <Paragraph>
-            On y trouve principalement de l'électro, de l'ambient, de la techno, de l'experimental mais aussi du funk, de la synth-pop, de la disco, du rock, etc. Bref, un peu toute musique chouette dénichée à droite à gauche. À déguster avec une bonne part de <Link href="https://www.instagram.com/mmpsev/">tarte au cerfeuil</Link> (d'où le nom), bien goulûment.
+            On y trouve principalement de l'électro, de l'ambient, de la techno, de l'experimental mais aussi du funk, de la synth-pop, de la disco, du rock, etc. Bref, un peu toute musique chouette dénichée à droite à gauche. À déguster avec une bonne part de <Link href="https://www.instagram.com/mmpsev/">tarte au cerfeuil</Link> (d'où le nom).
           </Paragraph>
 
           <Paragraph>Sans plus attendre, la dernière <Code>cmd</Code>, vous m'en direz des nouvelles :</Paragraph>
