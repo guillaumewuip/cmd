@@ -19,6 +19,7 @@ export function Bandcamp({
     artwork: 'small',
     transparent: 'true',
   })
+    .filter(([_, value]) => !!value)
     .map(([key, value]) => `${key}=${value}`)
     .join('/')
 
