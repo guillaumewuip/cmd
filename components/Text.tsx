@@ -72,3 +72,7 @@ export function H3({ children } : { children: React.ReactNode }) {
 export function Code({ children } : { children: React.ReactNode }) {
   return <code className={styles.code}>{children}</code>
 }
+
+export function Blockquote({ children } : { children: React.ReactNode }) {
+  return <blockquote className={styles.blockquote}>{children}</blockquote>
+}
