@@ -28,6 +28,7 @@ export function Bandcamp({
   return (
     <div className={styles.container}>
       <iframe
+        title="Embed player"
         className={styles.iframe}
         height="120px"
         src={src}
@@ -47,6 +48,7 @@ export function Soundcloud({
   return (
     <div className={styles.container}>
       <iframe
+        title="Embed player"
         className={styles.iframe}
         height="128"
         src={src}
@@ -66,6 +68,7 @@ export function Mixcloud({
   return (
     <div className={styles.container}>
       <iframe
+        title="Embed player"
         className={styles.iframe}
         height="120"
         src={src}
@@ -85,6 +88,7 @@ export function Youtube({
   return (
     <div className={classnames(styles.youtubeWrapper, styles.container)}>
       <iframe
+        title="Embed player"
         className={styles.iframe}
         src={src}
         seamless
