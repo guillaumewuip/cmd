@@ -2,6 +2,7 @@ import Typewriter from 'typewriter-effect';
 import classnames from 'classnames'
 
 import styles from './Text.module.scss'
+import {useEffect, useState} from 'react';
 
 export function Paragraph({
   children,
@@ -33,9 +34,21 @@ export function Small({ children } : { children: React.ReactNode }) {
 }
 
 export function MainTitle() {
+  const [showAnim, setShowAnim] = useState(false)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowAnim(true)
+    }, 6000)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [setShowAnim])
+
   return (
     <h1 className={styles.mainTitle} aria-label="cerfeuil et musique douce">
-      <Typewriter
+      {showAnim ? <Typewriter
         options={{
           loop: true
         }}
@@ -48,7 +61,7 @@ export function MainTitle() {
             .pauseFor(20000)
             .start();
         }}
-      />
+      /> : "cerfeuil et musique douce"}
       </h1>
   )
 }
