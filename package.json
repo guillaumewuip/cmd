@@ -11,12 +11,12 @@
   "dependencies": {
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "@next/mdx": "^10.2.3",
+    "@next/mdx": "^11.1.0",
     "classnames": "^2.3.1",
-    "date-fns": "^2.21.3",
+    "date-fns": "^2.23.0",
     "feed": "^4.2.2",
-    "fp-ts": "^2.10.5",
-    "next": "10.x",
+    "fp-ts": "^2.11.1",
+    "next": "11.x",
     "next-sitemap": "^1.6.162",
     "react": "17.x",
     "react-dom": "17.x",
@@ -24,8 +24,8 @@
     "typewriter-effect": "^2.18.0"
   },
   "devDependencies": {
-    "@types/react": "^17.0.6",
-    "sass": "^1.34.0",
-    "typescript": "^4.2.4"
+    "@types/react": "^17.0.19",
+    "sass": "^1.38.0",
+    "typescript": "^4.3.5"
   }
 }
