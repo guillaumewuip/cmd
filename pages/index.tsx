@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 
+import { NextSeo } from 'next-seo';
+
 import { pipe } from 'fp-ts/function'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 
@@ -34,38 +36,13 @@ export default function Home({
     <div>
       <Head>
         <title>{Metadata.site.name}</title>
-        <link rel="icon" href="/favicon.png" />
-
-        <meta name="author" content={Metadata.author.name} />
-        <meta name="description" content={Metadata.description} />
-
-        <meta property="twitter:title" content={Metadata.site.name} />
-        <meta name="twitter:description" content={Metadata.description} />
-        <meta name="twitter:creator" content={Metadata.author.twitter.id} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:image" content={imageUrl} />
-
-        <meta property="og:title" content={Metadata.site.name} />
-        <meta property="og:site_name" content={Metadata.site.name} />
-        <meta property="og:locale" content="fr_FR" />
-        <meta property="og:url" content={Metadata.site.url} />
-        <meta property="og:description" content={Metadata.description} />
-        <meta property="og:image" content={imageUrl} />
-        <meta property="og:type" content="website" />
-
-        <script type="application/ld+json">
-          {'{'}
-            "@type": "WebSite",
-            "@context": "https://schema.org"
-            "headline": "{Metadata.site.name}",
-            "description": "{Metadata.description}",
-            "url": "{Metadata.site.url}",
-            "name": "{Metadata.site.name}",
-          {'}'}
-        </script>
-
-        <link type="application/atom+xml" rel="alternate" href="https://cmd.wuips.com/rss/feed.xml" title={Metadata.site.name} />
       </Head>
+
+      <NextSeo
+        openGraph={{
+          images: [{ url: imageUrl}]
+        }}
+      />
 
       <Layout.Wrapper>
         <Layout.SmallSection>
