@@ -1,6 +1,29 @@
 import classnames from 'classnames'
+import { PropsWithChildren, useEffect, useState } from 'react'
+import Skeleton from 'react-loading-skeleton';
 
 import styles from './MusicEmbed.module.scss'
+
+function EmptyIframe() {
+  return <Skeleton height={60}/>
+}
+
+function AsyncIframeWrapper({children}: PropsWithChildren<{}>) {
+  const [showIframe, setShowIframe] = useState(false)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowIframe(true)
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [setShowIframe])
+
+  return <>{showIframe ? children : <EmptyIframe />}</>
+}
+
 
 export function Bandcamp({
   album,
@@ -27,13 +50,15 @@ export function Bandcamp({
 
   return (
     <div className={styles.container}>
-      <iframe
-        title="Embed player"
-        className={styles.iframe}
-        height="120px"
-        src={src}
-        seamless
-      />
+      <AsyncIframeWrapper>
+        <iframe
+          title="Embed player"
+          className={styles.iframe}
+          height="120px"
+          src={src}
+          seamless
+        />
+      </AsyncIframeWrapper>
     </div>
   )
 }
@@ -47,13 +72,15 @@ export function Soundcloud({
 
   return (
     <div className={styles.container}>
-      <iframe
-        title="Embed player"
-        className={styles.iframe}
-        height="128"
-        src={src}
-        seamless
-      />
+      <AsyncIframeWrapper>
+        <iframe
+          title="Embed player"
+          className={styles.iframe}
+          height="128"
+          src={src}
+          seamless
+        />
+      </AsyncIframeWrapper>
     </div>
   )
 }
@@ -67,13 +94,15 @@ export function Mixcloud({
 
   return (
     <div className={styles.container}>
-      <iframe
-        title="Embed player"
-        className={styles.iframe}
-        height="120"
-        src={src}
-        seamless
-      />
+      <AsyncIframeWrapper>
+        <iframe
+          title="Embed player"
+          className={styles.iframe}
+          height="120"
+          src={src}
+          seamless
+        />
+      </AsyncIframeWrapper>
     </div>
   )
 }
@@ -87,12 +116,14 @@ export function Youtube({
 
   return (
     <div className={classnames(styles.youtubeWrapper, styles.container)}>
-      <iframe
-        title="Embed player"
-        className={styles.iframe}
-        src={src}
-        seamless
-      />
+      <AsyncIframeWrapper>
+        <iframe
+          title="Embed player"
+          className={styles.iframe}
+          src={src}
+          seamless
+        />
+      </AsyncIframeWrapper>
     </div>
   )
 }
