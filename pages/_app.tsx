@@ -10,17 +10,17 @@ import { Hr } from '../components/Hr'
 import * as Metadata from '../metadata'
 
 const mdComponents = {
-  h1: props => <H1 {...props} />,
-  h2: props => <H2 {...props} />,
-  h3: props => <H3 {...props} />,
-  a: props => <Link {...props} />,
-  p: props => <Paragraph {...props} />,
+  h1: (props: any) => <H1 {...props} />,
+  h2: (props: any) => <H2 {...props} />,
+  h3: (props: any) => <H3 {...props} />,
+  a: (props: any) => <Link {...props} />,
+  p: (props: any) => <Paragraph {...props} />,
   hr: () => <Hr  />,
-  code: props => <Code {...props} />,
-  blockquote: props => <Blockquote {...props} />,
+  code: (props: any) => <Code {...props} />,
+  blockquote: (props: any) => <Blockquote {...props} />,
 }
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageProps: any }) {
   return (
     <>
       <Head>
