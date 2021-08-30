@@ -80,7 +80,7 @@ export async function getPostInfosFromFullname(fullName: string): Promise<Post> 
   const date = dateFromFilename(fullName)
   const createdAt = formatDate(date, 'dd/MM/Y')
 
-  const url = `${SiteMetadata.site.url}/posts/${fullName}`
+  const url = `${SiteMetadata.site.url}/post/${fullName}`
 
   return {
     rawCreatedAt: date,
