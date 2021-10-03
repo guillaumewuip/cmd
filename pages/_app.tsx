@@ -26,6 +26,7 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageP
       <Head>
         <link rel="icon" href="/favicon.png" />
         <link type="application/atom+xml" rel="alternate" href="https://cmd.wuips.com/rss/feed.xml" title={Metadata.site.name} />
+        <link href="https://github.com/guillaumewuip" rel="me" />
       </Head>
       <DefaultSeo
         openGraph={{
