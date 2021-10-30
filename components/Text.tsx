@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import Typewriter from 'typewriter-effect';
 import classnames from 'classnames'
 
+import * as MusicEmbed from './MusicEmbed'
+
 import styles from './Text.module.scss'
-import {useEffect, useState} from 'react';
 
 export function Paragraph({
   children,
@@ -66,7 +68,12 @@ export function MainTitle() {
   )
 }
 
+
 export function Link({ href, children } : { href: string, children: string }) {
+  if (href === children && MusicEmbed.isEmbedableLink(href)) {
+    return <MusicEmbed.MusicEmbedLink href={href} />
+  }
+
   return <a className={styles.a} href={href}>{children}</a>
 }
 
