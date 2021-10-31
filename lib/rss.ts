@@ -18,7 +18,7 @@ const author = {
 export async function generateFeeds() {
   const feed = new Feed({
     title: "cerfeuil et musique douce",
-    description: "This is my personal feed!",
+    description: "cerfeuil et musique douce",
     id: siteURL,
     link: siteURL,
     language: "fr-FR",
