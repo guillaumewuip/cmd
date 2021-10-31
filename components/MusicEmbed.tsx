@@ -1,11 +1,10 @@
-import classnames from 'classnames'
 import { PropsWithChildren, useEffect, useState } from 'react'
 import Skeleton from 'react-loading-skeleton';
 
 import styles from './MusicEmbed.module.scss'
 
 function EmptyIframe() {
-  return <Skeleton height={60}/>
+  return <Skeleton height={100}/>
 }
 
 function AsyncIframeWrapper({children}: PropsWithChildren<{}>) {
@@ -182,14 +181,16 @@ export function Youtube({
   const src = `https://www.youtube.com/embed/${id}`;
 
   return (
-    <span className={classnames(styles.youtubeWrapper, styles.container)}>
+    <span className={styles.container}>
       <AsyncIframeWrapper>
-        <iframe
-          title="Embed player"
-          className={styles.iframe}
-          src={src}
-          seamless
-        />
+        <span className={styles.youtubeWrapper}>
+          <iframe
+            title="Embed player"
+            className={styles.iframe}
+            src={src}
+            seamless
+          />
+        </span>
       </AsyncIframeWrapper>
     </span>
   )
