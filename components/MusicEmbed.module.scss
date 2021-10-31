@@ -6,10 +6,12 @@
 }
 
 .container {
+  display: block;
   margin: sizes.$s 0 sizes.$xl;
 }
 
 .youtubeWrapper {
+  display: block;
   position: relative;
   padding-bottom: 56.25%; /* 16:9 */
   height: 0;

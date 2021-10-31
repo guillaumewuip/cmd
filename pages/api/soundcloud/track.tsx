@@ -1,0 +1,61 @@
+import { NextApiRequest, NextApiResponse} from 'next'
+
+import { parse } from 'node-html-parser';
+
+async function getSoundcloudTrackId(url: string) {
+  const response = await fetch(url)
+  const documentString = await response.text()
+
+  const document = parse(documentString)
+
+  const metaContentElement = document.querySelector('meta[content^="soundcloud://sounds:"]')
+
+  if (!metaContentElement) {
+    throw new Error(`Can't find meta tag`)
+  }
+
+  const result = metaContentElement.attributes.content.match(/sounds:(?<id>\d*)/)
+
+  if (result === null) {
+    throw new Error(`Can't find trackId`)
+  }
+
+  const { groups: { id } = { id: undefined } } = result
+
+  if (id === undefined) {
+    throw new Error(`Can't find trackId`)
+  }
+
+  return id
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    if (req.method === 'GET') {
+      const url = req.query.url
+
+      if (!url || Array.isArray(url)) {
+        res.status(400).json({
+          error: 'Missing correct url query parameter'
+        })
+        return
+      }
+
+      const trackId = await getSoundcloudTrackId(decodeURIComponent(url))
+
+      res.status(200).json({
+        trackId
+      })
+      return
+    }
+
+    res.status(400)
+    return
+  } catch (error) {
+    console.error(error)
+
+    res.status(500)
+    return
+  }
+}
+
