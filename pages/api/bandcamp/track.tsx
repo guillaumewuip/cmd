@@ -1,21 +1,26 @@
 import { NextApiRequest, NextApiResponse} from 'next'
 
-import { parse } from 'node-html-parser';
+import { JSDOM } from 'jsdom';
 
 async function getBandcampTrackId(url: string) {
   const response = await fetch(url)
   const documentString = await response.text()
 
-  const document = parse(documentString)
+  const document = new JSDOM(documentString).window.document
 
   const metaPagePropertiesElement = document.querySelector('meta[name="bc-page-properties"]')
-
 
   if (!metaPagePropertiesElement) {
     throw new Error(`Can't find bc-page-properties meta tag`)
   }
 
-  const pageProperties = JSON.parse(metaPagePropertiesElement.attributes.content)
+  const content = metaPagePropertiesElement.getAttribute('content')
+
+  if (!content) {
+    throw new Error(`No content on bc-page-properties meta tag`)
+  }
+
+  const pageProperties = JSON.parse(content)
 
   if (!('item_id' in pageProperties)) {
     throw new Error(`Can't find item_id in page properties`)

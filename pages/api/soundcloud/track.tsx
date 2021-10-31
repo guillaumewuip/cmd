@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse} from 'next'
 
-import { parse } from 'node-html-parser';
+import { JSDOM } from 'jsdom';
 
 async function getSoundcloudTrackId(url: string) {
   const response = await fetch(url)
   const documentString = await response.text()
 
-  const document = parse(documentString)
+  const document = new JSDOM(documentString).window.document
 
   const metaContentElement = document.querySelector('meta[content^="soundcloud://sounds:"]')
 
@@ -14,7 +14,13 @@ async function getSoundcloudTrackId(url: string) {
     throw new Error(`Can't find meta tag`)
   }
 
-  const result = metaContentElement.attributes.content.match(/sounds:(?<id>\d*)/)
+  const content = metaContentElement.getAttribute('content')
+
+  if (!content) {
+    throw new Error(`No content on meta tag`)
+  }
+
+  const result = content.match(/sounds:(?<id>\d*)/)
 
   if (result === null) {
     throw new Error(`Can't find trackId`)
