@@ -1,5 +1,5 @@
-import 'react-loading-skeleton/dist/skeleton.css'
 import '../styles/globals.scss'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import Head from 'next/head'
 import { MDXProvider } from '@mdx-js/react'
