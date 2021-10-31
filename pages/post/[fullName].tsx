@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NextSeo } from 'next-seo';
 
-import * as PostMetadata from '../../lib/postMetadata'
 import * as Posts from '../../lib/posts'
 
 import * as Layout from '../../layout/Default'
@@ -14,30 +13,26 @@ import * as Article from '../../components/Article'
 import * as SiteMetadata from '../../metadata'
 
 function Page({
-  fullName,
-  metadata,
-  createdAt,
+  post
 }: {
-  fullName: string,
-  metadata: PostMetadata.PostMetadata,
-  createdAt: string,
+  post: Posts.Post
 }) {
-  const Content = dynamic(() => import(`../../_posts/${fullName}.mdx`))
+  const Content = dynamic(() => import(`../../_posts/${post.infos.fullName}.mdx`))
 
-  const url = `${SiteMetadata.site.url}/post/${fullName}`
-  const imageUrl = `${SiteMetadata.site.url}${metadata.image.src}`
+  const url = `${SiteMetadata.site.url}/post/${post.infos.fullName}`
+  const imageUrl = `${SiteMetadata.site.url}${post.infos.metadata.image.src}`
 
-  const title = `${metadata.title} - ${SiteMetadata.site.name}`
+  const title = `${post.infos.metadata.title} - ${SiteMetadata.site.name}`
 
   return (
     <div>
       <Head>
-        <title>{metadata.title} - {SiteMetadata.site.name}</title>
+        <title>{post.infos.metadata.title} - {SiteMetadata.site.name}</title>
       </Head>
 
       <NextSeo
         openGraph={{
-          description: metadata.description,
+          description: post.excerpt,
           title,
           url,
           images: [{ url: imageUrl }],
@@ -50,7 +45,7 @@ function Page({
 
       <Layout.Wrapper>
         <Header />
-        <Article.Article metadata={metadata} createdAt={createdAt} content={<Content />} />
+        <Article.Article metadata={post.infos.metadata} createdAt={post.infos.createdAt} content={<Content />} />
         <Footer />
       </Layout.Wrapper>
     </div>
@@ -58,13 +53,11 @@ function Page({
 }
 
 export async function getStaticProps({ params: { fullName } }: { params: { fullName: string }}) {
-  const { infos: { metadata, createdAt } } = await Posts.getPostInfosFromFullname(fullName)
+  const post = await Posts.getPostInfosFromFullname(fullName)
 
   return {
     props: {
-      fullName,
-      metadata,
-      createdAt,
+      post
     },
   }
 }

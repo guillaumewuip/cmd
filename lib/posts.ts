@@ -1,7 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { format as formatDate } from 'date-fns'
+import { JSDOM } from 'jsdom';
 
 import { pipe } from 'fp-ts/function';
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray'
@@ -70,26 +72,47 @@ export type PostInfos = Readonly<{
 }>
 
 export type Post = Readonly<{
-  rawCreatedAt: Date,
   infos: PostInfos,
+  excerpt: string,
 }>
 
+function postExcerpt(content: Parameters<typeof React.createElement>[0]) {
+  const markup = ReactDOMServer.renderToStaticMarkup(React.createElement(content))
+
+  const document = new JSDOM(markup).window.document
+
+  const result = document.evaluate('.//h2[1]//preceding::p', document, null, 0)
+
+  const nodes: Node[] = [];
+  let node = result.iterateNext();
+  while (node) {
+    nodes.push(node);
+    node = result.iterateNext();
+  }
+
+  const excerpt = nodes.map(node => node.textContent).join('\n')
+
+  return excerpt
+}
+
 export async function getPostInfosFromFullname(fullName: string): Promise<Post> {
-  const { metadata } = await import(`../_posts/${fullName}.mdx`)
+  const post = await import(`../_posts/${fullName}.mdx`)
+
+  const excerpt = postExcerpt(post.default)
 
   const date = dateFromFilename(fullName)
-  const createdAt = formatDate(date, 'dd/MM/Y')
+  const createdAt = formatDate(date, 'dd/MM/y')
 
   const url = `${SiteMetadata.site.url}/post/${fullName}`
 
   return {
-    rawCreatedAt: date,
     infos: {
       fullName,
       url,
-      metadata,
+      metadata: post.metadata,
       createdAt,
-    }
+    },
+    excerpt
   }
 }
 

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { Feed } from 'feed';
+import { parse as parseDate } from 'date-fns'
 
 import { pipe } from 'fp-ts/function'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
@@ -38,14 +39,17 @@ export async function generateFeeds() {
 
   pipe(
     postInfos,
-    ReadonlyArrayFP.map(({ rawCreatedAt, infos }) => {
+    ReadonlyArrayFP.map(post => {
+      const date = parseDate(post.infos.createdAt, 'dd/MM/y', new Date())
+      date.setHours(8)
+
       feed.addItem({
-        title: infos.metadata.title,
-        id: infos.url,
-        link: infos.url,
-        description: infos.metadata.description,
-        date: rawCreatedAt,
-        image: `${siteURL}${infos.metadata.image.src}`
+        title: post.infos.metadata.title,
+        id: post.infos.url,
+        link: post.infos.url,
+        description: post.excerpt,
+        date,
+        image: `${siteURL}${post.infos.metadata.image.src}`
       })
     })
   )
