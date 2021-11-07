@@ -147,28 +147,6 @@ export function Soundcloud({
   )
 }
 
-export function Mixcloud({
-  feed
-}: {
-  feed: string
-}) {
-  const src = `https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=${feed}`;
-
-  return (
-    <span className={styles.container}>
-      <AsyncIframeWrapper>
-        <iframe
-          title="Embed player"
-          className={styles.iframe}
-          height="120"
-          src={src}
-          seamless
-        />
-      </AsyncIframeWrapper>
-    </span>
-  )
-}
-
 function isYoutubeLink(href: string) {
   return href.includes('youtube.com/watch')
 }
