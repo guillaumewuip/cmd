@@ -2,12 +2,14 @@ import { NextApiRequest, NextApiResponse} from 'next'
 
 import { JSDOM } from 'jsdom';
 
-async function getBandcampTrackId(url: string) {
+async function fetchPage(url: string): Promise<Document> {
   const response = await fetch(url)
   const documentString = await response.text()
 
-  const document = new JSDOM(documentString).window.document
+  return new JSDOM(documentString).window.document
+}
 
+function extractTrackId(document: Document): string {
   const metaPagePropertiesElement = document.querySelector('meta[name="bc-page-properties"]')
 
   if (!metaPagePropertiesElement) {
@@ -29,6 +31,20 @@ async function getBandcampTrackId(url: string) {
   return pageProperties.item_id
 }
 
+function extractStream(document: Document): string {
+  const script = document.querySelector('script[data-tralbum]')
+
+  if (!script) {
+    throw new Error(`Can't find data-tralbum script tag`)
+  }
+
+  const data = JSON.parse(script.getAttribute('data-tralbum') || '')
+
+  const url = Object.values(data.trackinfo[0].file)[0] as string
+
+  return url
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === 'GET') {
@@ -41,10 +57,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return
       }
 
-      const trackId = await getBandcampTrackId(decodeURIComponent(url))
+      const page = await fetchPage(decodeURIComponent(url))
+      const trackId = extractTrackId(page)
+      const streamUrl = extractStream(page)
 
       res.status(200).json({
-        trackId
+        trackId,
+        streamUrl,
       })
       return
     }
