@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageP
         <link rel="webmention" href="https://webmention.io/cmd.wuips.com/webmention" />
         <link rel="pingback" href="https://webmention.io/cmd.wuips.com/xmlrpc" />
       </Head>
+      {/* @ts-ignore */}
       <DefaultSeo
         openGraph={{
           title: Metadata.site.name,

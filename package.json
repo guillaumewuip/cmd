@@ -7,5 +7,22 @@
   },
   "dependencies": {
     "pnpm": "^6.24.2"
+  },
+  "devDependencies": {
+    "turbo": "^1.0.19"
+  },
+  "turbo": {
+    "baseBranch": "origin/main",
+    "pipeline": {
+      "build": {
+        "dependsOn": ["^build"],
+        "outputs": [
+          ".next/**"
+        ]
+      },
+      "dev": {
+        "cache": false
+      }
+    }
   }
 }

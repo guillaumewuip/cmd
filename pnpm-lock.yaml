@@ -5,8 +5,11 @@ importers:
   .:
     specifiers:
       pnpm: ^6.24.2
+      turbo: ^1.0.19
     dependencies:
       pnpm: 6.24.2
+    devDependencies:
+      turbo: 1.0.19
 
   blog:
     specifiers:
@@ -2933,6 +2936,12 @@ packages:
   /tty-browserify/0.0.1:
     resolution: {integrity: sha512-C3TaO7K81YvjCgQH9Q1S3R3P3BtN3RIM8n+OvX4il1K1zgE8ZhI0op7kClgkxtutIE8hQrcrHBXvIheqKUUCxw==}
     dev: false
+
+  /turbo/1.0.19:
+    resolution: {integrity: sha512-/gdEdpdludyHX+344JQ84bglK33dI4IWTtGkBkfJnSQW+lC3/JFAu9jy+4zNK2gdzxjwcB2/qQK+Pv53SZd1Kw==}
+    hasBin: true
+    requiresBuild: true
+    dev: true
 
   /type-check/0.3.2:
     resolution: {integrity: sha1-WITKtRLPHTVeP7eE8wgEsrUg23I=}
