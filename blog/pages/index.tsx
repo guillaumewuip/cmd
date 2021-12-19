@@ -13,7 +13,8 @@ import * as Layout from '../layout/Default'
 
 import * as Article from '../components/Article'
 
-import { Paragraph, Code, H2, Link } from '../components/Text'
+import { Link } from '../components/Text'
+import { Paragraph, Code, H2 } from '@cmd/ui-components-text'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { Hr } from '../components/Hr'
@@ -38,6 +39,7 @@ export default function Home({
         <title>{Metadata.site.name}</title>
       </Head>
 
+      {/* @ts-ignore */}
       <NextSeo
         openGraph={{
           images: [{ url: imageUrl}]

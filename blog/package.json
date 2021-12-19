@@ -1,5 +1,5 @@
 {
-  "name": "cmd-blog",
+  "name": "@cmd/blog",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.16.5",
+    "@cmd/ui-components-text": "workspace:latest",
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@next/mdx": "^12.0.7",
@@ -29,6 +30,8 @@
     "xml-parse": "^0.4.0"
   },
   "devDependencies": {
+    "@cmd/config-typescript": "workspace:latest",
+    "@cmd/tokens": "workspace:latest",
     "@types/jsdom": "^16.2.13",
     "@types/mdx-js__react": "^1.5.5",
     "@types/react": "^17.0.37",

@@ -30,6 +30,7 @@ function Page({
         <title>{post.infos.metadata.title} - {SiteMetadata.site.name}</title>
       </Head>
 
+      {/* @ts-ignore */}
       <NextSeo
         openGraph={{
           description: post.excerpt,

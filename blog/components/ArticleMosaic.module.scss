@@ -1,6 +1,6 @@
-@use '../tokens/sizes';
-@use '../tokens/colors';
-@use '../tokens/breakpoints';
+@use '@cmd/tokens/sizes';
+@use '@cmd/tokens/colors';
+@use '@cmd/tokens/breakpoints';
 
 .grid {
   display: grid;

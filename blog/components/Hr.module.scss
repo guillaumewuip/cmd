@@ -1,5 +1,5 @@
-@use '../tokens/sizes';
-@use '../tokens/colors';
+@use '@cmd/tokens/sizes';
+@use '@cmd/tokens/colors';
 
 .hr {
   margin: sizes.$m 0;

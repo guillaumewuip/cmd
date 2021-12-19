@@ -1,0 +1,6 @@
+{
+  "extends": "@cmd/config-typescript",
+  "exclude": [
+    "dist"
+  ]
+}

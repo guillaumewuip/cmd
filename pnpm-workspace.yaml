@@ -1,2 +1,5 @@
 packages:
+  - 'config/*'
+  - 'ui/components/*'
+  - 'ui/*'
   - 'blog'
