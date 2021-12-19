@@ -47,8 +47,7 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageP
           handle: Metadata.author.twitter.id,
           cardType: 'summary'
         }}
-      >
-      </DefaultSeo>
+      />
       <MDXProvider components={mdComponents}>
         <Component {...pageProps} />
       </MDXProvider>
