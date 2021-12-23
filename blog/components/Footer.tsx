@@ -1,6 +1,6 @@
 import { Link, Small } from './Text'
 
-import styles from './Footer.module.scss'
+import * as styles from './Footer.css'
 
 export function Footer() {
   return (

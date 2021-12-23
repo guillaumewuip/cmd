@@ -7,7 +7,7 @@ import * as Posts from '../lib/posts'
 
 import { Paragraph } from '../components/Text'
 
-import styles from './ArticleMosaic.module.scss'
+import * as styles from './ArticleMosaic.css'
 
 function Article({
   post

@@ -3,7 +3,7 @@ import NextImage from 'next/image'
 
 import * as PostMetadata from '../lib/postMetadata'
 
-import styles from './Article.module.scss'
+import * as styles from './Article.css'
 import { H1, Small } from './Text'
 
 function Wrapper({ children }: { children: React.ReactNode }) {

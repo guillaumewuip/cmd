@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from 'react'
 import Skeleton from 'react-loading-skeleton';
 
-import styles from './MusicEmbed.module.scss'
+import * as styles from './MusicEmbed.css'
 
 function EmptyIframe() {
   return <Skeleton height={100}/>

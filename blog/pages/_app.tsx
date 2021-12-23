@@ -1,4 +1,3 @@
-import '../styles/globals.scss'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import Head from 'next/head'
@@ -9,6 +8,9 @@ import { H1, H2, H3, Link, Paragraph, Code, Blockquote } from '../components/Tex
 import { Hr } from '../components/Hr'
 
 import * as Metadata from '../metadata'
+
+import { theme } from '../styles/theme.css'
+import '../styles/global.css.ts'
 
 const mdComponents = {
   h1: (props: any) => <H1 {...props} />,
@@ -23,13 +25,17 @@ const mdComponents = {
 
 function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageProps: any }) {
   return (
-    <>
+    <div className={theme}>
       <Head>
         <link rel="icon" href="/favicon.png" />
         <link type="application/atom+xml" rel="alternate" href="https://cmd.wuips.com/rss/feed.xml" title={Metadata.site.name} />
         <link href="https://github.com/guillaumewuip" rel="me" />
         <link rel="webmention" href="https://webmention.io/cmd.wuips.com/webmention" />
         <link rel="pingback" href="https://webmention.io/cmd.wuips.com/xmlrpc" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet" />
       </Head>
       {/* @ts-ignore */}
       <DefaultSeo
@@ -52,7 +58,7 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageP
       <MDXProvider components={mdComponents}>
         <Component {...pageProps} />
       </MDXProvider>
-    </>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 import { MainTitle } from './Text'
 
-import styles from './Header.module.scss'
+import * as styles from './Header.css'
 
 export function Header() {
   return (
