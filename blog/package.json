@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "@babel/core": "^7.16.5",
-    "@cmd/tokens": "workspace:*",
-    "@cmd/theme": "workspace:*",
+    "@cmd/domain": "workspace:*",
+    "@cmd/ui-article": "workspace:*",
+    "@cmd/ui-theme": "workspace:*",
+    "@cmd/ui-text": "workspace:*",
+    "@cmd/ui-tokens": "workspace:*",
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@next/mdx": "^12.0.7",

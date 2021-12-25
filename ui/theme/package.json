@@ -1,5 +1,5 @@
 {
-  "name": "@cmd/theme",
+  "name": "@cmd/ui-theme",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -13,7 +13,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "@cmd/tokens": "workspace:*",
+    "@cmd/ui-tokens": "workspace:*",
     "@vanilla-extract/css": "^1.6.8",
     "@vanilla-extract/private": "^1.0.3"
   }

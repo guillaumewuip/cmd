@@ -11,7 +11,8 @@ import * as Task from 'fp-ts/Task';
 import * as Ord from 'fp-ts/Ord';
 import * as DateFP from 'fp-ts/Date';
 
-import * as Metadata from './postMetadata';
+import { Post } from '@cmd/domain';
+
 import * as SiteMetadata from '../metadata';
 
 const postsDirectory = path.join(process.cwd(), '_posts')
@@ -64,18 +65,6 @@ export function getAllPostsPaths() {
   )
 }
 
-export type PostInfos = Readonly<{
-  fullName: string
-  url: string,
-  metadata: Metadata.PostMetadata,
-  createdAt: string,
-}>
-
-export type Post = Readonly<{
-  infos: PostInfos,
-  excerpt: string,
-}>
-
 function postExcerpt(content: Parameters<typeof React.createElement>[0]) {
   const markup = ReactDOMServer.renderToStaticMarkup(React.createElement(content))
 
@@ -95,7 +84,7 @@ function postExcerpt(content: Parameters<typeof React.createElement>[0]) {
   return excerpt
 }
 
-export async function getPostInfosFromFullname(fullName: string): Promise<Post> {
+export async function getPostInfosFromFullname(fullName: string): Promise<Post.Post> {
   const post = await import(`../_posts/${fullName}.mdx`)
 
   const excerpt = postExcerpt(post.default)
@@ -116,14 +105,14 @@ export async function getPostInfosFromFullname(fullName: string): Promise<Post> 
   }
 }
 
-export async function getLastPostInfos(): Promise<Post> {
+export async function getLastPostInfos(): Promise<Post.Post> {
   const filename = filenames[0]
   const fullName = fullNameFromFilename(filename)
 
   return getPostInfosFromFullname(fullName)
 }
 
-export async function getAllPostInfos(): Promise<ReadonlyArray<Post>> {
+export async function getAllPostInfos(): Promise<ReadonlyArray<Post.Post>> {
   return pipe(
     filenames,
     ReadonlyArrayFP.map(fullNameFromFilename),

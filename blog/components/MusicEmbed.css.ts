@@ -1,5 +1,5 @@
 import { style, globalStyle } from '@vanilla-extract/css'
-import { vars } from '@cmd/theme'
+import { vars } from '@cmd/ui-theme'
 
 export const iframe = style({
   border: 0,

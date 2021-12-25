@@ -3,16 +3,15 @@ import NextImage from 'next/image'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 import { pipe } from 'fp-ts/function'
 
-import * as Posts from '../lib/posts'
+import { Infos } from '@cmd/domain'
+import { Paragraph } from '@cmd/ui-text'
 
-import { Paragraph } from '../components/Text'
-
-import * as styles from './ArticleMosaic.css'
+import * as styles from './Mosaic.css'
 
 function Article({
   post
 }: {
-  post: Posts.PostInfos
+  post: Infos.Infos
 }) {
   return (
     <a className={styles.article} href={`/post/${post.fullName}`}>
@@ -30,7 +29,7 @@ function Article({
 export function Mosaic({
   posts,
 }: {
-  posts: ReadonlyArray<Posts.PostInfos>
+  posts: ReadonlyArray<Infos.Infos>
 }) {
   return (
     <div className={styles.grid}>

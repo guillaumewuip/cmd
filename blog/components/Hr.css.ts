@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '@cmd/theme'
+import { vars } from '@cmd/ui-theme'
 
 export const hr = style({
   margin: `${vars.sizes.m} 0`,

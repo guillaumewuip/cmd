@@ -1,0 +1,15 @@
+{
+  "name": "@cmd/domain",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist-typings/index.d.ts",
+  "scripts": {
+    "build": "lib-builder"
+  },
+  "devDependencies": {
+    "@cmd/lib-builder": "workspace:*",
+    "@cmd/tsconfig": "workspace:*",
+    "typescript": "^4.5.4"
+  }
+}

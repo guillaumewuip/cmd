@@ -6,18 +6,23 @@ import { NextSeo } from 'next-seo';
 import { pipe } from 'fp-ts/function'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 
-import * as Posts from '../lib/posts'
+import { Infos } from '@cmd/domain'
+
+import { Article, Mosaic } from '@cmd/ui-article'
+
+import {
+  getLastPostInfos,
+  getAllPostInfos,
+} from '../lib/posts'
+
 import * as RSS from '../lib/rss'
 
 import * as Layout from '../layout/Default'
 
-import * as Article from '../components/Article'
-
-import { Paragraph, Code, H2, Link } from '../components/Text'
+import { Paragraph, Code, H2, Link } from '@cmd/ui-text'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { Hr } from '../components/Hr'
-import { Mosaic } from '../components/ArticleMosaic'
 
 import * as Metadata from '../metadata'
 
@@ -25,8 +30,8 @@ export default function Home({
   lastCmd,
   previousCmds,
 }: {
-  lastCmd: Posts.PostInfos
-  previousCmds: ReadonlyArray<Posts.PostInfos>
+  lastCmd: Infos.Infos
+  previousCmds: ReadonlyArray<Infos.Infos>
 }) {
   const PostContent = dynamic(() => import(`../_posts/${lastCmd.fullName}.mdx`))
 
@@ -58,7 +63,7 @@ export default function Home({
           <Paragraph>Sans plus attendre, la dernière <Code>cmd</Code>, vous m'en direz des nouvelles :</Paragraph>
         </Layout.SmallSection>
 
-        <Article.Article metadata={lastCmd.metadata} createdAt={lastCmd.createdAt} content={<PostContent />} />
+        <Article metadata={lastCmd.metadata} createdAt={lastCmd.createdAt} content={<PostContent />} />
 
         <Layout.SmallSection>
           <H2>Toutes les <Code>cmd</Code> passées listées bien comme il faut ici même :</H2>
@@ -84,8 +89,8 @@ export default function Home({
 export async function getStaticProps() {
   await RSS.generateFeeds()
 
-  const lastCmd = await Posts.getLastPostInfos()
-  const previousCmds = await Posts.getAllPostInfos()
+  const lastCmd = await getLastPostInfos()
+  const previousCmds = await getAllPostInfos()
 
   return {
     props: {

@@ -3,9 +3,10 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import Head from 'next/head'
 import { MDXProvider } from '@mdx-js/react'
 import { DefaultSeo } from 'next-seo';
-import { themeClassName } from '@cmd/theme'
+import { themeClassName } from '@cmd/ui-theme'
+import { H1, H2, H3, Paragraph, Code, Blockquote } from '@cmd/ui-text'
 
-import { H1, H2, H3, Link, Paragraph, Code, Blockquote } from '../components/Text'
+import { Link } from '../components/Text'
 import { Hr } from '../components/Hr'
 
 import * as Metadata from '../metadata'
