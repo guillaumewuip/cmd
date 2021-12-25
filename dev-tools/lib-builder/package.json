@@ -1,0 +1,14 @@
+{
+  "name": "@cmd/lib-builder",
+  "version": "0.0.0",
+  "bin": {
+    "lib-builder": "./bin/lib-builder.sh"
+  },
+  "peerDependencies": {
+    "typescript": "*"
+  },
+  "private": true,
+  "dependencies": {
+    "@microsoft/api-extractor": "^7.19.2"
+  }
+}

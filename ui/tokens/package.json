@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
-  "typings": "dist-typings/tokens.d.ts",
+  "typings": "dist-typings/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist/ dist-typings/ && tsc && api-extractor run --local && rm -f dist/**.d.ts dist/**.d.ts.map"
+    "build": "lib-builder"
   },
   "devDependencies": {
     "@cmd/tsconfig": "workspace:*",
+    "@cmd/lib-builder": "workspace:*",
     "@microsoft/api-extractor": "^7.19.2",
     "typescript": "^4.5.4"
   }
