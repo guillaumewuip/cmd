@@ -4,6 +4,7 @@
     "jsx": "preserve",
     "allowJs": true,
     "declaration": false,
+    "declarationMap": false,
     "noEmit": true
   },
   "include": [
