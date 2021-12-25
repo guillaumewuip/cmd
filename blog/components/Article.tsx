@@ -26,7 +26,7 @@ function Image({ src, alt, caption }: { src: string, alt: string, caption?: stri
   return (
     <div className={styles.imageSection}>
       <div className={styles.imageContainer}>
-        <NextImage src={src} alt={alt} layout="fill" objectFit="cover" />
+        <NextImage src={src} alt={alt} layout="fill" objectFit="cover" priority />
       </div>
       {caption && <div className={styles.caption}><Small>{caption}</Small></div>}
     </div>
