@@ -14,6 +14,7 @@ importers:
   blog:
     specifiers:
       '@babel/core': ^7.16.5
+      '@cmd/tsconfig': workspace:*
       '@mdx-js/loader': ^1.6.22
       '@mdx-js/react': ^1.6.22
       '@next/mdx': ^12.0.7
@@ -55,18 +56,22 @@ importers:
       next-sitemap: 1.6.203_next@12.0.7
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-loading-skeleton: 3.0.1_react@17.0.2
+      react-loading-skeleton: 3.0.2_react@17.0.2
       typewriter-effect: 2.18.2_react-dom@17.0.2+react@17.0.2
       xml-parse: 0.4.0
     devDependencies:
-      '@types/jsdom': 16.2.13
+      '@cmd/tsconfig': link:../tools/tsconfig
+      '@types/jsdom': 16.2.14
       '@types/mdx-js__react': 1.5.5
-      '@types/react': 17.0.37
+      '@types/react': 17.0.38
       '@vanilla-extract/css': 1.6.8
       '@vanilla-extract/css-utils': 0.1.2
       '@vanilla-extract/next-plugin': 2.0.1_next@12.0.7+webpack@5.65.0
       typescript: 4.5.4
       webpack: 5.65.0
+
+  tools/tsconfig:
+    specifiers: {}
 
 packages:
 
@@ -275,7 +280,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.16.5
+      '@babel/helper-plugin-utils': 7.10.4
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.12.9
       '@babel/plugin-transform-parameters': 7.16.5_@babel+core@7.12.9
     dev: false
@@ -631,8 +636,8 @@ packages:
       '@types/unist': 2.0.6
     dev: false
 
-  /@types/jsdom/16.2.13:
-    resolution: {integrity: sha512-8JQCjdeAidptSsOcRWk2iTm9wCcwn9l+kRG6k5bzUacrnm1ezV4forq0kWjUih/tumAeoG+OspOvQEbbRucBTw==}
+  /@types/jsdom/16.2.14:
+    resolution: {integrity: sha512-6BAy1xXEmMuHeAJ4Fv4yXKwBDTGTOseExKE3OaHiNycdHdZw59KfYzrt0DkDluvwmik1HRt6QS7bImxUmpSy+w==}
     dependencies:
       '@types/node': 17.0.0
       '@types/parse5': 6.0.3
@@ -652,7 +657,7 @@ packages:
   /@types/mdx-js__react/1.5.5:
     resolution: {integrity: sha512-k8pnaP6JXVlQh18HgL5X6sYFNC/qZnzO7R2+HsmwrwUd+JnnsU0d9lyyT0RQrHg1anxDU36S98TI/fsGtmYqqg==}
     dependencies:
-      '@types/react': 17.0.37
+      '@types/react': 17.0.38
     dev: true
 
   /@types/node/17.0.0:
@@ -672,11 +677,11 @@ packages:
   /@types/react-dom/17.0.11:
     resolution: {integrity: sha512-f96K3k+24RaLGVu/Y2Ng3e1EbZ8/cVJvypZWd7cy0ofCBaf2lcM46xNhycMZ2xGwbBjRql7hOlZ+e2WlJ5MH3Q==}
     dependencies:
-      '@types/react': 17.0.37
+      '@types/react': 17.0.38
     dev: false
 
-  /@types/react/17.0.37:
-    resolution: {integrity: sha512-2FS1oTqBGcH/s0E+CjrCCR9+JMpsu9b69RTFO+40ua43ZqP5MmQ4iUde/dMjWR909KxZwmOQIFq6AV6NjEG5xg==}
+  /@types/react/17.0.38:
+    resolution: {integrity: sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
@@ -750,7 +755,7 @@ packages:
       '@vanilla-extract/integration': 2.0.1
       chalk: 4.1.2
       debug: 4.3.3
-      loader-utils: 2.0.0
+      loader-utils: 2.0.2
       virtual-resource-loader: 1.0.0
       webpack: 5.65.0
     transitivePeerDependencies:
@@ -2254,7 +2259,7 @@ packages:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 10.0.0
-      ws: 8.3.0
+      ws: 8.4.0
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -2319,6 +2324,16 @@ packages:
       big.js: 5.2.2
       emojis-list: 3.0.0
       json5: 2.2.0
+    dev: false
+
+  /loader-utils/2.0.2:
+    resolution: {integrity: sha512-TM57VeHptv569d/GKh6TAYdzKblwDNiumOdkFnejjD0XwTH87K90w3O7AiJRqdQoXygvi1VQTJTLGhJl7WqA7A==}
+    engines: {node: '>=8.9.0'}
+    dependencies:
+      big.js: 5.2.2
+      emojis-list: 3.0.0
+      json5: 2.2.0
+    dev: true
 
   /locate-path/5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
@@ -2777,8 +2792,8 @@ packages:
     engines: {node: '>= 0.6.0'}
     dev: false
 
-  /prop-types/15.7.2:
-    resolution: {integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==}
+  /prop-types/15.8.0:
+    resolution: {integrity: sha512-fDGekdaHh65eI3lMi5OnErU6a8Ighg2KjcjQxO7m8VHyWjcPyj5kiOgV1LQDOOOgVy3+5FgjXvdSSX7B8/5/4g==}
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
@@ -2868,8 +2883,8 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: false
 
-  /react-loading-skeleton/3.0.1_react@17.0.2:
-    resolution: {integrity: sha512-YL9tSV7w53HLd5aAPPjUGp9iqUJ5+yj8ZI//E1ES1OHrWy2mSCHTRPSc37u77Di+jWph6evGVNKBr3rpAnKwDQ==}
+  /react-loading-skeleton/3.0.2_react@17.0.2:
+    resolution: {integrity: sha512-rlALwuZEcjazUDeIy3+fEhm20Uk9Yd/zZGeITU034K2ts5/yEf7RuZaV2FyrPWypIII4LAsFEo9WDTPKp6G0fQ==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
@@ -3362,7 +3377,7 @@ packages:
       react: 17.x
       react-dom: 17.x
     dependencies:
-      prop-types: 15.7.2
+      prop-types: 15.8.0
       raf: 3.4.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -3507,7 +3522,7 @@ packages:
   /virtual-resource-loader/1.0.0:
     resolution: {integrity: sha512-MalwfaqwMcUmb2MtHb2hK6YYg3It4j7Hxv8I7FEAtm1h477kZ8hWPcqVpxZAInLIkmh0YbnCpvXwzmnyhdAyhw==}
     dependencies:
-      loader-utils: 2.0.0
+      loader-utils: 2.0.2
     dev: true
 
   /vm-browserify/1.1.2:
@@ -3656,8 +3671,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /ws/8.3.0:
-    resolution: {integrity: sha512-Gs5EZtpqZzLvmIM59w4igITU57lrtYVFneaa434VROv4thzJyV6UjIL3D42lslWlI+D4KzLYnxSwtfuiO79sNw==}
+  /ws/8.4.0:
+    resolution: {integrity: sha512-IHVsKe2pjajSUIl4KYMQOdlyliovpEPquKkqbwswulszzI7r0SfQrxnXdWAEqOlDCLrVSJzo+O1hAwdog2sKSQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
