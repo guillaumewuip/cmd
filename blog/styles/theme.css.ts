@@ -1,8 +1,10 @@
 import { createTheme } from '@vanilla-extract/css';
 
-import * as breakpoints from '../tokens/breakpoints'
-import * as sizes from '../tokens/sizes'
-import * as colors from '../tokens/colors'
+import {
+  breakpoints,
+  sizes,
+  colors,
+} from '@cmd/tokens'
 
 export const [theme, vars] = createTheme({
   breakpoints,

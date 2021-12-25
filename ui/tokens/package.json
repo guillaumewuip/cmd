@@ -1,0 +1,14 @@
+{
+  "name": "@cmd/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@cmd/tsconfig": "workspace:*",
+    "typescript": "^4.5.4"
+  }
+}

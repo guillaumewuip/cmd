@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css'
 import { calc } from '@vanilla-extract/css-utils'
+import { breakpoints } from '@cmd/tokens'
 import { vars } from '../styles/theme.css'
-import * as breakpoints from '../tokens/breakpoints'
 
 export const main = style({
   overflow: 'hidden',
