@@ -17,6 +17,7 @@
     "allowUnreachableCode": false,
     "incremental": true,
     "declaration": true,
+    "declarationMap": true,
     "lib": [
       "dom",
       "dom.iterable",
