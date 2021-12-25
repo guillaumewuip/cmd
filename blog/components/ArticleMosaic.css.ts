@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
+import { mediaQueries } from '@cmd/tokens'
 import { vars } from '../styles/theme.css'
-import { forDesktopOnly } from '../tokens/media-queries'
 
 export const grid = style({
   display: 'grid',
@@ -12,7 +12,7 @@ export const grid = style({
   margin: `${vars.sizes.s} 0`,
 
   '@media': {
-    ...forDesktopOnly({
+    ...mediaQueries.forDesktopOnly({
       gridTemplateColumns: 'repeat(5, 1fr)',
     })
   }

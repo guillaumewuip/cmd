@@ -14,6 +14,7 @@ importers:
   blog:
     specifiers:
       '@babel/core': ^7.16.5
+      '@cmd/tokens': workspace:*
       '@cmd/tsconfig': workspace:*
       '@mdx-js/loader': ^1.6.22
       '@mdx-js/react': ^1.6.22
@@ -42,6 +43,7 @@ importers:
       xml-parse: ^0.4.0
     dependencies:
       '@babel/core': 7.16.5
+      '@cmd/tokens': link:../ui/tokens
       '@mdx-js/loader': 1.6.22_react@17.0.2
       '@mdx-js/react': 1.6.22_react@17.0.2
       '@next/mdx': 12.0.7_f56c41adb6190c4680be4a1c0222355d
@@ -72,6 +74,14 @@ importers:
 
   tools/tsconfig:
     specifiers: {}
+
+  ui/tokens:
+    specifiers:
+      '@cmd/tsconfig': workspace:*
+      typescript: ^4.5.4
+    devDependencies:
+      '@cmd/tsconfig': link:../../tools/tsconfig
+      typescript: 4.5.4
 
 packages:
 

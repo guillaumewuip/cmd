@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
+import { mediaQueries } from '@cmd/tokens'
 import { vars } from '../styles/theme.css'
-import { forDesktopOnly } from '../tokens/media-queries'
 
 export const article = style({
   display: 'grid',
@@ -16,7 +16,7 @@ export const article = style({
   marginBottom: `${vars.sizes.l}`,
 
   '@media': {
-    ...forDesktopOnly({
+    ...mediaQueries.forDesktopOnly({
       gridTemplateColumns: '33% 67%',
       gridTemplateAreas: `
         "left title"
@@ -31,7 +31,7 @@ export const title = style({
   gridArea: 'title',
 
   '@media': {
-    ...forDesktopOnly({
+    ...mediaQueries.forDesktopOnly({
       paddingTop: vars.sizes.m,
       paddingLeft: vars.sizes.m,
     })
@@ -42,7 +42,7 @@ export const left = style({
   gridArea: 'top',
 
   '@media': {
-    ...forDesktopOnly({
+    ...mediaQueries.forDesktopOnly({
       paddingRight: vars.sizes.m,
       gridArea: 'left',
     })
@@ -75,7 +75,7 @@ export const right = style({
   gridArea: 'bottom',
 
   '@media': {
-    ...forDesktopOnly({
+    ...mediaQueries.forDesktopOnly({
       paddingLeft: vars.sizes.m,
       gridArea: 'right',
     })

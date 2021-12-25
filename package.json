@@ -13,10 +13,14 @@
   },
   "turbo": {
     "baseBranch": "origin/main",
+    "npmClient": "pnpm",
     "pipeline": {
       "build": {
-        "dependsOn": ["^build"],
+        "dependsOn": [
+          "^build"
+        ],
         "outputs": [
+          "dist/**",
           ".next/**"
         ]
       },
