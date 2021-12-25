@@ -1,4 +1,4 @@
-import styles from './Default.module.scss'
+import * as styles from './Default.css'
 
 export function Wrapper({ children }:{ children: React.ReactNode }) {
   return (

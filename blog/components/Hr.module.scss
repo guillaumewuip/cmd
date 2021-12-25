@@ -1,9 +1,0 @@
-@use '../tokens/sizes';
-@use '../tokens/colors';
-
-.hr {
-  margin: sizes.$m 0;
-  border: 0;
-  text-align: center;
-  color: colors.$grey;
-}

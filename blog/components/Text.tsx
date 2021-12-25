@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 import * as MusicEmbed from './MusicEmbed'
 
-import styles from './Text.module.scss'
+import * as styles from './Text.css'
 
 export function Paragraph({
   children,
