@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css'
 import { calc } from '@vanilla-extract/css-utils'
-import { breakpoints } from '@cmd/tokens'
-import { vars } from '@cmd/theme'
+import { breakpoints } from '@cmd/ui-tokens'
+import { vars } from '@cmd/ui-theme'
 
 export const main = style({
   overflow: 'hidden',

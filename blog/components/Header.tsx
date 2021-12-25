@@ -1,4 +1,4 @@
-import { MainTitle } from './Text'
+import { MainTitle } from '@cmd/ui-text'
 
 import * as styles from './Header.css'
 

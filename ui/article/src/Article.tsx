@@ -1,10 +1,10 @@
 import { ReactNode } from 'react'
 import NextImage from 'next/image'
 
-import * as PostMetadata from '../lib/postMetadata'
+import { H1, Small } from '@cmd/ui-text'
+import { Metadata } from '@cmd/domain'
 
 import * as styles from './Article.css'
-import { H1, Small } from './Text'
 
 function Wrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -54,7 +54,7 @@ export function Article({
   createdAt,
   content,
 }: {
-  metadata: PostMetadata.PostMetadata,
+  metadata: Metadata.Metadata,
   createdAt: string,
   content: ReactNode,
 }) {

@@ -2,20 +2,26 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NextSeo } from 'next-seo';
 
-import * as Posts from '../../lib/posts'
+import { Article } from '@cmd/ui-article'
+
+import { Post } from '@cmd/domain'
 
 import * as Layout from '../../layout/Default'
 
 import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
-import * as Article from '../../components/Article'
+
+import {
+  getPostInfosFromFullname,
+  getAllPostsPaths,
+} from '../../lib/posts'
 
 import * as SiteMetadata from '../../metadata'
 
 function Page({
   post
 }: {
-  post: Posts.Post
+  post: Post.Post
 }) {
   const Content = dynamic(() => import(`../../_posts/${post.infos.fullName}.mdx`))
 
@@ -45,7 +51,7 @@ function Page({
 
       <Layout.Wrapper>
         <Header />
-        <Article.Article metadata={post.infos.metadata} createdAt={post.infos.createdAt} content={<Content />} />
+        <Article metadata={post.infos.metadata} createdAt={post.infos.createdAt} content={<Content />} />
         <Footer />
       </Layout.Wrapper>
     </div>
@@ -53,7 +59,7 @@ function Page({
 }
 
 export async function getStaticProps({ params: { fullName } }: { params: { fullName: string }}) {
-  const post = await Posts.getPostInfosFromFullname(fullName)
+  const post = await getPostInfosFromFullname(fullName)
 
   return {
     props: {
@@ -63,7 +69,7 @@ export async function getStaticProps({ params: { fullName } }: { params: { fullN
 }
 
 export async function getStaticPaths() {
-  const paths = Posts.getAllPostsPaths()
+  const paths = getAllPostsPaths()
 
   return {
     paths,

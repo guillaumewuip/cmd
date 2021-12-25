@@ -4,7 +4,7 @@ import {
   breakpoints,
   sizes,
   colors,
-} from '@cmd/tokens'
+} from '@cmd/ui-tokens'
 
 import { MapLeafNodes, CSSVarFunction } from '@vanilla-extract/private';
 

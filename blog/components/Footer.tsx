@@ -1,4 +1,4 @@
-import { Link, Small } from './Text'
+import { Link, Small } from '@cmd/ui-text'
 
 import * as styles from './Footer.css'
 
