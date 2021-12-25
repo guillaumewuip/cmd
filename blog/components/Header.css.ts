@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '../styles/theme.css'
+import { vars } from '@cmd/theme'
 
 export const link = style({
   color: vars.colors.dark,

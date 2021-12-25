@@ -1,5 +1,5 @@
 {
-  "name": "@cmd/tokens",
+  "name": "@cmd/theme",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -8,8 +8,13 @@
     "build": "lib-builder"
   },
   "devDependencies": {
-    "@cmd/tsconfig": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
+    "@cmd/tsconfig": "workspace:*",
     "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "@cmd/tokens": "workspace:*",
+    "@vanilla-extract/css": "^1.6.8",
+    "@vanilla-extract/private": "^1.0.3"
   }
 }

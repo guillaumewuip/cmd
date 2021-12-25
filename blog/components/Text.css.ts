@@ -1,6 +1,6 @@
 import { style, globalStyle } from '@vanilla-extract/css';
 import { fonts } from '@cmd/tokens'
-import { vars } from '../styles/theme.css'
+import { vars } from '@cmd/theme'
 
 export const paragraph = style({
   fontFamily: fonts.rubik,
