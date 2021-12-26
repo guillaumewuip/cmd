@@ -1,4 +1,4 @@
-import * as breakpoints from './breakpoints'
+import { breakpoints } from '@cmd/ui-tokens'
 
 export const forPhoneOnly = (content: object) => ({
   [`(max-width: ${breakpoints.phone})`]: content

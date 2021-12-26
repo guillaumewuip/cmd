@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css'
 import { calc } from '@vanilla-extract/css-utils'
-import { breakpoints } from '@cmd/ui-tokens'
 import { vars } from '@cmd/ui-theme'
 
 export const main = style({
@@ -11,11 +10,11 @@ export const main = style({
 export const wrapper = style({
   margin: '0 auto',
   width: '100%',
-  maxWidth: breakpoints.maxContentWidth,
+  maxWidth: vars.breakpoints.maxContentWidth,
   padding: `0 ${vars.sizes.l}`,
 })
 
 export const smallSection = style({
-  maxWidth: calc.multiply(breakpoints.maxContentWidth, 0.8),
+  maxWidth: calc.multiply(vars.breakpoints.maxContentWidth, 0.8),
   margin: '0 auto',
 })

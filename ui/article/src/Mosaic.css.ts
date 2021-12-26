@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { mediaQueries } from '@cmd/ui-tokens'
-import { vars } from '@cmd/ui-theme'
+import { vars, mediaQueries  } from '@cmd/ui-theme'
 
 export const grid = style({
   display: 'grid',

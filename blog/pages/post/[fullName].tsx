@@ -2,14 +2,13 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NextSeo } from 'next-seo';
 
-import { Article } from '@cmd/ui-article'
 
 import { Post } from '@cmd/domain'
 
-import * as Layout from '../../layout/Default'
-
-import { Header } from '../../components/Header'
-import { Footer } from '../../components/Footer'
+import { Article } from '@cmd/ui-article'
+import * as Layout from '@cmd/ui-layout'
+import { Header } from '@cmd/ui-header'
+import { Footer } from '@cmd/ui-footer'
 
 import {
   getPostInfosFromFullname,
