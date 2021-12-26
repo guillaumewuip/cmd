@@ -4,10 +4,10 @@ importers:
 
   .:
     specifiers:
-      pnpm: ^6.24.2
+      pnpm: ^6.24.3
       turbo: ^1.0.19
     dependencies:
-      pnpm: 6.24.2
+      pnpm: 6.24.3
     devDependencies:
       turbo: 1.0.19
 
@@ -17,9 +17,12 @@ importers:
       '@cmd/domain': workspace:*
       '@cmd/tsconfig': workspace:*
       '@cmd/ui-article': workspace:*
+      '@cmd/ui-footer': workspace:*
+      '@cmd/ui-header': workspace:*
+      '@cmd/ui-layout': workspace:*
+      '@cmd/ui-music-embed': workspace:*
       '@cmd/ui-text': workspace:*
       '@cmd/ui-theme': workspace:*
-      '@cmd/ui-tokens': workspace:*
       '@mdx-js/loader': ^1.6.22
       '@mdx-js/react': ^1.6.22
       '@next/mdx': ^12.0.7
@@ -27,10 +30,7 @@ importers:
       '@types/mdx-js__react': ^1.5.5
       '@types/react': ^17.0.37
       '@types/react-dom': ^17.0.11
-      '@vanilla-extract/css': ^1.6.8
-      '@vanilla-extract/css-utils': ^0.1.2
       '@vanilla-extract/next-plugin': ^2.0.1
-      classnames: ^2.3.1
       date-fns: ^2.27.0
       feed: ^4.2.2
       fp-ts: ^2.11.5
@@ -40,23 +40,23 @@ importers:
       next-sitemap: ^1.6.203
       react: ^17.0.2
       react-dom: ^17.0.2
-      react-loading-skeleton: ^3.0.1
       typescript: ^4.5.4
-      typewriter-effect: ^2.18.2
       webpack: ^5.65.0
       xml-parse: ^0.4.0
     dependencies:
       '@babel/core': 7.16.5
       '@cmd/domain': link:../domain
       '@cmd/ui-article': link:../ui/article
+      '@cmd/ui-footer': link:../ui/footer
+      '@cmd/ui-header': link:../ui/header
+      '@cmd/ui-layout': link:../ui/layout
+      '@cmd/ui-music-embed': link:../ui/music-embed
       '@cmd/ui-text': link:../ui/text
       '@cmd/ui-theme': link:../ui/theme
-      '@cmd/ui-tokens': link:../ui/tokens
       '@mdx-js/loader': 1.6.22_react@17.0.2
       '@mdx-js/react': 1.6.22_react@17.0.2
       '@next/mdx': 12.0.7_f56c41adb6190c4680be4a1c0222355d
       '@types/react-dom': 17.0.11
-      classnames: 2.3.1
       date-fns: 2.27.0
       feed: 4.2.2
       fp-ts: 2.11.5
@@ -66,16 +66,12 @@ importers:
       next-sitemap: 1.6.203_next@12.0.7
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-loading-skeleton: 3.0.2_react@17.0.2
-      typewriter-effect: 2.18.2_react-dom@17.0.2+react@17.0.2
       xml-parse: 0.4.0
     devDependencies:
       '@cmd/tsconfig': link:../dev-tools/tsconfig
       '@types/jsdom': 16.2.14
       '@types/mdx-js__react': 1.5.5
       '@types/react': 17.0.38
-      '@vanilla-extract/css': 1.6.8
-      '@vanilla-extract/css-utils': 0.1.2
       '@vanilla-extract/next-plugin': 2.0.1_next@12.0.7+webpack@5.65.0
       typescript: 4.5.4
       webpack: 5.65.0
@@ -107,7 +103,6 @@ importers:
       '@cmd/tsconfig': workspace:*
       '@cmd/ui-text': workspace:*
       '@cmd/ui-theme': workspace:*
-      '@cmd/ui-tokens': workspace:*
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
       classnames: ^2.3.1
@@ -120,7 +115,6 @@ importers:
       '@cmd/domain': link:../../domain
       '@cmd/ui-text': link:../text
       '@cmd/ui-theme': link:../theme
-      '@cmd/ui-tokens': link:../tokens
       '@vanilla-extract/css': 1.6.8
       classnames: 2.3.1
       fp-ts: 2.11.5
@@ -130,6 +124,106 @@ importers:
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
       next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      typescript: 4.5.4
+
+  ui/footer:
+    specifiers:
+      '@cmd/lib-builder': workspace:*
+      '@cmd/tsconfig': workspace:*
+      '@cmd/ui-text': workspace:*
+      '@cmd/ui-theme': workspace:*
+      '@types/react': ^17.0.37
+      '@vanilla-extract/css': ^1.6.8
+      classnames: ^2.3.1
+      react: ^17.0.2
+      react-dom: ^17.0.2
+      typescript: ^4.5.4
+    dependencies:
+      '@cmd/ui-text': link:../text
+      '@cmd/ui-theme': link:../theme
+      '@vanilla-extract/css': 1.6.8
+      classnames: 2.3.1
+    devDependencies:
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      '@types/react': 17.0.38
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      typescript: 4.5.4
+
+  ui/header:
+    specifiers:
+      '@cmd/lib-builder': workspace:*
+      '@cmd/tsconfig': workspace:*
+      '@cmd/ui-theme': workspace:*
+      '@types/react': ^17.0.37
+      '@vanilla-extract/css': ^1.6.8
+      classnames: ^2.3.1
+      react: ^17.0.2
+      react-dom: ^17.0.2
+      typescript: ^4.5.4
+      typewriter-effect: ^2.18.2
+    dependencies:
+      '@cmd/ui-theme': link:../theme
+      '@vanilla-extract/css': 1.6.8
+      classnames: 2.3.1
+      typewriter-effect: 2.18.2_react-dom@17.0.2+react@17.0.2
+    devDependencies:
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      '@types/react': 17.0.38
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      typescript: 4.5.4
+
+  ui/layout:
+    specifiers:
+      '@cmd/lib-builder': workspace:*
+      '@cmd/tsconfig': workspace:*
+      '@cmd/ui-theme': workspace:*
+      '@types/react': ^17.0.37
+      '@vanilla-extract/css': ^1.6.8
+      '@vanilla-extract/css-utils': ^0.1.2
+      classnames: ^2.3.1
+      react: ^17.0.2
+      react-dom: ^17.0.2
+      typescript: ^4.5.4
+    dependencies:
+      '@cmd/ui-theme': link:../theme
+      '@vanilla-extract/css': 1.6.8
+      '@vanilla-extract/css-utils': 0.1.2
+      classnames: 2.3.1
+    devDependencies:
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      '@types/react': 17.0.38
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      typescript: 4.5.4
+
+  ui/music-embed:
+    specifiers:
+      '@cmd/lib-builder': workspace:*
+      '@cmd/tsconfig': workspace:*
+      '@cmd/ui-theme': workspace:*
+      '@types/react': ^17.0.37
+      '@vanilla-extract/css': ^1.6.8
+      classnames: ^2.3.1
+      react: ^17.0.2
+      react-dom: ^17.0.2
+      react-loading-skeleton: ^3.0.1
+      typescript: ^4.5.4
+    dependencies:
+      '@cmd/ui-theme': link:../theme
+      '@vanilla-extract/css': 1.6.8
+      classnames: 2.3.1
+      react-loading-skeleton: 3.0.2_react@17.0.2
+    devDependencies:
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      '@types/react': 17.0.38
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
@@ -146,13 +240,11 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       typescript: ^4.5.4
-      typewriter-effect: ^2.18.2
     dependencies:
       '@cmd/ui-theme': link:../theme
       '@cmd/ui-tokens': link:../tokens
       '@vanilla-extract/css': 1.6.8
       classnames: 2.3.1
-      typewriter-effect: 2.18.2_react-dom@17.0.2+react@17.0.2
     devDependencies:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
@@ -885,7 +977,7 @@ packages:
 
   /@vanilla-extract/css-utils/0.1.2:
     resolution: {integrity: sha512-qoxIu5E/UhJtoKsPL1JaU9nhTN0Xl5zYV0pScOgsvc3JN46TvTTt0L3GV8x3PQpZP7x3elw8BsC9czYbhJy9Gg==}
-    dev: true
+    dev: false
 
   /@vanilla-extract/css/1.6.8:
     resolution: {integrity: sha512-wkZay2jWe9a3Dt30j+WTJicK4+YV7i65lr+QnpkigVY9uU2KPzaiASEyUV8AouT2cZm7AOhteBBVKI8cYeWnVQ==}
@@ -2932,8 +3024,8 @@ packages:
   /platform/1.3.6:
     resolution: {integrity: sha512-fnWVljUchTro6RiCFvCXBbNhJc2NijN7oIQxbwsyL0buWJPG85v81ehlHI9fXrJsMNgTofEoWIQeClKpgxFLrg==}
 
-  /pnpm/6.24.2:
-    resolution: {integrity: sha512-YUHmlLfWkA0+6upTzRCz/VWADW+dMsqTCRGXJqHrsCPeaw84MGZ6mec18nGdJufNB7hzeTuugAsi0e/ziPKUWA==}
+  /pnpm/6.24.3:
+    resolution: {integrity: sha512-FctPe51AlYa+nnlcnMbrxcsqXeIGhGQ0i35VrHk8+NR9PAfKTghoUqLRvIbRT/WDHx0uJnMrh1aKuVyrp+kqUQ==}
     engines: {node: '>=12.17'}
     hasBin: true
     dev: false

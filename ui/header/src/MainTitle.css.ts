@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css';
 import { vars } from '@cmd/ui-theme'
 
 export const mainTitle = style({
-  fontFamily: 'Rubik, Courier, sans-serif',
+  fontFamily: vars.fonts.rubik,
   fontWeight: 700,
   letterSpacing: vars.sizes.xxs,
   fontSize: '2.6rem',

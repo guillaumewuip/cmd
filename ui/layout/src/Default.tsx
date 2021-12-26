@@ -1,3 +1,4 @@
+import React from 'react'
 import * as styles from './Default.css'
 
 export function Wrapper({ children }:{ children: React.ReactNode }) {

@@ -4,18 +4,24 @@ import Head from 'next/head'
 import { MDXProvider } from '@mdx-js/react'
 import { DefaultSeo } from 'next-seo';
 import { themeClassName } from '@cmd/ui-theme'
-import { H1, H2, H3, Paragraph, Code, Blockquote } from '@cmd/ui-text'
-
-import { Link } from '../components/Text'
-import { Hr } from '../components/Hr'
+import { H1, H2, H3, Paragraph, Code, Blockquote, Link, Hr } from '@cmd/ui-text'
+import * as MusicEmbed from '@cmd/ui-music-embed'
 
 import * as Metadata from '../metadata'
+
+export function LinkMaybeMusic({ href, children } : { href: string, children: string }) {
+  if (href === children && MusicEmbed.isEmbedableLink(href)) {
+    return <MusicEmbed.MusicEmbedLink href={href} />
+  }
+
+  return <Link href={href}>{children}</Link>
+}
 
 const mdComponents = {
   h1: (props: any) => <H1 {...props} />,
   h2: (props: any) => <H2 {...props} />,
   h3: (props: any) => <H3 {...props} />,
-  a: (props: any) => <Link {...props} />,
+  a: (props: any) => <LinkMaybeMusic {...props} />,
   p: (props: any) => <Paragraph {...props} />,
   hr: () => <Hr  />,
   code: (props: any) => <Code {...props} />,

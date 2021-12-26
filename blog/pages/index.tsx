@@ -9,6 +9,10 @@ import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 import { Infos } from '@cmd/domain'
 
 import { Article, Mosaic } from '@cmd/ui-article'
+import * as Layout from '@cmd/ui-layout'
+import { Paragraph, Code, H2, Link, Hr } from '@cmd/ui-text'
+import { Header } from '@cmd/ui-header'
+import { Footer } from '@cmd/ui-footer'
 
 import {
   getLastPostInfos,
@@ -16,13 +20,6 @@ import {
 } from '../lib/posts'
 
 import * as RSS from '../lib/rss'
-
-import * as Layout from '../layout/Default'
-
-import { Paragraph, Code, H2, Link } from '@cmd/ui-text'
-import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
-import { Hr } from '../components/Hr'
 
 import * as Metadata from '../metadata'
 
