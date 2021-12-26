@@ -1,11 +1,12 @@
 import fs from 'fs';
+import path from 'path';
 import { Feed } from 'feed';
 import { parse as parseDate } from 'date-fns'
 
 import { pipe } from 'fp-ts/function'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 
-import * as Posts from './posts'
+import { Post } from '@cmd/domain-post'
 
 const siteURL = "http://cmd.wuips.com"
 
@@ -15,7 +16,10 @@ const author = {
   link: "https://twitter.com/guillaumewuip",
 };
 
-export async function generateFeeds() {
+export async function generateFeeds(
+  posts: ReadonlyArray<Post.Post>,
+  { outputDir }: { outputDir: string }
+) {
   const feed = new Feed({
     title: "cerfeuil et musique douce",
     description: "cerfeuil et musique douce",
@@ -35,13 +39,15 @@ export async function generateFeeds() {
     author,
   });
 
-  const postInfos = await Posts.getAllPostInfos()
-
   pipe(
-    postInfos,
+    posts,
     ReadonlyArrayFP.map(post => {
       const date = parseDate(post.infos.createdAt, 'dd/MM/y', new Date())
       date.setHours(8)
+
+      console.log({
+        title: post.infos.metadata.title,
+      });
 
       feed.addItem({
         title: post.infos.metadata.title,
@@ -54,8 +60,8 @@ export async function generateFeeds() {
     })
   )
 
-  fs.mkdirSync("./public/rss", { recursive: true });
-  fs.writeFileSync("./public/rss/feed.xml", feed.rss2());
-  fs.writeFileSync("./public/rss/atom.xml", feed.atom1());
-  fs.writeFileSync("./public/rss/feed.json", feed.json1());
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.writeFileSync(path.join(outputDir, "feed.xml"), feed.rss2());
+  fs.writeFileSync(path.join(outputDir, "atom.xml"), feed.atom1());
+  fs.writeFileSync(path.join(outputDir, "feed.json"), feed.json1());
 }

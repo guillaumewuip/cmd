@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@babel/core": "^7.16.5",
-    "@cmd/domain": "workspace:*",
+    "@cmd/domain-post": "workspace:*",
+    "@cmd/domain-rss": "workspace:*",
     "@cmd/ui-article": "workspace:*",
     "@cmd/ui-footer": "workspace:*",
     "@cmd/ui-header": "workspace:*",

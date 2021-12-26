@@ -2,8 +2,7 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NextSeo } from 'next-seo';
 
-
-import { Post } from '@cmd/domain'
+import { Post } from '@cmd/domain-post'
 
 import { Article } from '@cmd/ui-article'
 import * as Layout from '@cmd/ui-layout'
