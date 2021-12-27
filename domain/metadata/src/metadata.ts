@@ -1,4 +1,4 @@
-export type Metadata = {
+export type Cmd = {
   type: 'cmd',
   title: string,
   image: {
@@ -8,6 +8,8 @@ export type Metadata = {
   },
 };
 
-export function create(data: Metadata): Metadata {
+export type Metadata = Cmd;
+
+export function createCmd(data: Cmd): Cmd {
   return data;
 }

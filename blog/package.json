@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@babel/core": "^7.16.5",
+    "@cmd/domain-metadata": "workspace:*",
     "@cmd/domain-post": "workspace:*",
     "@cmd/domain-rss": "workspace:*",
     "@cmd/ui-article": "workspace:*",
@@ -22,7 +22,6 @@
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@next/mdx": "^12.0.7",
-    "@types/react-dom": "^17.0.11",
     "date-fns": "^2.27.0",
     "feed": "^4.2.2",
     "fp-ts": "^2.11.5",
@@ -35,10 +34,12 @@
     "xml-parse": "^0.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.5",
     "@cmd/tsconfig": "workspace:*",
     "@types/jsdom": "^16.2.13",
     "@types/mdx-js__react": "^1.5.5",
     "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
     "@vanilla-extract/next-plugin": "^2.0.1",
     "typescript": "^4.5.4",
     "webpack": "^5.65.0"

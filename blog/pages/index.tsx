@@ -3,8 +3,8 @@ import Head from 'next/head'
 
 import { NextSeo } from 'next-seo';
 
-import { pipe } from 'fp-ts/function'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
+import { pipe } from 'fp-ts/function'
 
 import { Infos } from '@cmd/domain-post'
 
@@ -14,30 +14,36 @@ import { Paragraph, Code, H2, Link, Hr } from '@cmd/ui-text'
 import { Header } from '@cmd/ui-header'
 import { Footer } from '@cmd/ui-footer'
 
-import * as RSS from '@cmd/domain-rss'
+import { Metadata } from '@cmd/domain-metadata'
+import { generateFeeds } from '@cmd/domain-rss'
 
 import {
   getLastPostInfos,
   getAllPostInfos,
 } from '../lib/posts'
 
-import * as Metadata from '../metadata'
+import * as SiteMetadata from '../metadata'
+
+type Cmd = {
+  href: string,
+  metadata: Metadata.Cmd
+}
 
 export default function Home({
   lastCmd,
   previousCmds,
 }: {
   lastCmd: Infos.Infos
-  previousCmds: ReadonlyArray<Infos.Infos>
+  previousCmds: ReadonlyArray<Cmd>
 }) {
   const PostContent = dynamic(() => import(`../_posts/${lastCmd.fullName}.mdx`))
 
-  const imageUrl = `${Metadata.site.url}${lastCmd.metadata.image.src}`
+  const imageUrl = `${SiteMetadata.site.url}${lastCmd.metadata.image.src}`
 
   return (
     <div>
       <Head>
-        <title>{Metadata.site.name}</title>
+        <title>{SiteMetadata.site.name}</title>
       </Head>
 
       <NextSeo
@@ -87,21 +93,22 @@ export async function getStaticProps() {
   const lastCmd = await getLastPostInfos()
   const previousCmds = await getAllPostInfos()
 
-  console.log({
-    outputDir: './public/rss'
-  });
-
-  await RSS.generateFeeds(previousCmds, {
+  await generateFeeds(previousCmds, {
     outputDir: './public/rss'
   })
+
+  const cmds: ReadonlyArray<Cmd> = pipe(
+    previousCmds,
+    ReadonlyArrayFP.map(post => ({
+      href: `/post/${post.infos.fullName}`,
+      metadata: post.infos.metadata
+    }))
+  )
 
   return {
     props: {
       lastCmd: lastCmd.infos,
-      previousCmds: pipe(
-        previousCmds,
-        ReadonlyArrayFP.map(post => post.infos)
-      ),
+      previousCmds: cmds,
     },
   }
 }

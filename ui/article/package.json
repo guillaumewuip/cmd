@@ -18,7 +18,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "@cmd/domain-post": "workspace:*",
+    "@cmd/domain-metadata": "workspace:*",
     "@cmd/ui-theme": "workspace:*",
     "@cmd/ui-text": "workspace:*",
     "@vanilla-extract/css": "^1.6.8",

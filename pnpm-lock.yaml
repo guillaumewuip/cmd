@@ -14,6 +14,7 @@ importers:
   blog:
     specifiers:
       '@babel/core': ^7.16.5
+      '@cmd/domain-metadata': workspace:*
       '@cmd/domain-post': workspace:*
       '@cmd/domain-rss': workspace:*
       '@cmd/tsconfig': workspace:*
@@ -45,7 +46,7 @@ importers:
       webpack: ^5.65.0
       xml-parse: ^0.4.0
     dependencies:
-      '@babel/core': 7.16.5
+      '@cmd/domain-metadata': link:../domain/metadata
       '@cmd/domain-post': link:../domain/post
       '@cmd/domain-rss': link:../domain/rss
       '@cmd/ui-article': link:../ui/article
@@ -58,7 +59,6 @@ importers:
       '@mdx-js/loader': 1.6.22_react@17.0.2
       '@mdx-js/react': 1.6.22_react@17.0.2
       '@next/mdx': 12.0.7_f56c41adb6190c4680be4a1c0222355d
-      '@types/react-dom': 17.0.11
       date-fns: 2.27.0
       feed: 4.2.2
       fp-ts: 2.11.5
@@ -70,10 +70,12 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       xml-parse: 0.4.0
     devDependencies:
+      '@babel/core': 7.16.5
       '@cmd/tsconfig': link:../dev-tools/tsconfig
       '@types/jsdom': 16.2.14
       '@types/mdx-js__react': 1.5.5
       '@types/react': 17.0.38
+      '@types/react-dom': 17.0.11
       '@vanilla-extract/next-plugin': 2.0.1_next@12.0.7+webpack@5.65.0
       typescript: 4.5.4
       webpack: 5.65.0
@@ -87,7 +89,7 @@ importers:
   dev-tools/tsconfig:
     specifiers: {}
 
-  domain/post:
+  domain/metadata:
     specifiers:
       '@cmd/lib-builder': workspace:*
       '@cmd/tsconfig': workspace:*
@@ -95,6 +97,31 @@ importers:
     devDependencies:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      typescript: 4.5.4
+
+  domain/post:
+    specifiers:
+      '@cmd/domain-metadata': workspace:*
+      '@cmd/lib-builder': workspace:*
+      '@cmd/tsconfig': workspace:*
+      '@types/jsdom': ^16.2.13
+      '@types/react': ^17.0.37
+      '@types/react-dom': ^17.0.11
+      jsdom: ^19.0.0
+      react: ^17.0.2
+      react-dom: ^17.0.2
+      typescript: ^4.5.4
+    dependencies:
+      '@cmd/domain-metadata': link:../metadata
+      jsdom: 19.0.0
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    devDependencies:
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      '@types/jsdom': 16.2.14
+      '@types/react': 17.0.38
+      '@types/react-dom': 17.0.11
       typescript: 4.5.4
 
   domain/rss:
@@ -121,7 +148,7 @@ importers:
   ui/article:
     specifiers:
       '@babel/core': ^7.16.5
-      '@cmd/domain-post': workspace:*
+      '@cmd/domain-metadata': workspace:*
       '@cmd/lib-builder': workspace:*
       '@cmd/tsconfig': workspace:*
       '@cmd/ui-text': workspace:*
@@ -135,7 +162,7 @@ importers:
       react-dom: ^17.0.2
       typescript: ^4.5.4
     dependencies:
-      '@cmd/domain-post': link:../../domain/post
+      '@cmd/domain-metadata': link:../../domain/metadata
       '@cmd/ui-text': link:../text
       '@cmd/ui-theme': link:../theme
       '@vanilla-extract/css': 1.6.8
@@ -319,6 +346,7 @@ packages:
   /@babel/compat-data/7.16.4:
     resolution: {integrity: sha512-1o/jo7D+kC9ZjHX5v+EHrdjl3PhxMrLSOTGsOdHJ+KL8HCaEK6ehrVL2RS6oHDZp+L7xLirLrPmQtEng769J/Q==}
     engines: {node: '>=6.9.0'}
+    dev: true
 
   /@babel/core/7.12.9:
     resolution: {integrity: sha512-gTXYh3M5wb7FRXQy+FErKFAv90BnlOuNn1QkCK2lREoPAjrQCO49+HVSrFoe5uakFAF5eenS75KbO2vQiLrTMQ==}
@@ -365,6 +393,7 @@ packages:
       source-map: 0.5.7
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@babel/generator/7.16.5:
     resolution: {integrity: sha512-kIvCdjZqcdKqoDbVVdt5R99icaRtrtYhYK/xux5qiWCBmfdvEYMFZ68QCrpE5cbFM1JsuArUNs1ZkuKtTtUcZA==}
@@ -385,6 +414,7 @@ packages:
       '@babel/helper-validator-option': 7.14.5
       browserslist: 4.19.1
       semver: 6.3.0
+    dev: true
 
   /@babel/helper-environment-visitor/7.16.5:
     resolution: {integrity: sha512-ODQyc5AnxmZWm/R2W7fzhamOk1ey8gSguo5SGvF0zcB3uUzRpTRmM/jmLSm9bDMyPlvbyJ+PwPEK0BWIoZ9wjg==}
@@ -460,6 +490,7 @@ packages:
   /@babel/helper-validator-option/7.14.5:
     resolution: {integrity: sha512-OX8D5eeX4XwcroVW45NMvoYaIuFI+GQpA2a8Gi+X/U/cDUIRsV37qQfF905F0htTRCREQIB4KqPeaveRJUl3Ow==}
     engines: {node: '>=6.9.0'}
+    dev: true
 
   /@babel/helpers/7.16.5:
     resolution: {integrity: sha512-TLgi6Lh71vvMZGEkFuIxzaPsyeYCHQ5jJOOX1f0xXn0uciFuE8cEk0wyBquMcCxBXZ5BJhE2aUB7pnWTD150Tw==}
@@ -935,7 +966,7 @@ packages:
   /@types/jsdom/16.2.14:
     resolution: {integrity: sha512-6BAy1xXEmMuHeAJ4Fv4yXKwBDTGTOseExKE3OaHiNycdHdZw59KfYzrt0DkDluvwmik1HRt6QS7bImxUmpSy+w==}
     dependencies:
-      '@types/node': 17.0.0
+      '@types/node': 17.0.5
       '@types/parse5': 6.0.3
       '@types/tough-cookie': 4.0.1
     dev: true
@@ -977,12 +1008,13 @@ packages:
 
   /@types/prop-types/15.7.4:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
+    dev: true
 
   /@types/react-dom/17.0.11:
     resolution: {integrity: sha512-f96K3k+24RaLGVu/Y2Ng3e1EbZ8/cVJvypZWd7cy0ofCBaf2lcM46xNhycMZ2xGwbBjRql7hOlZ+e2WlJ5MH3Q==}
     dependencies:
       '@types/react': 17.0.38
-    dev: false
+    dev: true
 
   /@types/react/17.0.38:
     resolution: {integrity: sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==}
@@ -990,9 +1022,11 @@ packages:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
       csstype: 3.0.10
+    dev: true
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: true
 
   /@types/tough-cookie/4.0.1:
     resolution: {integrity: sha512-Y0K95ThC3esLEYD6ZuqNek29lNX2EM1qxV8y2FTLUB0ff5wWrk7az+mLrnNFUnaXcgKye22+sFBRXOgpPILZNg==}
@@ -1418,6 +1452,7 @@ packages:
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
+    dev: true
 
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -2900,6 +2935,7 @@ packages:
 
   /node-releases/2.0.1:
     resolution: {integrity: sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==}
+    dev: true
 
   /normalize-path/3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -3037,6 +3073,7 @@ packages:
 
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
+    dev: true
 
   /picomatch/2.3.0:
     resolution: {integrity: sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==}
