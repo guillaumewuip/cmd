@@ -6,7 +6,7 @@ import { NextSeo } from 'next-seo';
 import { pipe } from 'fp-ts/function'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 
-import { Infos } from '@cmd/domain'
+import { Infos } from '@cmd/domain-post'
 
 import { Article, Mosaic } from '@cmd/ui-article'
 import * as Layout from '@cmd/ui-layout'
@@ -14,12 +14,12 @@ import { Paragraph, Code, H2, Link, Hr } from '@cmd/ui-text'
 import { Header } from '@cmd/ui-header'
 import { Footer } from '@cmd/ui-footer'
 
+import * as RSS from '@cmd/domain-rss'
+
 import {
   getLastPostInfos,
   getAllPostInfos,
 } from '../lib/posts'
-
-import * as RSS from '../lib/rss'
 
 import * as Metadata from '../metadata'
 
@@ -84,10 +84,16 @@ export default function Home({
 }
 
 export async function getStaticProps() {
-  await RSS.generateFeeds()
-
   const lastCmd = await getLastPostInfos()
   const previousCmds = await getAllPostInfos()
+
+  console.log({
+    outputDir: './public/rss'
+  });
+
+  await RSS.generateFeeds(previousCmds, {
+    outputDir: './public/rss'
+  })
 
   return {
     props: {

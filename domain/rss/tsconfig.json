@@ -1,0 +1,11 @@
+{
+  "extends": "@cmd/tsconfig",
+  "compilerOptions": {
+    "target": "ES6",
+    "baseUrl": "./",
+    "outDir": "./dist"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

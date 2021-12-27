@@ -11,7 +11,7 @@ import * as Task from 'fp-ts/Task';
 import * as Ord from 'fp-ts/Ord';
 import * as DateFP from 'fp-ts/Date';
 
-import { Post } from '@cmd/domain';
+import { Post } from '@cmd/domain-post';
 
 import * as SiteMetadata from '../metadata';
 

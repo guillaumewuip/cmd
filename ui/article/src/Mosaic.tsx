@@ -3,7 +3,7 @@ import NextImage from 'next/image'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 import { pipe } from 'fp-ts/function'
 
-import { Infos } from '@cmd/domain'
+import { Infos } from '@cmd/domain-post'
 import { Paragraph } from '@cmd/ui-text'
 
 import * as styles from './Mosaic.css'

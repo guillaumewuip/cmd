@@ -14,7 +14,8 @@ importers:
   blog:
     specifiers:
       '@babel/core': ^7.16.5
-      '@cmd/domain': workspace:*
+      '@cmd/domain-post': workspace:*
+      '@cmd/domain-rss': workspace:*
       '@cmd/tsconfig': workspace:*
       '@cmd/ui-article': workspace:*
       '@cmd/ui-footer': workspace:*
@@ -45,7 +46,8 @@ importers:
       xml-parse: ^0.4.0
     dependencies:
       '@babel/core': 7.16.5
-      '@cmd/domain': link:../domain
+      '@cmd/domain-post': link:../domain/post
+      '@cmd/domain-rss': link:../domain/rss
       '@cmd/ui-article': link:../ui/article
       '@cmd/ui-footer': link:../ui/footer
       '@cmd/ui-header': link:../ui/header
@@ -85,20 +87,41 @@ importers:
   dev-tools/tsconfig:
     specifiers: {}
 
-  domain:
+  domain/post:
     specifiers:
       '@cmd/lib-builder': workspace:*
       '@cmd/tsconfig': workspace:*
       typescript: ^4.5.4
     devDependencies:
-      '@cmd/lib-builder': link:../dev-tools/lib-builder
-      '@cmd/tsconfig': link:../dev-tools/tsconfig
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      typescript: 4.5.4
+
+  domain/rss:
+    specifiers:
+      '@cmd/domain-post': workspace:*
+      '@cmd/lib-builder': workspace:*
+      '@cmd/tsconfig': workspace:*
+      '@types/node': ^17.0.5
+      date-fns: ^2.27.0
+      feed: ^4.2.2
+      fp-ts: ^2.11.5
+      typescript: ^4.5.4
+    dependencies:
+      '@cmd/domain-post': link:../post
+      date-fns: 2.27.0
+      feed: 4.2.2
+      fp-ts: 2.11.5
+    devDependencies:
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      '@types/node': 17.0.5
       typescript: 4.5.4
 
   ui/article:
     specifiers:
       '@babel/core': ^7.16.5
-      '@cmd/domain': workspace:*
+      '@cmd/domain-post': workspace:*
       '@cmd/lib-builder': workspace:*
       '@cmd/tsconfig': workspace:*
       '@cmd/ui-text': workspace:*
@@ -112,7 +135,7 @@ importers:
       react-dom: ^17.0.2
       typescript: ^4.5.4
     dependencies:
-      '@cmd/domain': link:../../domain
+      '@cmd/domain-post': link:../../domain/post
       '@cmd/ui-text': link:../text
       '@cmd/ui-theme': link:../theme
       '@vanilla-extract/css': 1.6.8
@@ -939,6 +962,10 @@ packages:
 
   /@types/node/17.0.0:
     resolution: {integrity: sha512-eMhwJXc931Ihh4tkU+Y7GiLzT/y/DBNpNtr4yU9O2w3SYBsr9NaOPhQlLKRmoWtI54uNwuo0IOUFQjVOTZYRvw==}
+
+  /@types/node/17.0.5:
+    resolution: {integrity: sha512-w3mrvNXLeDYV1GKTZorGJQivK6XLCoGwpnyJFbJVK/aTBQUxOCaa/GlFAAN3OTDFcb7h5tiFG+YXCO2By+riZw==}
+    dev: true
 
   /@types/parse5/5.0.3:
     resolution: {integrity: sha512-kUNnecmtkunAoQ3CnjmMkzNU/gtxG8guhi+Fk2U/kOpIKjIMKnXGp4IJCgQJrXSgMsWYimYG4TGjz/UzbGEBTw==}
