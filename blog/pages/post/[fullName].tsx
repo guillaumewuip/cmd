@@ -2,6 +2,9 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NextSeo } from 'next-seo';
 
+import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray'
+import { pipe } from 'fp-ts/function';
+
 import { Post } from '@cmd/domain-post'
 
 import { Article } from '@cmd/ui-article'
@@ -10,7 +13,7 @@ import { Header } from '@cmd/ui-header'
 import { Footer } from '@cmd/ui-footer'
 
 import {
-  getPostInfosFromFullname,
+  getPostFromFullname,
   getAllPostsPaths,
 } from '../../lib/posts'
 
@@ -57,7 +60,7 @@ function Page({
 }
 
 export async function getStaticProps({ params: { fullName } }: { params: { fullName: string }}) {
-  const post = await getPostInfosFromFullname(fullName)
+  const post = await getPostFromFullname(fullName)
 
   return {
     props: {
@@ -67,7 +70,14 @@ export async function getStaticProps({ params: { fullName } }: { params: { fullN
 }
 
 export async function getStaticPaths() {
-  const paths = getAllPostsPaths()
+  const paths: ReadonlyArray<{ params: { fullName: string } }> = pipe(
+    getAllPostsPaths(),
+    ReadonlyArrayFP.map(fullName => ({
+      params: {
+        fullName,
+      }
+    }))
+  )
 
   return {
     paths,

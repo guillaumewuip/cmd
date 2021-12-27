@@ -45,10 +45,6 @@ export async function generateFeeds(
       const date = parseDate(post.infos.createdAt, 'dd/MM/y', new Date())
       date.setHours(8)
 
-      console.log({
-        title: post.infos.metadata.title,
-      });
-
       feed.addItem({
         title: post.infos.metadata.title,
         id: post.infos.url,

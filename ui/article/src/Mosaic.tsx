@@ -3,23 +3,25 @@ import NextImage from 'next/image'
 import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
 import { pipe } from 'fp-ts/function'
 
-import { Infos } from '@cmd/domain-post'
+import { Metadata } from '@cmd/domain-metadata'
 import { Paragraph } from '@cmd/ui-text'
 
 import * as styles from './Mosaic.css'
 
 function Article({
-  post
+  href,
+  metadata,
 }: {
-  post: Infos.Infos
+  href: string,
+  metadata: Metadata.Cmd
 }) {
   return (
-    <a className={styles.article} href={`/post/${post.fullName}`}>
-      <NextImage src={post.metadata.image.src} alt={post.metadata.image.alt} layout="fill" objectFit="cover" />
+    <a className={styles.article} href={href}>
+      <NextImage src={metadata.image.src} alt={metadata.image.alt} layout="fill" objectFit="cover" />
       <div className={styles.overlay} />
       <div className={styles.title}>
         <Paragraph inverted noMargin>
-          <strong>{post.metadata.title}</strong>
+          <strong>{metadata.title}</strong>
         </Paragraph>
       </div>
     </a>
@@ -29,13 +31,13 @@ function Article({
 export function Mosaic({
   posts,
 }: {
-  posts: ReadonlyArray<Infos.Infos>
+  posts: ReadonlyArray<{ metadata: Metadata.Cmd, href: string }>
 }) {
   return (
     <div className={styles.grid}>
       {pipe(
         posts,
-        ReadonlyArrayFP.map(post => <Article key={post.fullName} post={post} />)
+        ReadonlyArrayFP.map(post => <Article key={post.href} {...post} />)
       )}
     </div>
   )

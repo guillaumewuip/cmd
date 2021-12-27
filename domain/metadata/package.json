@@ -1,5 +1,5 @@
 {
-  "name": "@cmd/domain-post",
+  "name": "@cmd/domain-metadata",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -10,15 +10,6 @@
   "devDependencies": {
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "@types/jsdom": "^16.2.13",
-    "@types/react": "^17.0.37",
-    "@types/react-dom": "^17.0.11",
     "typescript": "^4.5.4"
-  },
-  "dependencies": {
-    "@cmd/domain-metadata": "workspace:*",
-    "jsdom": "^19.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
   }
 }
