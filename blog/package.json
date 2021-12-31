@@ -1,5 +1,5 @@
 {
-  "name": "cmd-blog",
+  "name": "@cmd/blog",
   "version": "0.0.0",
   "private": true,
   "scripts": {

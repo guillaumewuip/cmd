@@ -9,7 +9,7 @@
     "pnpm": "^6.24.3"
   },
   "devDependencies": {
-    "turbo": "^1.0.19"
+    "turbo": "^1.0.23"
   },
   "turbo": {
     "baseBranch": "origin/main",
