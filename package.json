@@ -25,7 +25,9 @@
         ]
       },
       "dev": {
-        "cache": false
+        "cache": false,
+        "dependsOn": [],
+        "outputs": []
       }
     }
   }
