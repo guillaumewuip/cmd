@@ -24,6 +24,17 @@
       "esnext"
     ]
   },
+  "watchOptions": {
+    "watchFile": "dynamicprioritypolling",
+    "watchDirectory": "dynamicprioritypolling",
+    "fallbackPolling": "dynamicpriority",
+    "synchronousWatchDirectory": true,
+    "excludeDirectories": [
+      "./node_modules",
+      "./dist"
+    ],
+    "excludeFiles": []
+  },
   "exclude": [
     "node_modules"
   ]

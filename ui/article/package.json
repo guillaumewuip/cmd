@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "typings": "dist-typings/index.d.ts",
   "scripts": {
-    "build": "lib-builder"
+    "build": "lib-build",
+    "dev": "lib-dev"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",

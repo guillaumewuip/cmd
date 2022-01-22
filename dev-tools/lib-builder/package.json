@@ -2,7 +2,8 @@
   "name": "@cmd/lib-builder",
   "version": "0.0.0",
   "bin": {
-    "lib-builder": "./bin/lib-builder.sh"
+    "lib-build": "./bin/lib-build.sh",
+    "lib-dev": "./bin/lib-dev.sh"
   },
   "peerDependencies": {
     "typescript": "*"
