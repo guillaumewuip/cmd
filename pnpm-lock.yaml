@@ -15,6 +15,7 @@ importers:
     specifiers:
       '@babel/core': ^7.16.5
       '@cmd/domain-metadata': workspace:*
+      '@cmd/domain-player': workspace:*
       '@cmd/domain-post': workspace:*
       '@cmd/domain-rss': workspace:*
       '@cmd/tsconfig': workspace:*
@@ -23,11 +24,13 @@ importers:
       '@cmd/ui-header': workspace:*
       '@cmd/ui-layout': workspace:*
       '@cmd/ui-music-embed': workspace:*
+      '@cmd/ui-player': workspace:*
       '@cmd/ui-text': workspace:*
       '@cmd/ui-theme': workspace:*
       '@mdx-js/loader': ^1.6.22
       '@mdx-js/react': ^1.6.22
       '@next/mdx': ^12.0.7
+      '@remark-embedder/core': ^2.0.0
       '@types/jsdom': ^16.2.13
       '@types/mdx-js__react': ^1.5.5
       '@types/react': ^17.0.37
@@ -47,6 +50,7 @@ importers:
       xml-parse: ^0.4.0
     dependencies:
       '@cmd/domain-metadata': link:../domain/metadata
+      '@cmd/domain-player': link:../domain/player
       '@cmd/domain-post': link:../domain/post
       '@cmd/domain-rss': link:../domain/rss
       '@cmd/ui-article': link:../ui/article
@@ -54,11 +58,13 @@ importers:
       '@cmd/ui-header': link:../ui/header
       '@cmd/ui-layout': link:../ui/layout
       '@cmd/ui-music-embed': link:../ui/music-embed
+      '@cmd/ui-player': link:../ui/player
       '@cmd/ui-text': link:../ui/text
       '@cmd/ui-theme': link:../ui/theme
       '@mdx-js/loader': 1.6.22_react@17.0.2
       '@mdx-js/react': 1.6.22_react@17.0.2
       '@next/mdx': 12.0.7_f56c41adb6190c4680be4a1c0222355d
+      '@remark-embedder/core': 2.0.0
       date-fns: 2.27.0
       feed: 4.2.2
       fp-ts: 2.11.5
@@ -97,6 +103,33 @@ importers:
     devDependencies:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      typescript: 4.5.4
+
+  domain/player:
+    specifiers:
+      '@cmd/lib-builder': workspace:*
+      '@cmd/tsconfig': workspace:*
+      '@fp51/opaque-union': ^1.0.0
+      '@types/lodash.throttle': ^4.1.6
+      classnames: ^2.3.1
+      fp-ts: ^2.11.5
+      fp-ts-local-storage: ^1.0.3
+      lodash.throttle: ^4.1.1
+      tslib: ^2.3.1
+      typescript: ^4.5.4
+      zustand: ^3.6.8
+    dependencies:
+      '@fp51/opaque-union': 1.0.0_fp-ts@2.11.5
+      classnames: 2.3.1
+      fp-ts: 2.11.5
+      fp-ts-local-storage: 1.0.3_fp-ts@2.11.5
+      lodash.throttle: 4.1.1
+      zustand: 3.6.8
+    devDependencies:
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      '@types/lodash.throttle': 4.1.6
+      tslib: 2.3.1
       typescript: 4.5.4
 
   domain/post:
@@ -181,7 +214,6 @@ importers:
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
       react: ^17.0.2
-      react-dom: ^17.0.2
       typescript: ^4.5.4
     dependencies:
       '@cmd/ui-text': link:../text
@@ -192,7 +224,6 @@ importers:
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
       react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
 
   ui/header:
@@ -227,7 +258,6 @@ importers:
       '@vanilla-extract/css': ^1.6.8
       '@vanilla-extract/css-utils': ^0.1.2
       react: ^17.0.2
-      react-dom: ^17.0.2
       typescript: ^4.5.4
     dependencies:
       '@cmd/ui-theme': link:../theme
@@ -238,7 +268,6 @@ importers:
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
       react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
 
   ui/music-embed:
@@ -260,6 +289,43 @@ importers:
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
       react: 17.0.2
+      typescript: 4.5.4
+
+  ui/player:
+    specifiers:
+      '@cmd/domain-player': workspace:*
+      '@cmd/lib-builder': workspace:*
+      '@cmd/tsconfig': workspace:*
+      '@cmd/ui-text': workspace:*
+      '@cmd/ui-theme': workspace:*
+      '@fp51/opaque-union': ^1.0.0
+      '@types/react': ^17.0.37
+      '@vanilla-extract/css': ^1.6.8
+      '@vanilla-extract/css-utils': ^0.1.2
+      classnames: ^2.3.1
+      date-fns: ^2.27.0
+      fp-ts: ^2.11.5
+      react: ^17.0.2
+      react-loading-skeleton: ^3.0.1
+      tslib: ^2.3.1
+      typescript: ^4.5.4
+    dependencies:
+      '@cmd/domain-player': link:../../domain/player
+      '@cmd/ui-text': link:../text
+      '@cmd/ui-theme': link:../theme
+      '@fp51/opaque-union': 1.0.0_fp-ts@2.11.5
+      '@vanilla-extract/css': 1.6.8
+      '@vanilla-extract/css-utils': 0.1.2
+      classnames: 2.3.1
+      date-fns: 2.27.0
+      fp-ts: 2.11.5
+      react-loading-skeleton: 3.0.2_react@17.0.2
+    devDependencies:
+      '@cmd/lib-builder': link:../../dev-tools/lib-builder
+      '@cmd/tsconfig': link:../../dev-tools/tsconfig
+      '@types/react': 17.0.38
+      react: 17.0.2
+      tslib: 2.3.1
       typescript: 4.5.4
 
   ui/text:
@@ -549,6 +615,13 @@ packages:
     dependencies:
       regenerator-runtime: 0.13.4
 
+  /@babel/runtime/7.16.7:
+    resolution: {integrity: sha512-9E9FJowqAsytyOY6LG+1KuueckRL+aQW+mKvXRXnuFGyRAyepJPmEo9vgMfXUA6O9u3IeEdv9MAkppFcaQwogQ==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.4
+    dev: false
+
   /@babel/template/7.16.0:
     resolution: {integrity: sha512-MnZdpFD/ZdYhXwiunMqqgyZyucaYsbL0IrjoGjaVhGilz+x8YB++kRfygSOIj1yOtWKPlx7NBp+9I1RQSgsd5A==}
     engines: {node: '>=6.9.0'}
@@ -594,6 +667,21 @@ packages:
 
   /@emotion/hash/0.8.0:
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
+
+  /@fp51/foldable-helpers/1.0.0:
+    resolution: {integrity: sha512-RcrZdIL2S5VYmY+maGBHLNcYacbRYhwqk2DS268xtsfDjv+CfwS2SbquchqnQMy3ZcEkJeJE3M/XpXeHsRTuWg==}
+    dependencies:
+      fp-ts: 2.11.5
+    dev: false
+
+  /@fp51/opaque-union/1.0.0_fp-ts@2.11.5:
+    resolution: {integrity: sha512-fUV3L6q50Jc9JMGT8PBuWIoEC4NVR1v31Sp+lhdqZ6xTngVaZK+dMVxqxCGAFBPfED9Rv7DmDs/JhLnWv0cGdw==}
+    dependencies:
+      '@fp51/foldable-helpers': 1.0.0
+      monocle-ts: 2.3.11_fp-ts@2.11.5
+    transitivePeerDependencies:
+      - fp-ts
+    dev: false
 
   /@hapi/accept/5.0.2:
     resolution: {integrity: sha512-CmzBx/bXUR8451fnZRuZAJRlzgm0Jgu5dltTX/bszmR2lheb9BpyN47Q1RbaGTsvFzn0PXAEs+lXDKfshccYZw==}
@@ -880,6 +968,19 @@ packages:
     requiresBuild: true
     optional: true
 
+  /@remark-embedder/core/2.0.0:
+    resolution: {integrity: sha512-ET2wIk0nMBSPBisFhqLdeelBOnNWihLuTGkGbhHNY+Jsm7lyBewTcUHoMCymaM8p6YhVN8luxqk1/5nDZyt5KQ==}
+    engines: {node: '>=12', npm: '>=6'}
+    dependencies:
+      '@babel/runtime': 7.16.7
+      '@types/hast': 2.3.4
+      '@types/mdast': 3.0.10
+      hast-util-from-parse5: 6.0.1
+      parse5: 6.0.1
+      unified: 9.2.2
+      unist-util-visit: 2.0.3
+    dev: false
+
   /@rushstack/node-core-library/3.44.2:
     resolution: {integrity: sha512-lQ8Ct267UKkNSJSDxpBWn7SyyITWQ9l3Xqww0V+YY0rMt02r9eiGvwwPaU1ugJW7IMVo6r/HXvgbmpOSPyzGyg==}
     dependencies:
@@ -953,6 +1054,16 @@ packages:
 
   /@types/json-schema/7.0.9:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
+    dev: true
+
+  /@types/lodash.throttle/4.1.6:
+    resolution: {integrity: sha512-/UIH96i/sIRYGC60NoY72jGkCJtFN5KVPhEMMMTjol65effe1gPn0tycJqV5tlSwMTzX8FqzB5yAj0rfGHTPNg==}
+    dependencies:
+      '@types/lodash': 4.14.178
+    dev: true
+
+  /@types/lodash/4.14.178:
+    resolution: {integrity: sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==}
     dev: true
 
   /@types/mdast/3.0.10:
@@ -2005,6 +2116,14 @@ packages:
       mime-types: 2.1.34
     dev: false
 
+  /fp-ts-local-storage/1.0.3_fp-ts@2.11.5:
+    resolution: {integrity: sha512-72nXiVVA7Fj1FS0lfGIED18/AS8gA50OjOrUCWuhNEYL9f614MkLjkQVkpnAFr0QI1H8/1CxH2tAfPs0CkncHQ==}
+    peerDependencies:
+      fp-ts: ^2.0.1
+    dependencies:
+      fp-ts: 2.11.5
+    dev: false
+
   /fp-ts/2.11.5:
     resolution: {integrity: sha512-OqlwJq1BdpB83BZXTqI+dNcA6uYk6qk4u9Cgnt64Y+XS7dwdbp/mobx8S2KXf2AXH+scNmA/UVK3SEFHR3vHZA==}
     dev: false
@@ -2588,6 +2707,10 @@ packages:
   /lodash.sortby/4.7.0:
     resolution: {integrity: sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=}
 
+  /lodash.throttle/4.1.1:
+    resolution: {integrity: sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=}
+    dev: false
+
   /lodash.uniq/4.5.0:
     resolution: {integrity: sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=}
     dev: false
@@ -2689,6 +2812,14 @@ packages:
 
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
+
+  /monocle-ts/2.3.11_fp-ts@2.11.5:
+    resolution: {integrity: sha512-YJQdpDeKU0NNAecDjFgDDnDoivmf2nXsJZTRQdKh5jsPKG2lT/15dFnSuUcQoKB/VZN1z7jQ0B0bffbRFUtLmg==}
+    peerDependencies:
+      fp-ts: ^2.5.0
+    dependencies:
+      fp-ts: 2.11.5
+    dev: false
 
   /ms/2.0.0:
     resolution: {integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=}
@@ -3638,6 +3769,10 @@ packages:
     resolution: {integrity: sha512-rvuRbTarPXmMb79SmzEp8aqXNKcK+y0XaB298IXueQ8I2PsrATcPBCSPyK/dDNa2iWOhKlfNnOjdAOTBU/nkFA==}
     dev: false
 
+  /tslib/2.3.1:
+    resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
+    dev: true
+
   /tty-browserify/0.0.1:
     resolution: {integrity: sha512-C3TaO7K81YvjCgQH9Q1S3R3P3BtN3RIM8n+OvX4il1K1zgE8ZhI0op7kClgkxtutIE8hQrcrHBXvIheqKUUCxw==}
 
@@ -3801,6 +3936,17 @@ packages:
 
   /unified/9.2.0:
     resolution: {integrity: sha512-vx2Z0vY+a3YoTj8+pttM3tiJHCwY5UFbYdiWrwBEbHmK8pvsPj2rtAX2BFfgXen8T39CJWblWRDT4L5WGXtDdg==}
+    dependencies:
+      bail: 1.0.5
+      extend: 3.0.2
+      is-buffer: 2.0.5
+      is-plain-obj: 2.1.0
+      trough: 1.0.5
+      vfile: 4.2.1
+    dev: false
+
+  /unified/9.2.2:
+    resolution: {integrity: sha512-Sg7j110mtefBD+qunSLO1lqOEKdrwBFBrR6Qd8f4uwkhWNlbkaqwHse6e7QvD3AP/MNoJdEDLaf8OxYyoWgorQ==}
     dependencies:
       bail: 1.0.5
       extend: 3.0.2
@@ -4120,6 +4266,16 @@ packages:
       validator: 13.7.0
     optionalDependencies:
       commander: 2.20.3
+    dev: false
+
+  /zustand/3.6.8:
+    resolution: {integrity: sha512-8dqxig1l/o/N4M3DGxhweLVyCvNsd40oU3fXuY4MfqX1notavmjljCnSeTN3FGfYzbo963w4un2ChYsPB/0gKA==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
     dev: false
 
   /zwitch/1.0.5:

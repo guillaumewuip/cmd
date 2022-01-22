@@ -15,7 +15,7 @@ import { Footer } from '@cmd/ui-footer'
 import {
   getPostFromFullname,
   getAllPostsPaths,
-} from '../../lib/posts'
+} from '../../posts'
 
 import * as SiteMetadata from '../../metadata'
 

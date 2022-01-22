@@ -1,31 +1,35 @@
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import Head from 'next/head'
-import { MDXProvider } from '@mdx-js/react'
+
+import * as Option from 'fp-ts/Option'
+
+import { MDXProvider, MDXProviderComponents } from '@mdx-js/react'
 import { DefaultSeo } from 'next-seo';
 import { themeClassName } from '@cmd/ui-theme'
 import { H1, H2, H3, Paragraph, Code, Blockquote, Link, Hr } from '@cmd/ui-text'
-import * as MusicEmbed from '@cmd/ui-music-embed'
+import * as Player from '@cmd/ui-player'
 
 import * as Metadata from '../metadata'
 
-export function LinkMaybeMusic({ href, children } : { href: string, children: string }) {
-  if (href === children && MusicEmbed.isEmbedableLink(href)) {
-    return <MusicEmbed.MusicEmbedLink href={href} />
-  }
-
-  return <Link href={href}>{children}</Link>
-}
-
-const mdComponents = {
-  h1: (props: any) => <H1 {...props} />,
-  h2: (props: any) => <H2 {...props} />,
-  h3: (props: any) => <H3 {...props} />,
-  a: (props: any) => <LinkMaybeMusic {...props} />,
-  p: (props: any) => <Paragraph {...props} />,
+const mdComponents: MDXProviderComponents = {
+  h1: (props) => <H1 {...props} />,
+  h2: (props) => <H2 {...props} />,
+  h3: (props) => <H3 {...props} />,
+  a: (props) => <Link {...props} />,
+  p: (props) => <Paragraph {...props} />,
   hr: () => <Hr  />,
-  code: (props: any) => <Code {...props} />,
-  blockquote: (props: any) => <Blockquote {...props} />,
+  code: (props) => <Code {...props} />,
+  blockquote: (props) => <Blockquote {...props} />,
+  player: (props) => {
+    const parsed = Player.parseLink(props.href)
+
+    if (Option.isNone(parsed)) {
+      return <p><Link href={props.href}>{props.href}</Link></p>
+    }
+
+    return <Player.TrackPlayer embedableLink={parsed.value} />
+  },
 }
 
 function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageProps: any }) {
@@ -40,7 +44,10 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageP
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,600;0,700;1,400;1,700&family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
+
+        <script src='https://www.youtube.com/iframe_api' async></script>
+        <script src='https://w.soundcloud.com/player/api.js' async></script>
       </Head>
       {/* @ts-ignore */}
       <DefaultSeo
@@ -62,6 +69,7 @@ function MyApp({ Component, pageProps }: { Component: React.ComponentType, pageP
       />
       <MDXProvider components={mdComponents}>
         <Component {...pageProps} />
+        <Player.Preview />
       </MDXProvider>
     </div>
   )

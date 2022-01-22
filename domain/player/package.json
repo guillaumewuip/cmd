@@ -1,5 +1,5 @@
 {
-  "name": "@cmd/ui-footer",
+  "name": "@cmd/domain-player",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -11,16 +11,16 @@
   "devDependencies": {
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "@types/react": "^17.0.37",
-    "react": "^17.0.2",
+    "@types/lodash.throttle": "^4.1.6",
+    "tslib": "^2.3.1",
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "@cmd/ui-theme": "workspace:*",
-    "@cmd/ui-text": "workspace:*",
-    "@vanilla-extract/css": "^1.6.8"
-  },
-  "peerDependencies": {
-    "react": "^17.0.2"
+    "@fp51/opaque-union": "^1.0.0",
+    "classnames": "^2.3.1",
+    "fp-ts": "^2.11.5",
+    "fp-ts-local-storage": "^1.0.3",
+    "lodash.throttle": "^4.1.1",
+    "zustand": "^3.6.8"
   }
 }
