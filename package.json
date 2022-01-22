@@ -21,6 +21,7 @@
         ],
         "outputs": [
           "dist/**",
+          "dist-typings/**",
           ".next/**"
         ]
       },
