@@ -11,6 +11,6 @@
   "devDependencies": {
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.5"
   }
 }

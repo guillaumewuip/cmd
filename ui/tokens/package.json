@@ -9,8 +9,8 @@
     "dev": "lib-dev"
   },
   "devDependencies": {
-    "@cmd/tsconfig": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
-    "typescript": "^4.5.4"
+    "@cmd/tsconfig": "workspace:*",
+    "typescript": "^4.5.5"
   }
 }

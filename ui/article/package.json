@@ -9,21 +9,21 @@
     "dev": "lib-dev"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.5",
+    "@babel/core": "^7.16.12",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
     "@types/react": "^17.0.37",
-    "next": "^12.0.7",
+    "next": "^12.0.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "@cmd/domain-metadata": "workspace:*",
     "@cmd/ui-text": "workspace:*",
     "@cmd/ui-theme": "workspace:*",
     "@vanilla-extract/css": "^1.6.8",
-    "fp-ts": "^2.11.5"
+    "fp-ts": "^2.11.8"
   },
   "peerDependencies": {
     "next": "^12.0.7",

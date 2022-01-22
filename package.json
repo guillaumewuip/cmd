@@ -6,7 +6,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "pnpm": "^6.24.3"
+    "pnpm": "^6.27.1"
   },
   "devDependencies": {
     "turbo": "^1.0.28"
