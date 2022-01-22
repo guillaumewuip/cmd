@@ -10,7 +10,7 @@ import { pipe } from 'fp-ts/function';
 
 import { Post } from '@cmd/domain-post';
 
-import * as SiteMetadata from '../metadata';
+import * as SiteMetadata from './metadata';
 
 function dateFromFilename(filename: string): Date {
   const match = filename.match(/(?<date>\d\d\d\d-\d\d-\d\d)/)
@@ -58,7 +58,7 @@ export function getAllPostsPaths(): ReadonlyArray<string> {
 }
 
 export async function getPostFromFullname(fullName: string): Promise<Post.Post> {
-  const post = await import(`../_posts/${fullName}.mdx`)
+  const post = await import(`./_posts/${fullName}.mdx`)
 
   const date = dateFromFilename(fullName)
   const createdAt = formatDate(date, 'dd/MM/y')

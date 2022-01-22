@@ -2,9 +2,11 @@ import { style } from '@vanilla-extract/css'
 import { calc } from '@vanilla-extract/css-utils'
 import { vars } from '@cmd/ui-theme'
 
+const topPadding = '84px';
+
 export const main = style({
   overflow: 'hidden',
-  padding: `${vars.sizes.xl} 0 ${vars.sizes.s}`,
+  padding: `${topPadding} 0 ${vars.sizes.s}`,
 })
 
 export const wrapper = style({

@@ -55,3 +55,7 @@ export function Code({ children } : { children: React.ReactNode }) {
 export function Blockquote({ children } : { children: React.ReactNode }) {
   return <blockquote className={styles.blockquote}>{children}</blockquote>
 }
+
+export function Monospace({ children } : { children: React.ReactNode }) {
+  return <span className={styles.monospace}>{children}</span>
+}

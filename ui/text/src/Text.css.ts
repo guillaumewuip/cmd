@@ -18,6 +18,13 @@ export const small = style({
   color: vars.colors.grey,
 })
 
+export const monospace = style([
+  small,
+  {
+    fontFamily: vars.fonts.monospace,
+  }
+])
+
 export const mainTitle = style({
   fontFamily: 'Rubik, Courier, sans-serif',
   fontWeight: 700,

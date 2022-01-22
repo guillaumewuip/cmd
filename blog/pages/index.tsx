@@ -20,7 +20,7 @@ import { generateFeeds } from '@cmd/domain-rss'
 import {
   getLastPostInfos,
   getAllPostInfos,
-} from '../lib/posts'
+} from '../posts'
 
 import * as SiteMetadata from '../metadata'
 
