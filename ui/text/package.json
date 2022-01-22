@@ -13,17 +13,14 @@
     "@cmd/tsconfig": "workspace:*",
     "@types/react": "^17.0.37",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "typescript": "^4.5.4"
   },
   "dependencies": {
     "@cmd/ui-theme": "workspace:*",
-    "@cmd/ui-tokens": "workspace:*",
     "@vanilla-extract/css": "^1.6.8",
     "classnames": "^2.3.1"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^17.0.2"
   }
 }

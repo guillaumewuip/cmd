@@ -108,14 +108,10 @@ importers:
       '@types/react': ^17.0.37
       '@types/react-dom': ^17.0.11
       jsdom: ^19.0.0
-      react: ^17.0.2
-      react-dom: ^17.0.2
       typescript: ^4.5.4
     dependencies:
       '@cmd/domain-metadata': link:../metadata
       jsdom: 19.0.0
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
     devDependencies:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
@@ -253,7 +249,6 @@ importers:
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
       react: ^17.0.2
-      react-dom: ^17.0.2
       react-loading-skeleton: ^3.0.1
       typescript: ^4.5.4
     dependencies:
@@ -265,7 +260,6 @@ importers:
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
       react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
 
   ui/text:
@@ -273,16 +267,13 @@ importers:
       '@cmd/lib-builder': workspace:*
       '@cmd/tsconfig': workspace:*
       '@cmd/ui-theme': workspace:*
-      '@cmd/ui-tokens': workspace:*
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
       classnames: ^2.3.1
       react: ^17.0.2
-      react-dom: ^17.0.2
       typescript: ^4.5.4
     dependencies:
       '@cmd/ui-theme': link:../theme
-      '@cmd/ui-tokens': link:../tokens
       '@vanilla-extract/css': 1.6.8
       classnames: 2.3.1
     devDependencies:
@@ -290,7 +281,6 @@ importers:
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
       react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
       typescript: 4.5.4
 
   ui/theme:
