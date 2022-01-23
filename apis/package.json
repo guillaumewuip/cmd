@@ -10,7 +10,6 @@
     "linkedom": "^0.13.0"
   },
   "devDependencies":{
-    "@cmd/tsconfig": "workspace:*",
     "@vercel/node": "^1.12.1",
     "typescript": "^4.5.5"
   }

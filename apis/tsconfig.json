@@ -1,5 +1,4 @@
 {
-  "extends": "@cmd/tsconfig",
   "compilerOptions": {
     "allowJs": true,
     "declaration": false,
