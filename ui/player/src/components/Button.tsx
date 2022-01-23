@@ -20,6 +20,7 @@ export function Play({
     <button className={classnames(
       styles.commandButton,
       {
+        [styles.large]: size === 'large',
         [styles.medium]: size === 'medium',
         [styles.small]: size === 'small',
       }
@@ -47,6 +48,7 @@ export function Pause({
     <button className={classnames(
       styles.commandButton,
       {
+        [styles.large]: size === 'large',
         [styles.medium]: size === 'medium',
         [styles.small]: size === 'small',
       }
@@ -165,6 +167,7 @@ export function Loading({
 
   return (
     <svg className={classnames(styles.svgLoading, {
+      [styles.large]: size === 'large',
       [styles.medium]: size === 'medium',
       [styles.small]: size === 'small',
     })} viewBox="0 0 526 526" xmlns="http://www.w3.org/2000/svg">

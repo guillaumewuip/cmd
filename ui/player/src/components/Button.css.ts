@@ -14,10 +14,6 @@ export const commandButton = style({
   borderRadius: '200000px',
   textAlign: 'center',
 
-  height: calc.multiply(vars.sizes.m, 2),
-  width: calc.multiply(vars.sizes.m, 2),
-  padding: vars.sizes.xs,
-
   selectors: {
     '&:hover, &:focus': {
       cursor: 'pointer',
@@ -28,14 +24,6 @@ export const commandButton = style({
       backgroundColor: vars.colors.dark,
     }
   },
-
-  '@media': {
-    ...mediaQueries.forDesktopOnly({
-      height: calc.multiply(vars.sizes.m, 3),
-      width: calc.multiply(vars.sizes.m, 3),
-      padding: vars.sizes.s,
-    })
-  }
 })
 
 export const svg = style({
@@ -59,6 +47,20 @@ export const svgLoading = style([
     padding: vars.sizes.s,
   }
 ])
+
+export const large = style({
+  height: calc.multiply(vars.sizes.m, 3),
+  width: calc.multiply(vars.sizes.m, 3),
+  padding: vars.sizes.s,
+
+  '@media': {
+    ...mediaQueries.forPhoneOnly({
+      height: calc.multiply(vars.sizes.m, 2),
+      width: calc.multiply(vars.sizes.m, 2),
+      padding: vars.sizes.xs,
+    })
+  }
+})
 
 export const medium = style({
   height: calc.multiply(vars.sizes.m, 2),
