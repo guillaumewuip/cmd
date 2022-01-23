@@ -32,7 +32,7 @@ type BandcampData = {
 }
 
 async function fetchBandcampData(href: string): Promise<BandcampData> {
-  const response = await fetch(`/api/bandcamp/track?url=${encodeURIComponent(href)}`)
+  const response = await fetch(`https://cmd-apis.vercel.app/api/bandcamp/track?url=${encodeURIComponent(href)}`)
 
   const payload = await response.json()
 

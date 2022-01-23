@@ -48,7 +48,7 @@ function LocalPlayer({
 }
 
 async function fetchSoundcloudTrackId(href: string): Promise<string> {
-  const response = await fetch(`/api/soundcloud/track?url=${encodeURIComponent(href)}`)
+  const response = await fetch(`https://cmd-apis.vercel.app/api/soundcloud/track?url=${encodeURIComponent(href)}`)
 
   const payload = await response.json()
 
