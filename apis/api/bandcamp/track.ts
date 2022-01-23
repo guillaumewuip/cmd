@@ -3,6 +3,8 @@ import fetch from 'cross-fetch'
 
 import { parseHTML } from 'linkedom';
 
+import { handleGET } from '../../handleRequest'
+
 async function fetchPage(url: string): Promise<Document> {
   const response = await fetch(url)
   const documentString = await response.text()
@@ -46,36 +48,24 @@ function extractStream(document: Document): string {
   return url
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  try {
-    if (req.method === 'GET') {
-      const url = req.query.url
+const handleBandcamp = handleGET(async (req: VercelRequest, res: VercelResponse) => {
+  const url = req.query.url
 
-      if (!url || Array.isArray(url)) {
-        res.status(400).json({
-          error: 'Missing correct url query parameter'
-        })
-        return
-      }
-
-      const page = await fetchPage(decodeURIComponent(url))
-      const trackId = extractTrackId(page)
-      const streamUrl = extractStream(page)
-
-      res.status(200).json({
-        trackId,
-        streamUrl,
-      })
-      return
-    }
-
-    res.status(400)
-    return
-  } catch (error) {
-    console.error(error)
-
-    res.status(500)
+  if (!url || Array.isArray(url)) {
+    res.status(400).json({
+      error: 'Missing correct url query parameter'
+    })
     return
   }
-}
 
+  const page = await fetchPage(decodeURIComponent(url))
+  const trackId = extractTrackId(page)
+  const streamUrl = extractStream(page)
+
+  res.status(200).json({
+    trackId,
+    streamUrl,
+  })
+})
+
+export default handleBandcamp
