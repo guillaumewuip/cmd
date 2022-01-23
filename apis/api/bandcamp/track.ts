@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import fetch from 'cross-fetch'
 
 import { parseHTML } from 'linkedom';
 
