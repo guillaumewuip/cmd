@@ -15,7 +15,10 @@
   "repositories": [
     "guillaumewuip/cmd"
   ],
-  "dryRun": true,
+  "schedule": [
+    "after 12pm and before 7am"
+  ],
+  "dryRun": false,
   "username": "renovate-release",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "onboarding": false,
