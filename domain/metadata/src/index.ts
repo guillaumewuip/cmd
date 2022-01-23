@@ -1,5 +1,3 @@
-import * as Metadata from './metadata'
+import * as Metadata from "./metadata";
 
-export {
-  Metadata,
-}
+export { Metadata };

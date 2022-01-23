@@ -1,11 +1,11 @@
 export type Cmd = {
-  type: 'cmd',
-  title: string,
+  type: "cmd";
+  title: string;
   image: {
-    src: string,
-    alt: string,
-    caption?: string,
-  },
+    src: string;
+    alt: string;
+    caption?: string;
+  };
 };
 
 export type Metadata = Cmd;

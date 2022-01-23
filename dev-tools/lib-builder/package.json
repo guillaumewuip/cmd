@@ -5,11 +5,11 @@
     "lib-build": "./bin/lib-build.sh",
     "lib-dev": "./bin/lib-dev.sh"
   },
-  "peerDependencies": {
-    "typescript": "*"
-  },
   "private": true,
   "dependencies": {
     "@microsoft/api-extractor": "^7.19.2"
+  },
+  "peerDependencies": {
+    "typescript": "*"
   }
 }

@@ -1,31 +1,27 @@
-import {
-  Track,
-  playOrPause,
-  play,
-} from '@cmd/domain-player'
+import { Track, playOrPause, play } from "@cmd/domain-player";
 
-import * as styles from './TrackBar.css'
+import * as styles from "./TrackBar.css";
 
-import Progress from '../../components/Progress'
-import * as Button from  '../../components/Button'
-import TrackText from  '../../components/TrackText'
+import Progress from "../../components/Progress";
+import * as Button from "../../components/Button";
+import TrackText from "../../components/TrackText";
 
-import Aborted from './Aborted'
-import Loading from './Loading'
+import Aborted from "./Aborted";
+import Loading from "./Loading";
 
 export default function TrackBar({
   track,
   isSelected,
 }: {
-  track: Track.Track,
-  isSelected: boolean
+  track: Track.Track;
+  isSelected: boolean;
 }) {
   if (!Track.isInitialized(track)) {
-    return <Loading />
+    return <Loading />;
   }
 
   if (Track.isAborted(track)) {
-    return <Aborted />
+    return <Aborted />;
   }
 
   if (!isSelected) {
@@ -39,19 +35,22 @@ export default function TrackBar({
           <TrackText track={track} />
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className={styles.selectedBar}>
       <div className={styles.command}>
-        {
-          Track.isInteractive(track)
-          ? Track.isPlaying(track)
-            ? <Button.Pause onClick={playOrPause} trackName={Track.title(track)} />
-            : <Button.Play onClick={playOrPause} trackName={Track.title(track)} />
-          : <Button.Loading />
-        }
+        {!Track.isInteractive(track) && <Button.Loading />}
+        {Track.isInteractive(track) &&
+          (Track.isPlaying(track) ? (
+            <Button.Pause
+              onClick={playOrPause}
+              trackName={Track.title(track)}
+            />
+          ) : (
+            <Button.Play onClick={playOrPause} trackName={Track.title(track)} />
+          ))}
       </div>
 
       <div className={styles.title}>
@@ -62,5 +61,5 @@ export default function TrackBar({
         <Progress track={track} />
       </div>
     </div>
-  )
+  );
 }

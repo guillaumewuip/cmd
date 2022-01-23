@@ -1,52 +1,54 @@
-import { ReactNode } from 'react'
-import NextImage from 'next/image'
+import { ReactNode } from "react";
+import NextImage from "next/image";
 
-import { H1, Small } from '@cmd/ui-text'
-import { Metadata } from '@cmd/domain-metadata'
+import { H1, Small } from "@cmd/ui-text";
+import { Metadata } from "@cmd/domain-metadata";
 
-import * as styles from './Article.css'
+import * as styles from "./Article.css";
 
 function Wrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <article className={styles.article}>
-      {children}
-    </article>
-  )
+  return <article className={styles.article}>{children}</article>;
 }
 
 function Column({ children }: { children: React.ReactNode }) {
-  return (
-    <div className={styles.left}>
-      {children}
-    </div>
-  )
+  return <div className={styles.left}>{children}</div>;
 }
 
-function Image({ src, alt, caption }: { src: string, alt: string, caption?: string }) {
+function Image({
+  src,
+  alt,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  caption?: string;
+}) {
   return (
     <div className={styles.imageSection}>
       <div className={styles.imageContainer}>
-        <NextImage src={src} alt={alt} layout="fill" objectFit="cover" priority />
+        <NextImage
+          src={src}
+          alt={alt}
+          layout="fill"
+          objectFit="cover"
+          priority
+        />
       </div>
-      {caption && <div className={styles.caption}><Small>{caption}</Small></div>}
+      {caption && (
+        <div className={styles.caption}>
+          <Small>{caption}</Small>
+        </div>
+      )}
     </div>
   );
 }
 
 function Content({ children }: { children: React.ReactNode }) {
-  return (
-    <div className={styles.right}>
-      {children}
-    </div>
-  )
+  return <div className={styles.right}>{children}</div>;
 }
 
 function Title({ children }: { children: React.ReactNode }) {
-  return (
-    <div className={styles.title}>
-      {children}
-    </div>
-  )
+  return <div className={styles.title}>{children}</div>;
 }
 
 export function Article({
@@ -54,9 +56,9 @@ export function Article({
   createdAt,
   content,
 }: {
-  metadata: Metadata.Cmd,
-  createdAt: string,
-  content: ReactNode,
+  metadata: Metadata.Cmd;
+  createdAt: string;
+  content: ReactNode;
 }) {
   return (
     <Wrapper>
@@ -65,7 +67,11 @@ export function Article({
       </Title>
 
       <Column>
-        <Image src={metadata.image.src} alt={metadata.image.alt} caption={metadata.image.caption} />
+        <Image
+          src={metadata.image.src}
+          alt={metadata.image.alt}
+          caption={metadata.image.caption}
+        />
       </Column>
 
       <Content>
@@ -76,5 +82,5 @@ export function Article({
         </div>
       </Content>
     </Wrapper>
-  )
+  );
 }

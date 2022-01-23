@@ -4,8 +4,8 @@ export function position(id: string): number {
     document,
     null,
     XPathResult.NUMBER_TYPE,
-    null,
-  )
+    null
+  );
 
-  return result.numberValue
+  return result.numberValue;
 }

@@ -1,40 +1,38 @@
-import dynamic from 'next/dynamic'
-import Head from 'next/head'
-import { NextSeo } from 'next-seo';
+import React from "react";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { NextSeo } from "next-seo";
 
-import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray'
-import { pipe } from 'fp-ts/function';
+import * as ReadonlyArrayFP from "fp-ts/ReadonlyArray";
+import { pipe } from "fp-ts/function";
 
-import { Post } from '@cmd/domain-post'
+import { Post } from "@cmd/domain-post";
 
-import { Article } from '@cmd/ui-article'
-import * as Layout from '@cmd/ui-layout'
-import { Header } from '@cmd/ui-header'
-import { Footer } from '@cmd/ui-footer'
+import { Article } from "@cmd/ui-article";
+import * as Layout from "@cmd/ui-layout";
+import { Header } from "@cmd/ui-header";
+import { Footer } from "@cmd/ui-footer";
 
-import {
-  getPostFromFullname,
-  getAllPostsPaths,
-} from '../../posts'
+import { getPostFromFullname, getAllPostsPaths } from "../../posts";
 
-import * as SiteMetadata from '../../metadata'
+import * as SiteMetadata from "../../metadata";
 
-function Page({
-  post
-}: {
-  post: Post.Post
-}) {
-  const Content = dynamic(() => import(`../../_posts/${post.infos.fullName}.mdx`))
+function Page({ post }: { post: Post.Post }) {
+  const Content = dynamic(
+    () => import(`../../_posts/${post.infos.fullName}.mdx`)
+  );
 
-  const url = `${SiteMetadata.site.url}/post/${post.infos.fullName}`
-  const imageUrl = `${SiteMetadata.site.url}${post.infos.metadata.image.src}`
+  const url = `${SiteMetadata.site.url}/post/${post.infos.fullName}`;
+  const imageUrl = `${SiteMetadata.site.url}${post.infos.metadata.image.src}`;
 
-  const title = `${post.infos.metadata.title} - ${SiteMetadata.site.name}`
+  const title = `${post.infos.metadata.title} - ${SiteMetadata.site.name}`;
 
   return (
     <div>
       <Head>
-        <title>{post.infos.metadata.title} - {SiteMetadata.site.name}</title>
+        <title>
+          {post.infos.metadata.title} - {SiteMetadata.site.name}
+        </title>
       </Head>
 
       <NextSeo
@@ -43,46 +41,54 @@ function Page({
           title,
           url,
           images: [{ url: imageUrl }],
-          type: 'article',
+          type: "article",
         }}
         twitter={{
-          cardType: 'summary_large_image',
+          cardType: "summary_large_image",
         }}
       />
 
       <Layout.Wrapper>
         <Header />
-        <Article metadata={post.infos.metadata} createdAt={post.infos.createdAt} content={<Content />} />
+        <Article
+          metadata={post.infos.metadata}
+          createdAt={post.infos.createdAt}
+          content={<Content />}
+        />
         <Footer />
       </Layout.Wrapper>
     </div>
-  )
+  );
 }
 
-export async function getStaticProps({ params: { fullName } }: { params: { fullName: string }}) {
-  const post = await getPostFromFullname(fullName)
+export async function getStaticProps({
+  params: { fullName },
+}: {
+  params: { fullName: string };
+}) {
+  const post = await getPostFromFullname(fullName);
 
   return {
     props: {
-      post
+      post,
     },
-  }
+  };
 }
 
 export async function getStaticPaths() {
   const paths: ReadonlyArray<{ params: { fullName: string } }> = pipe(
     getAllPostsPaths(),
-    ReadonlyArrayFP.map(fullName => ({
+    ReadonlyArrayFP.map((fullName) => ({
       params: {
         fullName,
-      }
+      },
     }))
-  )
+  );
 
   return {
     paths,
-    fallback: false
-  }
+    fallback: false,
+  };
 }
 
-export default Page
+export default Page;

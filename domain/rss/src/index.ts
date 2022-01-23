@@ -1,14 +1,14 @@
-import fs from 'fs';
-import path from 'path';
-import { Feed } from 'feed';
-import { parse as parseDate } from 'date-fns'
+import fs from "fs";
+import path from "path";
+import { Feed } from "feed";
+import { parse as parseDate } from "date-fns";
 
-import { pipe } from 'fp-ts/function'
-import * as ReadonlyArrayFP from 'fp-ts/ReadonlyArray';
+import { pipe } from "fp-ts/function";
+import * as ReadonlyArrayFP from "fp-ts/ReadonlyArray";
 
-import { Post } from '@cmd/domain-post'
+import { Post } from "@cmd/domain-post";
 
-const siteURL = "http://cmd.wuips.com"
+const siteURL = "http://cmd.wuips.com";
 
 const author = {
   name: "Guillaume",
@@ -41,9 +41,10 @@ export async function generateFeeds(
 
   pipe(
     posts,
-    ReadonlyArrayFP.map(post => {
-      const date = parseDate(post.infos.createdAt, 'dd/MM/y', new Date())
-      date.setHours(8)
+    // eslint-disable-next-line array-callback-return
+    ReadonlyArrayFP.map((post) => {
+      const date = parseDate(post.infos.createdAt, "dd/MM/y", new Date());
+      date.setHours(8);
 
       feed.addItem({
         title: post.infos.metadata.title,
@@ -51,10 +52,10 @@ export async function generateFeeds(
         link: post.infos.url,
         description: post.excerpt,
         date,
-        image: `${siteURL}${post.infos.metadata.image.src}`
-      })
+        image: `${siteURL}${post.infos.metadata.image.src}`,
+      });
     })
-  )
+  );
 
   fs.mkdirSync(outputDir, { recursive: true });
   fs.writeFileSync(path.join(outputDir, "feed.xml"), feed.rss2());

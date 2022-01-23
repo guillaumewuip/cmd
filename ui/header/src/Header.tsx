@@ -1,6 +1,6 @@
-import { MainTitle } from './MainTitle'
+import { MainTitle } from "./MainTitle";
 
-import * as styles from './Header.css'
+import * as styles from "./Header.css";
 
 export function Header() {
   return (
@@ -9,5 +9,5 @@ export function Header() {
         <MainTitle />
       </a>
     </header>
-  )
+  );
 }

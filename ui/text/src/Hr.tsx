@@ -1,5 +1,5 @@
-import * as styles from './Hr.css'
+import * as styles from "./Hr.css";
 
 export function Hr() {
-  return <div className={styles.hr}>···</div>
+  return <div className={styles.hr}>···</div>;
 }
