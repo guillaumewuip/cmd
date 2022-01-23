@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":ignoreUnstable",
+    ":prImmediately",
+    ":automergeDisabled",
+    ":preserveSemverRanges",
+    ":rebaseStalePrs",
+    ":separateMultipleMajorReleases",
+    "group:monorepos",
+    "group:recommended",
+    "npm:unpublishSafe"
+  ],
+  "dryRun": true,
+  "username": "renovate-release",
+  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
+  "onboarding": false,
+  "platform": "github",
+  "timezone": "Europe/Paris"
+}
