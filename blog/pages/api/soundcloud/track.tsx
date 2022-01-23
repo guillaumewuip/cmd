@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse} from 'next'
 
-import { JSDOM } from 'jsdom';
+import { parseHTML } from 'linkedom';
 
 async function getSoundcloudTrackId(url: string) {
   const response = await fetch(url)
   const documentString = await response.text()
 
-  const document = new JSDOM(documentString).window.document
+  const document = parseHTML(documentString).window.document
 
   const metaContentElement = document.querySelector('meta[content^="soundcloud://sounds:"]')
 

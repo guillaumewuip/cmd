@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse} from 'next'
 
-import { JSDOM } from 'jsdom';
+import { parseHTML } from 'linkedom';
 
 async function fetchPage(url: string): Promise<Document> {
   const response = await fetch(url)
   const documentString = await response.text()
 
-  return new JSDOM(documentString).window.document
+  return parseHTML(documentString).window.document
 }
 
 function extractTrackId(document: Document): string {
