@@ -10,12 +10,18 @@ jobs:
   install:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
       - name: Setup
         uses: ./.github/actions/setup-project
 
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
       - name: Setup
         uses: ./.github/actions/setup-project
 

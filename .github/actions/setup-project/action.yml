@@ -5,9 +5,6 @@ description: 'Setup node, pnpm and install'
 runs:
   using: "composite"
   steps:
-    - name: Check out repository code
-      uses: actions/checkout@v2
-
     - uses: pnpm/action-setup@v2.0.1
       with:
         version: 6
