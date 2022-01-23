@@ -22,5 +22,11 @@ jobs:
           node-version: '14'
           cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install
+        run: pnpm install --frozen-lockfile
 
+      - name: Build
+        env:
+          TEAM: ${{ secrets.VERCEL_TEAM }}
+          TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: pnpm exec turbo run build --api="https://api.vercel.com" --team="$TEAM" --token="$TOKEN"
