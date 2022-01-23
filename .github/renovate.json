@@ -12,6 +12,9 @@
     "group:recommended",
     "npm:unpublishSafe"
   ],
+  "repositories": [
+    "guillaumewuip/cmd"
+  ],
   "dryRun": true,
   "username": "renovate-release",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
