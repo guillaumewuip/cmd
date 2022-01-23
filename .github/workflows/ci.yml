@@ -17,6 +17,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
   build:
+    needs: install
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -30,3 +31,19 @@ jobs:
           TEAM: ${{ secrets.VERCEL_TEAM }}
           TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: pnpm exec turbo run build --api="https://api.vercel.com" --team="$TEAM" --token="$TOKEN"
+
+  lint:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Setup
+        uses: ./.github/actions/setup-project
+
+      - name: Lint
+        env:
+          TEAM: ${{ secrets.VERCEL_TEAM }}
+          TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: pnpm exec turbo run lint --api="https://api.vercel.com" --team="$TEAM" --token="$TOKEN"
