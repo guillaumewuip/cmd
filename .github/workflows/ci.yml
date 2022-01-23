@@ -1,7 +1,10 @@
 name: Continuous Integration
 
 on:
-  - push
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   install:
@@ -19,5 +22,5 @@ jobs:
           node-version: '14'
           cache: 'pnpm'
 
-      - run: pnpm install --fix-lockfile
+      - run: pnpm install --frozen-lockfile
 
