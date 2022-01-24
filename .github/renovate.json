@@ -1,5 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "username": "renovate-release",
+  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
+  "platform": "github",
+  "repositories": [
+    "guillaumewuip/cmd"
+  ],
   "extends": [
     "config:base",
     ":ignoreUnstable",
@@ -12,16 +18,11 @@
     "group:recommended",
     "npm:unpublishSafe"
   ],
-  "repositories": [
-    "guillaumewuip/cmd"
-  ],
   "schedule": [
-    "after 12pm and before 7am"
+    "before 7am"
   ],
+  "timezone": "Europe/Paris",
   "dryRun": false,
-  "username": "renovate-release",
-  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "onboarding": false,
-  "platform": "github",
-  "timezone": "Europe/Paris"
+  "prCreation":"not-pending"
 }
