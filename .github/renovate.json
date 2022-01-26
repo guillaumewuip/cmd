@@ -14,6 +14,7 @@
     ":preserveSemverRanges",
     ":rebaseStalePrs",
     ":separateMultipleMajorReleases",
+    ":disableDependencyDashboard",
     "group:monorepos",
     "group:recommended",
     "npm:unpublishSafe"
