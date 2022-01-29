@@ -4,12 +4,6 @@ import {
   Youtube,
   isEmbedableLink,
   MusicEmbedLink,
-} from './MusicEmbed'
+} from "./MusicEmbed";
 
-export {
-  Bandcamp,
-  Soundcloud,
-  Youtube,
-  isEmbedableLink,
-  MusicEmbedLink,
-}
+export { Bandcamp, Soundcloud, Youtube, isEmbedableLink, MusicEmbedLink };

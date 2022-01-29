@@ -29,6 +29,10 @@
         "cache": false,
         "dependsOn": [],
         "outputs": []
+      },
+      "lint": {
+        "dependsOn": [],
+        "outputs": []
       }
     }
   }

@@ -1,10 +1,10 @@
-import { style } from '@vanilla-extract/css';
-import { vars, mediaQueries } from '@cmd/ui-theme'
+import { style } from "@vanilla-extract/css";
+import { vars, mediaQueries } from "@cmd/ui-theme";
 
 export const article = style({
-  display: 'grid',
-  gridTemplateColumns: '1fr',
-  gridTemplateRows: 'auto',
+  display: "grid",
+  gridTemplateColumns: "1fr",
+  gridTemplateRows: "auto",
   gridTemplateAreas: `
     "title"
     "top"
@@ -14,75 +14,73 @@ export const article = style({
   padding: `${vars.sizes.l} 0`,
   marginBottom: `${vars.sizes.l}`,
 
-  '@media': {
+  "@media": {
     ...mediaQueries.forDesktopOnly({
-      gridTemplateColumns: '33% 67%',
+      gridTemplateColumns: "33% 67%",
       gridTemplateAreas: `
         "left title"
         "left right"
-      `
-    })
-
-  }
+      `,
+    }),
+  },
 });
 
 export const title = style({
-  gridArea: 'title',
+  gridArea: "title",
 
-  '@media': {
+  "@media": {
     ...mediaQueries.forDesktopOnly({
       paddingTop: vars.sizes.m,
       paddingLeft: vars.sizes.m,
-    })
-  }
-})
+    }),
+  },
+});
 
 export const left = style({
-  gridArea: 'top',
+  gridArea: "top",
 
-  '@media': {
+  "@media": {
     ...mediaQueries.forDesktopOnly({
       paddingRight: vars.sizes.m,
-      gridArea: 'left',
-    })
-  }
-})
+      gridArea: "left",
+    }),
+  },
+});
 
 export const imageSection = style({
   marginBottom: vars.sizes.l,
-})
+});
 
 export const imageContainer = style({
-  position: 'relative',
-  width: '100%',
+  position: "relative",
+  width: "100%",
   marginBottom: vars.sizes.xs,
 
   selectors: {
-    '&::after': {
+    "&::after": {
       content: "",
-      display: 'block',
-      paddingBottom: '100%',
-    }
-  }
-})
+      display: "block",
+      paddingBottom: "100%",
+    },
+  },
+});
 
 export const caption = style({
-  textAlign: 'center'
-})
+  textAlign: "center",
+});
 
 export const right = style({
-  gridArea: 'bottom',
+  gridArea: "bottom",
 
-  '@media': {
+  "@media": {
     ...mediaQueries.forDesktopOnly({
       paddingLeft: vars.sizes.m,
-      gridArea: 'right',
-    })
-  }
-})
+      gridArea: "right",
+    }),
+  },
+});
 
 export const metadata = style({
-  width: '100%',
+  width: "100%",
   marginTop: vars.sizes.s,
-})
-
+});

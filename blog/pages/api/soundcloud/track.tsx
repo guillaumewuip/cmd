@@ -1,67 +1,71 @@
-import { NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from "next";
 
-import { parseHTML } from 'linkedom';
+import { parseHTML } from "linkedom";
 
 async function getSoundcloudTrackId(url: string) {
-  const response = await fetch(url)
-  const documentString = await response.text()
+  const response = await fetch(url);
+  const documentString = await response.text();
 
-  const document = parseHTML(documentString).window.document
+  const { document } = parseHTML(documentString).window;
 
-  const metaContentElement = document.querySelector('meta[content^="soundcloud://sounds:"]')
+  const metaContentElement = document.querySelector(
+    'meta[content^="soundcloud://sounds:"]'
+  );
 
   if (!metaContentElement) {
-    throw new Error(`Can't find meta tag`)
+    throw new Error(`Can't find meta tag`);
   }
 
-  const content = metaContentElement.getAttribute('content')
+  const content = metaContentElement.getAttribute("content");
 
   if (!content) {
-    throw new Error(`No content on meta tag`)
+    throw new Error(`No content on meta tag`);
   }
 
-  const result = content.match(/sounds:(?<id>\d*)/)
+  const result = content.match(/sounds:(?<id>\d*)/);
 
   if (result === null) {
-    throw new Error(`Can't find trackId`)
+    throw new Error(`Can't find trackId`);
   }
 
-  const { groups: { id } = { id: undefined } } = result
+  const { groups: { id } = { id: undefined } } = result;
 
   if (id === undefined) {
-    throw new Error(`Can't find trackId`)
+    throw new Error(`Can't find trackId`);
   }
 
-  return id
+  return id;
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
-    if (req.method === 'GET') {
-      const url = req.query.url
+    if (req.method === "GET") {
+      const { url } = req.query;
 
       if (!url || Array.isArray(url)) {
         res.status(400).json({
-          error: 'Missing correct url query parameter'
-        })
-        return
+          error: "Missing correct url query parameter",
+        });
+        return;
       }
 
-      const trackId = await getSoundcloudTrackId(decodeURIComponent(url))
+      const trackId = await getSoundcloudTrackId(decodeURIComponent(url));
 
       res.status(200).json({
-        trackId
-      })
-      return
+        trackId,
+      });
+      return;
     }
 
-    res.status(400)
-    return
+    res.status(400);
+    return;
   } catch (error) {
-    console.error(error)
+    // eslint-disable-next-line no-console
+    console.error(error);
 
-    res.status(500)
-    return
+    res.status(500);
   }
 }
-

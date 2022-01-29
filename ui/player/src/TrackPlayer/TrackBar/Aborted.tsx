@@ -1,6 +1,6 @@
-import AbortedText from './../../components/AbortedText'
+import AbortedText from "../../components/AbortedText";
 
-import * as styles from './TrackBar.css'
+import * as styles from "./TrackBar.css";
 
 export default function Aborted() {
   return (
@@ -9,5 +9,5 @@ export default function Aborted() {
         <AbortedText />
       </div>
     </div>
-  )
+  );
 }

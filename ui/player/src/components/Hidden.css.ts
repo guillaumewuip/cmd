@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style } from "@vanilla-extract/css";
 
 // from reakit
 export const hidden = style({
@@ -11,4 +11,4 @@ export const hidden = style({
   position: "absolute",
   whiteSpace: "nowrap",
   width: "1px",
-})
+});

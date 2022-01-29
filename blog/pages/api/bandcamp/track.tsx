@@ -1,80 +1,84 @@
-import { NextApiRequest, NextApiResponse} from 'next'
+import { NextApiRequest, NextApiResponse } from "next";
 
-import { parseHTML } from 'linkedom';
+import { parseHTML } from "linkedom";
 
 async function fetchPage(url: string): Promise<Document> {
-  const response = await fetch(url)
-  const documentString = await response.text()
+  const response = await fetch(url);
+  const documentString = await response.text();
 
-  return parseHTML(documentString).window.document
+  return parseHTML(documentString).window.document;
 }
 
 function extractTrackId(document: Document): string {
-  const metaPagePropertiesElement = document.querySelector('meta[name="bc-page-properties"]')
+  const metaPagePropertiesElement = document.querySelector(
+    'meta[name="bc-page-properties"]'
+  );
 
   if (!metaPagePropertiesElement) {
-    throw new Error(`Can't find bc-page-properties meta tag`)
+    throw new Error(`Can't find bc-page-properties meta tag`);
   }
 
-  const content = metaPagePropertiesElement.getAttribute('content')
+  const content = metaPagePropertiesElement.getAttribute("content");
 
   if (!content) {
-    throw new Error(`No content on bc-page-properties meta tag`)
+    throw new Error(`No content on bc-page-properties meta tag`);
   }
 
-  const pageProperties = JSON.parse(content)
+  const pageProperties = JSON.parse(content);
 
-  if (!('item_id' in pageProperties)) {
-    throw new Error(`Can't find item_id in page properties`)
+  if (!("item_id" in pageProperties)) {
+    throw new Error(`Can't find item_id in page properties`);
   }
 
-  return pageProperties.item_id
+  return pageProperties.item_id;
 }
 
 function extractStream(document: Document): string {
-  const script = document.querySelector('script[data-tralbum]')
+  const script = document.querySelector("script[data-tralbum]");
 
   if (!script) {
-    throw new Error(`Can't find data-tralbum script tag`)
+    throw new Error(`Can't find data-tralbum script tag`);
   }
 
-  const data = JSON.parse(script.getAttribute('data-tralbum') || '')
+  const data = JSON.parse(script.getAttribute("data-tralbum") || "");
 
-  const url = Object.values(data.trackinfo[0].file)[0] as string
+  const url = Object.values(data.trackinfo[0].file)[0] as string;
 
-  return url
+  return url;
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
-    if (req.method === 'GET') {
-      const url = req.query.url
+    if (req.method === "GET") {
+      const { url } = req.query;
 
       if (!url || Array.isArray(url)) {
         res.status(400).json({
-          error: 'Missing correct url query parameter'
-        })
-        return
+          error: "Missing correct url query parameter",
+        });
+        return;
       }
 
-      const page = await fetchPage(decodeURIComponent(url))
-      const trackId = extractTrackId(page)
-      const streamUrl = extractStream(page)
+      const page = await fetchPage(decodeURIComponent(url));
+      const trackId = extractTrackId(page);
+      const streamUrl = extractStream(page);
 
       res.status(200).json({
         trackId,
         streamUrl,
-      })
-      return
+      });
+      return;
     }
 
-    res.status(400)
-    return
+    res.status(400);
+    return;
   } catch (error) {
-    console.error(error)
+    // eslint-disable-next-line no-console
+    console.error(error);
 
-    res.status(500)
-    return
+    res.status(500);
   }
 }
-

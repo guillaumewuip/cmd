@@ -1,7 +1,4 @@
-import { Article } from './Article'
-import { Mosaic } from './Mosaic'
+import { Article } from "./Article";
+import { Mosaic } from "./Mosaic";
 
-export {
-  Article,
-  Mosaic,
-}
+export { Article, Mosaic };

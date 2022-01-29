@@ -1,31 +1,31 @@
-import { globalStyle } from '@vanilla-extract/css';
+import { globalStyle } from "@vanilla-extract/css";
 
-globalStyle('html, body', {
+globalStyle("html, body", {
   padding: 0,
   margin: 0,
-  fontSize: '16px',
+  fontSize: "16px",
 
-  '@media': {
-    'prefers-color-scheme: dark': {
-      filter: 'invert(1) hue-rotate(180deg)',
-    }
-  }
+  "@media": {
+    "prefers-color-scheme: dark": {
+      filter: "invert(1) hue-rotate(180deg)",
+    },
+  },
 });
 
-globalStyle('img, iframe', {
-  '@media': {
-    'prefers-color-scheme: dark': {
-      filter: 'invert(1) hue-rotate(-180deg)',
-    }
-  }
+globalStyle("img, iframe", {
+  "@media": {
+    "prefers-color-scheme: dark": {
+      filter: "invert(1) hue-rotate(-180deg)",
+    },
+  },
 });
 
-globalStyle('html', {
-  backgroundColor: '#fff',
+globalStyle("html", {
+  backgroundColor: "#fff",
 });
 
-globalStyle('*', {
+globalStyle("*", {
   padding: 0,
   margin: 0,
-  boxSizing: 'border-box'
+  boxSizing: "border-box",
 });

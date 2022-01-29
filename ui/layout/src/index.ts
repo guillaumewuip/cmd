@@ -1,9 +1,3 @@
-import {
-  Wrapper,
-  SmallSection,
-} from './Default'
+import { Wrapper, SmallSection } from "./Default";
 
-export {
-  Wrapper,
-  SmallSection,
-}
+export { Wrapper, SmallSection };

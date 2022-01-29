@@ -1,6 +1,6 @@
-import { useMemo } from 'react'
+import { useMemo } from "react";
 
-import { Monospace } from '@cmd/ui-text'
+import { Monospace } from "@cmd/ui-text";
 
 const abortedMessages = [
   `Ooops. Quelque chose est cassé. Bravo Guillaume.`,
@@ -8,15 +8,13 @@ const abortedMessages = [
   `Super ton petit blog Guillaume, mais c'est tout cassé.`,
   `Nos plus plates excuses, quelque chose ne fonctione pas bien.`,
   `Encore un truc HS, merci Guillaume.`,
-]
+];
 
-const randomAbortedMessage = () => abortedMessages[Math.floor(Math.random() * abortedMessages.length)]
+const randomAbortedMessage = () =>
+  abortedMessages[Math.floor(Math.random() * abortedMessages.length)];
 
 export default function AbortedText() {
-  const message = useMemo(randomAbortedMessage, [])
+  const message = useMemo(randomAbortedMessage, []);
 
-  return (
-    <Monospace>{message}</Monospace>
-  )
+  return <Monospace>{message}</Monospace>;
 }
-

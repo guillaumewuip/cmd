@@ -6,10 +6,12 @@
   "typings": "dist-typings/index.d.ts",
   "scripts": {
     "build": "lib-build",
-    "dev": "lib-dev"
+    "dev": "lib-dev",
+    "lint": "lib-lint \"src/**/*.@(js|ts|tsx)\""
   },
   "devDependencies": {
     "@cmd/lib-builder": "workspace:*",
+    "@cmd/eslint-config": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
     "@types/node": "^17.0.10",
     "typescript": "^4.5.5"

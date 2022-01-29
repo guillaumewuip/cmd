@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "postbuild": "next-sitemap",
-    "start": "next start"
+    "start": "next start",
+    "lint": "lib-lint \"pages/**/*.@(js|ts|tsx)\""
   },
   "dependencies": {
     "@cmd/domain-metadata": "workspace:*",
     "@cmd/domain-player": "workspace:*",
     "@cmd/domain-post": "workspace:*",
     "@cmd/domain-rss": "workspace:*",
+    "@cmd/eslint-config": "workspace:*",
     "@cmd/ui-article": "workspace:*",
     "@cmd/ui-footer": "workspace:*",
     "@cmd/ui-header": "workspace:*",
@@ -35,6 +37,7 @@
     "next-sitemap": "^1.9.12",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-loading-skeleton": "^3.0.1",
     "xml-parse": "^0.4.0"
   },
   "devDependencies": {

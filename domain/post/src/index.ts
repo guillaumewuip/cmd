@@ -1,7 +1,4 @@
-import * as Infos from './infos'
-import * as Post from './post'
+import * as Infos from "./infos";
+import * as Post from "./post";
 
-export {
-  Infos,
-  Post,
-}
+export { Infos, Post };
