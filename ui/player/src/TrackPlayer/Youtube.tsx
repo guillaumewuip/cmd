@@ -1,31 +1,32 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
-import { loadYoutube, Track } from "@cmd/domain-player";
+import { loadYoutube } from "@cmd/domain-player";
 
 import { VisuallyAndAriaHidden } from "../components/Hidden";
-import * as TrackBar from "./TrackBar";
+import TrackBar from "./TrackBar";
 
-export function Player({ trackId }: { trackId: string }) {
+export function Player({ id, youtubeId }: { id: string; youtubeId: string }) {
   const ref = useRef(null);
 
-  const loadSource = (track: Track.Reserved) => {
+  useEffect(() => {
     if (ref.current === null) {
-      throw new Error("Ref is empty");
+      throw new Error("Youtube ref is empty");
     }
 
-    return loadYoutube({
-      track,
+    loadYoutube({
+      id,
+      youtubeId,
       container: ref.current,
-    });
-  };
+    })();
+  }, [id, youtubeId]);
 
   return (
-    <div id={trackId}>
+    <>
       <VisuallyAndAriaHidden>
         <div ref={ref} tabIndex={-1} />
       </VisuallyAndAriaHidden>
 
-      <TrackBar.Player id={trackId} loadSource={loadSource} />
-    </div>
+      <TrackBar id={id} />
+    </>
   );
 }

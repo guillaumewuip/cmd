@@ -1,74 +1,79 @@
-import { useState, useEffect } from "react";
+import {
+  Tracks,
+  Track,
+  playOrPause,
+  play,
+  usePlayer,
+  shallowEqual,
+} from "@cmd/domain-player";
 
-import * as TaskEither from "fp-ts/TaskEither";
+import * as Eq from "fp-ts/Eq";
 import * as Option from "fp-ts/Option";
-import * as Either from "fp-ts/Either";
 import { pipe } from "fp-ts/function";
 
-import { register, usePlayer, Tracks, Track } from "@cmd/domain-player";
+import * as styles from "./TrackBar.css";
 
-import Loading from "./Loading";
+import Progress from "../../components/Progress";
+import * as Button from "../../components/Button";
+import TrackText from "../../components/TrackText";
+
 import Aborted from "./Aborted";
-import Loaded from "./Track";
 
-import { previousTitle } from "./previousTitle";
-import { position } from "./position";
+const eqOptionTrack = pipe(shallowEqual, Eq.fromEquals, Option.getEq);
 
-export function Player({
-  id,
-  loadSource,
-}: {
-  id: string;
-  loadSource: (track: Track.Reserved) => TaskEither.TaskEither<Error, void>;
-}) {
-  const [result, setResult] = useState<
-    Option.Option<Either.Either<Error, unknown>>
-  >(Option.none);
+export default function TrackBar({ id }: { id: string }) {
+  const maybeTrack = usePlayer(Tracks.findTrackById(id), eqOptionTrack.equals);
+  const selected = usePlayer(Tracks.isSelected(id));
 
-  const maybeTrack = usePlayer(Tracks.findTrackById(id));
-  const isSelected = usePlayer(Tracks.isSelected(id));
+  if (Option.isNone(maybeTrack)) {
+    return null;
+  }
 
-  useEffect(() => {
-    const title = previousTitle(id);
-    const weight = position(id);
+  const track = maybeTrack.value;
 
-    if (Option.isNone(title)) {
-      throw new Error(`Can't find title for ${id}`);
-    }
+  if (Track.isAborted(track)) {
+    return <Aborted />;
+  }
 
-    const track = register({
-      id,
-      title: title.value,
-      weight,
-    })();
+  if (!selected || Track.isReserved(track)) {
+    return (
+      <div className={styles.notSelectedBar}>
+        <div className={styles.command}>
+          {!Track.isInitialized(track) && <Button.Loading />}
+          {Track.isInitialized(track) && (
+            <Button.Play onClick={play(track)} trackName={Track.title(track)} />
+          )}
+        </div>
 
-    loadSource(track)().then((localResult) =>
-      setResult(Option.some(localResult))
+        <div className={styles.title}>
+          <TrackText track={track} />
+        </div>
+      </div>
     );
-  }, [id, loadSource, setResult]);
+  }
 
-  const state: Option.Option<Either.Either<Error, Track.Track>> = pipe(
-    result,
-    Option.fold(
-      () => Option.none,
-      Either.fold(
-        (error) => Option.some(Either.left(error)),
-        () => pipe(maybeTrack, Option.map(Either.right))
-      )
-    )
-  );
+  return (
+    <div className={styles.selectedBar}>
+      <div className={styles.command}>
+        {!Track.isInteractive(track) && <Button.Loading />}
+        {Track.isInteractive(track) &&
+          (Track.isPlaying(track) ? (
+            <Button.Pause
+              onClick={playOrPause}
+              trackName={Track.title(track)}
+            />
+          ) : (
+            <Button.Play onClick={playOrPause} trackName={Track.title(track)} />
+          ))}
+      </div>
 
-  return pipe(
-    state,
-    Option.fold(
-      () => <Loading />,
-      Either.fold(
-        () => <Aborted />,
-        (track) => <Loaded track={track} isSelected={isSelected} />
-      )
-    )
+      <div className={styles.title}>
+        <TrackText track={track} />
+      </div>
+
+      <div className={styles.progress}>
+        <Progress track={track} />
+      </div>
+    </div>
   );
 }
-
-export { default as Loading } from "./Loading";
-export { default as Aborted } from "./Aborted";

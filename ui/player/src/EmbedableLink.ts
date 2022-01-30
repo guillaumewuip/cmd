@@ -29,7 +29,7 @@ export type Bandcamp = ReturnType<typeof EmbedableLinkAPI.of.Bandcamp>;
 export const { fold } = EmbedableLinkAPI;
 export const href = EmbedableLinkAPI.lensFromProp("href").get;
 
-export const trackId = EmbedableLinkAPI.Youtube.lensFromProp("href").get;
+export const trackId = EmbedableLinkAPI.Youtube.lensFromProp("trackId").get;
 
 export function parseLink(text: string): Option.Option<EmbedableLink> {
   if (text.includes("youtube.com/watch")) {
@@ -59,4 +59,13 @@ export function parseLink(text: string): Option.Option<EmbedableLink> {
   }
 
   return Option.none;
+}
+
+export function slugify(link: EmbedableLink): string {
+  return href(link)
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/[-\s]+/g, "-");
 }
