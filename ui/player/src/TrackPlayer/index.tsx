@@ -38,6 +38,7 @@ export function TrackPlayer({
     register({
       id,
       title: title.value,
+      externalUrl: EmbedableLink.href(embedableLink),
       weight,
     })();
 
