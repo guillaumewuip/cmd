@@ -12,12 +12,12 @@ type $Reserved = {
   title: string;
 };
 
+type $Aborted = $Reserved;
+
 type $Initialized = $Reserved & {
   duration: Option.Option<number>; // in seconds
   source: Source.TrackSource;
 };
-
-type $Aborted = $Initialized;
 
 type $Loading = $Initialized & {
   position: Option.Option<Position.Position>;
@@ -60,7 +60,7 @@ export const maybePosition = TrackAPI.Loading.lensFromProp("position").get;
 
 export const eqId: Eq.Eq<Track> = Eq.contramap(id)(StringFP.Eq);
 
-const InitializedTrackAPI = Union.omit(TrackAPI, ["Reserved"]);
+const InitializedTrackAPI = Union.omit(TrackAPI, ["Reserved", "Aborted"]);
 export type Initialized = Union.Type<typeof InitializedTrackAPI>;
 
 export const isInitialized = InitializedTrackAPI.is;
@@ -82,7 +82,7 @@ export const reserved = (data: { id: string; title: string }) =>
   });
 
 export const initialized =
-  (data: { source: Source.TrackSource }) => (track: Reserved) =>
+  (data: { source: Source.TrackSource }) => (track: Track) =>
     TrackAPI.of.Loading({
       id: id(track),
       title: title(track),
@@ -90,6 +90,12 @@ export const initialized =
       duration: Option.none,
       position: Option.none,
     });
+
+export const aborted = (track: Track) =>
+  TrackAPI.of.Aborted({
+    id: id(track),
+    title: title(track),
+  });
 
 export const started = (track: Loading) =>
   TrackAPI.of.Playing({
@@ -147,14 +153,6 @@ export const buffered = (track: Loading) =>
       TrackAPI.Loading.lensFromProp("position").get,
       Option.getOrElse(Position.createStart)
     ),
-  });
-
-export const aborted = (track: Initialized) =>
-  TrackAPI.of.Aborted({
-    id: id(track),
-    title: title(track),
-    source: source(track),
-    duration: duration(track),
   });
 
 export const positionChanged = InteractiveTrackAPI.lensFromProp("position").set;

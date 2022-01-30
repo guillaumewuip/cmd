@@ -2,7 +2,7 @@ import * as Track from "./entities/Track";
 import * as Tracks from "./entities/Tracks";
 import * as Position from "./entities/Position";
 
-import { usePlayer } from "./store";
+import { usePlayer, shallowEqual } from "./store";
 import { playOrPause, play } from "./repositories/playPause";
 import {
   reserve,
@@ -17,6 +17,7 @@ export {
   Tracks,
   Position,
   usePlayer,
+  shallowEqual,
   playOrPause,
   play,
   reserve as register,

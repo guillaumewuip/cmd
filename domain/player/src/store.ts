@@ -21,3 +21,5 @@ export const write =
     store.setState(updater);
 
 export const usePlayer = createHook(store);
+
+export { default as shallowEqual } from "zustand/shallow";
