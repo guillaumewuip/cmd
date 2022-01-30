@@ -4,6 +4,7 @@ import * as Union from "@fp51/opaque-union";
 
 type $Youtube = {
   trackId: string;
+  href: string;
 };
 
 type $Soundcloud = {
@@ -26,11 +27,9 @@ export type Soundcloud = ReturnType<typeof EmbedableLinkAPI.of.Soundcloud>;
 export type Bandcamp = ReturnType<typeof EmbedableLinkAPI.of.Bandcamp>;
 
 export const { fold } = EmbedableLinkAPI;
-export const trackId = EmbedableLinkAPI.Youtube.lensFromProp("trackId").get;
-export const href = Union.pick(EmbedableLinkAPI, [
-  "Soundcloud",
-  "Bandcamp",
-]).lensFromProp("href").get;
+export const href = EmbedableLinkAPI.lensFromProp("href").get;
+
+export const trackId = EmbedableLinkAPI.Youtube.lensFromProp("href").get;
 
 export function parseLink(text: string): Option.Option<EmbedableLink> {
   if (text.includes("youtube.com/watch")) {
@@ -46,7 +45,9 @@ export function parseLink(text: string): Option.Option<EmbedableLink> {
       return Option.none;
     }
 
-    return Option.some(EmbedableLinkAPI.of.Youtube({ trackId: id }));
+    return Option.some(
+      EmbedableLinkAPI.of.Youtube({ trackId: id, href: text })
+    );
   }
 
   if (text.includes("soundcloud.com/")) {
