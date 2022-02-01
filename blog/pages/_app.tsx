@@ -76,7 +76,7 @@ function MyApp({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,600;0,700;1,400;1,700&family=IBM+Plex+Mono&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap"
           rel="stylesheet"
         />
 
