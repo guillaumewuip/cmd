@@ -5,6 +5,7 @@ const svg = style({
   filter: "grayscale(1)",
   opacity: 0.8,
   padding: `${vars.sizes.s} 0`,
+  position: "relative",
 
   selectors: {
     "&:hover, &:focus": {
@@ -13,6 +14,7 @@ const svg = style({
     },
 
     "&:active": {
+      top: "0.1rem",
       filter: "none",
       opacity: 1,
     },
