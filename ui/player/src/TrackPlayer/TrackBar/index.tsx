@@ -13,6 +13,7 @@ import { pipe } from "fp-ts/function";
 
 import * as styles from "./TrackBar.css";
 
+import SourceLink from "../../components/SourceLink";
 import Progress from "../../components/Progress";
 import * as Button from "../../components/Button";
 import TrackText from "../../components/TrackText";
@@ -20,6 +21,27 @@ import TrackText from "../../components/TrackText";
 import Aborted from "./Aborted";
 
 const eqOptionTrack = pipe(shallowEqual, Eq.fromEquals, Option.getEq);
+
+function Title({ track }: { track: Track.Track }) {
+  return (
+    <div className={styles.title}>
+      <TrackText track={track} />
+    </div>
+  );
+}
+
+function Source({ track }: { track: Track.Track }) {
+  return (
+    <div className={styles.source}>
+      {Track.isInitialized(track) && (
+        <SourceLink
+          href={Track.externalUrl(track)}
+          source={Track.source(track)}
+        />
+      )}
+    </div>
+  );
+}
 
 export default function TrackBar({ id }: { id: string }) {
   const maybeTrack = usePlayer(Tracks.findTrackById(id), eqOptionTrack.equals);
@@ -45,9 +67,9 @@ export default function TrackBar({ id }: { id: string }) {
           )}
         </div>
 
-        <div className={styles.title}>
-          <TrackText track={track} />
-        </div>
+        <Title track={track} />
+
+        <Source track={track} />
       </div>
     );
   }
@@ -67,13 +89,13 @@ export default function TrackBar({ id }: { id: string }) {
           ))}
       </div>
 
-      <div className={styles.title}>
-        <TrackText track={track} />
-      </div>
+      <Title track={track} />
 
       <div className={styles.progress}>
         <Progress track={track} />
       </div>
+
+      <Source track={track} />
     </div>
   );
 }

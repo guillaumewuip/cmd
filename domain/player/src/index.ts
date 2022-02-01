@@ -1,3 +1,4 @@
+import * as TrackSource from "./entities/TrackSource";
 import * as Track from "./entities/Track";
 import * as Tracks from "./entities/Tracks";
 import * as Position from "./entities/Position";
@@ -15,6 +16,7 @@ import { saveAutoplayChoice } from "./repositories/autoplay";
 export {
   Track,
   Tracks,
+  TrackSource,
   Position,
   usePlayer,
   shallowEqual,

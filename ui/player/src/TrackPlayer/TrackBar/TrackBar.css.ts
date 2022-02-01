@@ -28,12 +28,12 @@ export const notSelectedBar = style([
   bar,
   {
     gridTemplateRows: "1fr 2fr 2fr 1fr",
-    gridTemplateColumns: `minmax(${barHeight}, 1fr) 7fr`,
+    gridTemplateColumns: `minmax(${barHeight}, 1fr) 7fr minmax(${barHeight}, 1fr)`,
     gridTemplateAreas: `
-      "left top"
-      "left title"
-      "left title"
-      "left bottom"
+      "left top right"
+      "left title right"
+      "left title right"
+      "left bottom right"
     `,
   },
 ]);
@@ -81,10 +81,10 @@ export const selectedBar = style([
   notSelectedBar,
   {
     gridTemplateAreas: `
-      "left top"
-      "left title"
-      "left progress"
-      "left bottom"
+      "left top right"
+      "left title right"
+      "left progress right"
+      "left bottom right"
     `,
   },
 ]);
@@ -92,4 +92,10 @@ export const selectedBar = style([
 export const progress = style({
   gridArea: "progress",
   alignSelf: "center",
+});
+
+export const source = style({
+  gridArea: "right",
+  alignSelf: "center",
+  justifySelf: "end",
 });
