@@ -21,7 +21,7 @@ export const small = style({
 export const monospace = style([
   small,
   {
-    fontFamily: vars.fonts.monospace,
+    fontVariantNumeric: "tabular-nums",
   },
 ]);
 
