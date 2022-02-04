@@ -44,7 +44,7 @@ importers:
       linkedom: ^0.13.0
       next: ^12.0.8
       next-seo: ^5.0.0
-      next-sitemap: ^1.9.12
+      next-sitemap: ^2.0.0
       react: ^17.0.2
       react-dom: ^17.0.2
       react-loading-skeleton: ^3.0.1
@@ -75,7 +75,7 @@ importers:
       linkedom: 0.13.0
       next: 12.0.8_4c70148222b8596d478f3ced99e56e83
       next-seo: 5.1.0_227e7fb4dbd28186517209bc65f02635
-      next-sitemap: 1.9.12_next@12.0.8
+      next-sitemap: 2.1.8_next@12.0.8
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-loading-skeleton: 3.0.2_react@17.0.2
@@ -3577,9 +3577,9 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /next-sitemap/1.9.12_next@12.0.8:
-    resolution: {integrity: sha512-kHXf4ZNAGLJyK16HbjzE5X9JlKwXtxW+9J4dh3oT7LSbU/+3bN+VqWjNw/776Otbanf7EJsvl51oQ78qQW5XBQ==}
-    engines: {node: '>=14'}
+  /next-sitemap/2.1.8_next@12.0.8:
+    resolution: {integrity: sha512-q7MuDqK3bDQO/RDBkAbC0sP2LDpdKwE6QsOZ+vY/k16MLhSIaY9ZVBjnv2ePAThQDdhQ3dxaj8jKY7z5lnQxxw==}
+    engines: {node: '>=14.18.3'}
     hasBin: true
     peerDependencies:
       next: '*'
