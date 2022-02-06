@@ -4,6 +4,7 @@
   "private": true,
   "main": "dist/index.js",
   "typings": "dist-typings/index.d.ts",
+  "sideEffects": "false",
   "scripts": {
     "build": "lib-build",
     "dev": "lib-dev",
@@ -21,7 +22,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@cmd/domain-metadata": "workspace:*",
+    "@cmd/domain-post": "workspace:*",
     "@cmd/ui-text": "workspace:*",
     "@cmd/ui-theme": "workspace:*",
     "@vanilla-extract/css": "^1.6.8",

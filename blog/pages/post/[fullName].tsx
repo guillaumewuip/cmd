@@ -13,9 +13,8 @@ import * as Layout from "@cmd/ui-layout";
 import { Header } from "@cmd/ui-header";
 import { Footer } from "@cmd/ui-footer";
 
-import { getPostFromFullname, getAllPostsPaths } from "../../posts";
-
-import * as SiteMetadata from "../../metadata";
+import { getPostFromFullname, getAllPostsPaths } from "../../src/posts";
+import * as SiteMetadata from "../../src/metadata";
 
 function Page({ post }: { post: Post.Post }) {
   const Content = dynamic(

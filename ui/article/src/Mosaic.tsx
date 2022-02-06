@@ -3,7 +3,7 @@ import NextImage from "next/image";
 import * as ReadonlyArrayFP from "fp-ts/ReadonlyArray";
 import { pipe } from "fp-ts/function";
 
-import { Metadata } from "@cmd/domain-metadata";
+import { Metadata } from "@cmd/domain-post";
 import { Paragraph } from "@cmd/ui-text";
 
 import * as styles from "./Mosaic.css";

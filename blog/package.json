@@ -7,10 +7,9 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "lib-lint \"pages/**/*.@(js|ts|tsx)\""
+    "lint": "lib-lint \"@(pages|src)/**/*.@(js|ts|tsx)\""
   },
   "dependencies": {
-    "@cmd/domain-metadata": "workspace:*",
     "@cmd/domain-player": "workspace:*",
     "@cmd/domain-post": "workspace:*",
     "@cmd/domain-rss": "workspace:*",
@@ -45,6 +44,7 @@
     "@cmd/tsconfig": "workspace:*",
     "@types/jsdom": "^16.2.13",
     "@types/mdx-js__react": "^1.5.5",
+    "@types/node": "^17.0.10",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@vanilla-extract/next-plugin": "^2.0.1",

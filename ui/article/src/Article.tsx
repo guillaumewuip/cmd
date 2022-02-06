@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import NextImage from "next/image";
 
 import { H1, Small } from "@cmd/ui-text";
-import { Metadata } from "@cmd/domain-metadata";
+import { Metadata } from "@cmd/domain-post";
 
 import * as styles from "./Article.css";
 
