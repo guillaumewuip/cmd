@@ -1,32 +1,6 @@
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-import { JSDOM } from "jsdom";
-
-import { Metadata } from "@cmd/domain-metadata";
+import { Metadata } from "./metadata";
 
 import * as Infos from "./infos";
-
-function postExcerpt(content: Parameters<typeof React.createElement>[0]) {
-  const markup = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(content)
-  );
-
-  const { document } = new JSDOM(markup).window;
-
-  const result = document.evaluate(".//h2[1]//preceding::p", document, null, 0);
-
-  const nodes: Node[] = [];
-  let node = result.iterateNext();
-
-  while (node) {
-    nodes.push(node);
-    node = result.iterateNext();
-  }
-
-  const excerpt = nodes.map((localNode) => localNode.textContent).join("\n");
-
-  return excerpt;
-}
 
 export type Post = Readonly<{
   infos: Infos.Infos;
@@ -38,13 +12,13 @@ export function create({
   createdAt,
   url,
   metadata,
-  content,
+  excerpt,
 }: {
   fullName: string;
   createdAt: string;
   url: string;
-  metadata: Metadata.Metadata;
-  content: string;
+  metadata: Metadata;
+  excerpt: string;
 }): Post {
   const infos = Infos.create({
     fullName,
@@ -55,6 +29,6 @@ export function create({
 
   return {
     infos,
-    excerpt: postExcerpt(content),
+    excerpt,
   };
 }

@@ -1,9 +1,9 @@
-import { Metadata } from "@cmd/domain-metadata";
+import { Metadata } from "./metadata";
 
 export type Infos = Readonly<{
   fullName: string;
   url: string;
-  metadata: Metadata.Metadata;
+  metadata: Metadata;
   createdAt: string;
 }>;
 

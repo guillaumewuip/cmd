@@ -19,7 +19,7 @@ import {
 } from "@cmd/ui-text";
 import * as Player from "@cmd/ui-player";
 
-import * as Metadata from "../metadata";
+import * as Metadata from "../src/metadata";
 
 const mdComponents: MDXProviderComponents = {
   h1: (props) => <H1 {...props} />,

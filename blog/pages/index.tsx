@@ -8,7 +8,7 @@ import { NextSeo } from "next-seo";
 import * as ReadonlyArrayFP from "fp-ts/ReadonlyArray";
 import { pipe } from "fp-ts/function";
 
-import { Infos } from "@cmd/domain-post";
+import { Infos, Metadata } from "@cmd/domain-post";
 
 import { Article, Mosaic } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
@@ -16,12 +16,10 @@ import { Paragraph, Code, H2, Link, Hr } from "@cmd/ui-text";
 import { Header } from "@cmd/ui-header";
 import { Footer } from "@cmd/ui-footer";
 
-import { Metadata } from "@cmd/domain-metadata";
 import { generateFeeds } from "@cmd/domain-rss";
 
-import { getLastPostInfos, getAllPostInfos } from "../posts";
-
-import * as SiteMetadata from "../metadata";
+import { getLastPostInfos, getAllPostInfos } from "../src/posts";
+import * as SiteMetadata from "../src/metadata";
 
 type Cmd = {
   href: string;
