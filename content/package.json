@@ -1,0 +1,19 @@
+{
+  "name": "@cmd/content",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist-typings/index.d.ts",
+  "sideEffects": "false",
+  "scripts": {
+    "build": "lib-build",
+    "dev": "lib-dev",
+    "lint": "lib-lint \"src/**/*.@(js|ts|tsx)\""
+  },
+  "devDependencies": {
+    "@cmd/lib-builder": "workspace:*",
+    "@cmd/eslint-config": "workspace:*",
+    "@cmd/tsconfig": "workspace:*",
+    "typescript": "^4.5.5"
+  }
+}
