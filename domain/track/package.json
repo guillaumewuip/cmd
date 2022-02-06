@@ -1,0 +1,24 @@
+{
+  "name": "@cmd/domain-track",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist-typings/index.d.ts",
+  "scripts": {
+    "build": "lib-build",
+    "dev": "lib-dev",
+    "lint": "lib-lint \"src/**/*.@(js|ts|tsx)\""
+  },
+  "devDependencies": {
+    "@cmd/eslint-config": "workspace:*",
+    "@cmd/lib-builder": "workspace:*",
+    "@cmd/tsconfig": "workspace:*",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@fp51/opaque-union": "^1.0.0",
+    "fp-ts": "^2.11.8",
+    "io-ts": "^2.2.16"
+  }
+}
