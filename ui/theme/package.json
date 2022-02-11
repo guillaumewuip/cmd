@@ -4,7 +4,6 @@
   "private": true,
   "main": "dist/index.js",
   "typings": "dist-typings/index.d.ts",
-  "sideEffects": "false",
   "scripts": {
     "build": "lib-build",
     "dev": "lib-dev",
