@@ -483,59 +483,67 @@ export function loadSoundcloud({
 
         return {
           iframe,
+          soundcloudId,
         };
       }, Either.toError)
     ),
 
-    TaskEither.chainIOEitherK(({ iframe }: { iframe: HTMLIFrameElement }) =>
-      IOEither.tryCatch(() => {
-        const widget = new window.SC.Widget(iframe);
+    TaskEither.chainIOEitherK(
+      ({
+        iframe,
+        soundcloudId,
+      }: {
+        iframe: HTMLIFrameElement;
+        soundcloudId: string;
+      }) =>
+        IOEither.tryCatch(() => {
+          const widget = new window.SC.Widget(iframe);
 
-        // force reload
-        const newWidgetUrl = `http://api.soundcloud.com/tracks/${id}`;
-        widget.load(newWidgetUrl);
+          // force reload
+          const newWidgetUrl = `http://api.soundcloud.com/tracks/${soundcloudId}`;
+          widget.load(newWidgetUrl);
 
-        const source = Source.createSoundcloud({
-          widget,
-        });
+          const source = Source.createSoundcloud({
+            widget,
+          });
 
-        widget.bind(window.SC.Widget.Events.ERROR, () => {
-          aborted(id)();
-        });
-        widget.bind(window.SC.Widget.Events.READY, () => {
-          paused(id)();
-        });
+          widget.bind(window.SC.Widget.Events.ERROR, () => {
+            aborted(id)();
+          });
+          widget.bind(window.SC.Widget.Events.READY, () => {
+            paused(id)();
+          });
 
-        widget.bind(window.SC.Widget.Events.LOAD_PROGRESS, () => {
-          buffering(id)();
-        });
+          widget.bind(window.SC.Widget.Events.LOAD_PROGRESS, () => {
+            buffering(id)();
+          });
 
-        widget.bind(window.SC.Widget.Events.PLAY, () => {
-          playing(id)();
-        });
+          widget.bind(window.SC.Widget.Events.PLAY, () => {
+            playing(id)();
+          });
 
-        widget.bind(
-          window.SC.Widget.Events.PLAY_PROGRESS,
-          throttle(({ relativePosition, currentPosition }) => {
-            positionUpdate(() => Position.create(relativePosition))(id)();
+          widget.bind(
+            window.SC.Widget.Events.PLAY_PROGRESS,
+            throttle(({ relativePosition, currentPosition }) => {
+              positionUpdate(() => Position.create(relativePosition))(id)();
 
-            if (relativePosition) {
-              // millis to seconds conversion
-              durationUpdate(currentPosition / 1000 / relativePosition)(id)();
-            }
-          }, 1000)
-        );
+              if (relativePosition) {
+                // millis to seconds conversion
+                durationUpdate(currentPosition / 1000 / relativePosition)(id)();
+              }
+            }, 1000)
+          );
 
-        widget.bind(window.SC.Widget.Events.PAUSE, () => {
-          paused(id)();
-        });
+          widget.bind(window.SC.Widget.Events.PAUSE, () => {
+            paused(id)();
+          });
 
-        widget.bind(window.SC.Widget.Events.FINISH, () => {
-          ended(id)();
-        });
+          widget.bind(window.SC.Widget.Events.FINISH, () => {
+            ended(id)();
+          });
 
-        return source;
-      }, Either.toError)
+          return source;
+        }, Either.toError)
     ),
     Task.chainIOK(
       Either.fold(
