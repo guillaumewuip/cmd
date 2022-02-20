@@ -8,12 +8,20 @@ import { identity, pipe } from "fp-ts/function";
 
 import throttle from "lodash.throttle";
 
+import { capDelay, exponentialBackoff, limitRetries, Monoid } from "retry-ts";
+import { retrying } from "retry-ts/Task";
+
 import * as Tracks from "../entities/Tracks";
 import * as Track from "../entities/Track";
 import * as Source from "../entities/TrackSource";
 import * as Position from "../entities/Position";
 
 import * as Store from "../store";
+
+const taskRetryPolicy = capDelay(
+  6000,
+  Monoid.concat(exponentialBackoff(300), limitRetries(6))
+);
 
 const BASE_API = "https://cmd-apis.vercel.app";
 
@@ -452,19 +460,24 @@ export function loadSoundcloud({
   container: HTMLElement;
 }): Task.Task<void> {
   return pipe(
-    TaskEither.tryCatch(async () => {
-      const response = await fetch(
-        `${BASE_API}/api/soundcloud/track?url=${encodeURIComponent(
-          soundcloudUrl
-        )}`
-      );
+    retrying(
+      taskRetryPolicy,
+      () =>
+        TaskEither.tryCatch(async () => {
+          const response = await fetch(
+            `${BASE_API}/api/soundcloud/track?url=${encodeURIComponent(
+              soundcloudUrl
+            )}`
+          );
 
-      const payload = await response.json();
+          const payload = await response.json();
 
-      return {
-        soundcloudId: payload.trackId,
-      };
-    }, Either.toError),
+          return {
+            soundcloudId: payload.trackId,
+          };
+        }, Either.toError),
+      Either.isLeft
+    ),
 
     TaskEither.chainIOEitherK(({ soundcloudId }: { soundcloudId: string }) =>
       IOEither.tryCatch(() => {
@@ -562,17 +575,24 @@ export function loadBandcamp({
   bandcampUrl: string;
 }): Task.Task<void> {
   return pipe(
-    TaskEither.tryCatch(async () => {
-      const response = await fetch(
-        `${BASE_API}/api/bandcamp/track?url=${encodeURIComponent(bandcampUrl)}`
-      );
+    retrying(
+      taskRetryPolicy,
+      () =>
+        TaskEither.tryCatch(async () => {
+          const response = await fetch(
+            `${BASE_API}/api/bandcamp/track?url=${encodeURIComponent(
+              bandcampUrl
+            )}`
+          );
 
-      const payload = await response.json();
+          const payload = await response.json();
 
-      return {
-        streamUrl: payload.streamUrl,
-      };
-    }, Either.toError),
+          return {
+            streamUrl: payload.streamUrl,
+          };
+        }, Either.toError),
+      Either.isLeft
+    ),
     TaskEither.chainIOEitherK(({ streamUrl }: { streamUrl: string }) =>
       IOEither.tryCatch(() => {
         const audio = new Audio(streamUrl);
