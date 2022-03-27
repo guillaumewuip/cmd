@@ -2,14 +2,10 @@
   "name": "cmd",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@6.32.1",
   "scripts": {
     "preinstall": "npx only-allow pnpm"
   },
-  "dependencies": {
-    "pnpm": "^6.27.1"
-  },
   "devDependencies": {
-    "turbo": "^1.1.0"
+    "turbo": "^1.1.10"
   }
 }
