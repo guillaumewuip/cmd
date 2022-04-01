@@ -42,8 +42,8 @@ importers:
       next: ^12.1.1
       next-seo: ^5.2.0
       next-sitemap: ^2.5.14
-      react: ^17.0.2
-      react-dom: ^17.0.2
+      react: ^18.0.0
+      react-dom: ^18.0.0
       react-loading-skeleton: ^3.0.3
       typescript: ^4.6.3
       webpack: ^5.70.0
@@ -61,8 +61,8 @@ importers:
       '@cmd/ui-player': link:../ui/player
       '@cmd/ui-text': link:../ui/text
       '@cmd/ui-theme': link:../ui/theme
-      '@mdx-js/loader': 1.6.22_react@17.0.2
-      '@mdx-js/react': 1.6.22_react@17.0.2
+      '@mdx-js/loader': 1.6.22_react@18.0.0
+      '@mdx-js/react': 1.6.22_react@18.0.0
       '@next/mdx': 12.1.1_f56c41adb6190c4680be4a1c0222355d
       '@remark-embedder/core': 2.0.0
       date-fns: 2.28.0
@@ -70,12 +70,12 @@ importers:
       fp-ts: 2.11.9
       jsdom: 19.0.0
       linkedom: 0.14.5
-      next: 12.1.1_11ff11544d2bce3b43fc9d53812dafa4
-      next-seo: 5.2.0_8c3675119e28db7583641618775c51dc
+      next: 12.1.1_5e10357d46e5e44cc9019db1bbb926c5
+      next-seo: 5.2.0_7c9c465616ff1526975656dea2907c13
       next-sitemap: 2.5.14_next@12.1.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-loading-skeleton: 3.0.3_react@17.0.2
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+      react-loading-skeleton: 3.0.3_react@18.0.0
       xml-parse: 0.4.0
     devDependencies:
       '@babel/core': 7.16.12
@@ -216,8 +216,8 @@ importers:
       '@vanilla-extract/css': ^1.6.8
       fp-ts: ^2.11.8
       next: ^12.0.8
-      react: ^17.0.2
-      react-dom: ^17.0.2
+      react: ^18.0.0
+      react-dom: ^18.0.0
       typescript: ^4.5.5
     dependencies:
       '@cmd/domain-post': link:../../domain/post
@@ -231,9 +231,9 @@ importers:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
-      next: 12.0.8_11ff11544d2bce3b43fc9d53812dafa4
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
+      next: 12.0.8_5e10357d46e5e44cc9019db1bbb926c5
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
       typescript: 4.5.5
 
   ui/footer:
@@ -245,7 +245,7 @@ importers:
       '@cmd/ui-theme': workspace:*
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
-      react: ^17.0.2
+      react: ^18.0.0
       typescript: ^4.5.5
     dependencies:
       '@cmd/ui-text': link:../text
@@ -256,7 +256,7 @@ importers:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
-      react: 17.0.2
+      react: 18.0.0
       typescript: 4.5.5
 
   ui/header:
@@ -267,21 +267,21 @@ importers:
       '@cmd/ui-theme': workspace:*
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
-      react: ^17.0.2
-      react-dom: ^17.0.2
+      react: ^18.0.0
+      react-dom: ^18.0.0
       typescript: ^4.5.5
       typewriter-effect: ^2.18.2
     dependencies:
       '@cmd/ui-theme': link:../theme
       '@vanilla-extract/css': 1.6.8
-      typewriter-effect: 2.18.2_react-dom@17.0.2+react@17.0.2
+      typewriter-effect: 2.18.2_react-dom@18.0.0+react@18.0.0
     devDependencies:
       '@cmd/eslint-config': link:../../dev-tools/lib-linter
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
       typescript: 4.5.5
 
   ui/layout:
@@ -293,7 +293,7 @@ importers:
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
       '@vanilla-extract/css-utils': ^0.1.2
-      react: ^17.0.2
+      react: ^18.0.0
       typescript: ^4.5.5
     dependencies:
       '@cmd/ui-theme': link:../theme
@@ -304,7 +304,7 @@ importers:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
-      react: 17.0.2
+      react: 18.0.0
       typescript: 4.5.5
 
   ui/music-embed:
@@ -315,19 +315,19 @@ importers:
       '@cmd/ui-theme': workspace:*
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
-      react: ^17.0.2
+      react: ^18.0.0
       react-loading-skeleton: ^3.0.1
       typescript: ^4.5.5
     dependencies:
       '@cmd/ui-theme': link:../theme
       '@vanilla-extract/css': 1.6.8
-      react-loading-skeleton: 3.0.2_react@17.0.2
+      react-loading-skeleton: 3.0.2_react@18.0.0
     devDependencies:
       '@cmd/eslint-config': link:../../dev-tools/lib-linter
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
-      react: 17.0.2
+      react: 18.0.0
       typescript: 4.5.5
 
   ui/player:
@@ -345,7 +345,7 @@ importers:
       classnames: ^2.3.1
       date-fns: ^2.28.0
       fp-ts: ^2.11.8
-      react: ^17.0.2
+      react: ^18.0.0
       tslib: ^2.3.1
       typescript: ^4.5.5
     dependencies:
@@ -363,7 +363,7 @@ importers:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
-      react: 17.0.2
+      react: 18.0.0
       tslib: 2.3.1
       typescript: 4.5.5
 
@@ -376,7 +376,7 @@ importers:
       '@types/react': ^17.0.37
       '@vanilla-extract/css': ^1.6.8
       classnames: ^2.3.1
-      react: ^17.0.2
+      react: ^18.0.0
       typescript: ^4.5.5
     dependencies:
       '@cmd/ui-theme': link:../theme
@@ -387,7 +387,7 @@ importers:
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
       '@cmd/tsconfig': link:../../dev-tools/tsconfig
       '@types/react': 17.0.38
-      react: 17.0.2
+      react: 18.0.0
       typescript: 4.5.5
 
   ui/theme:
@@ -931,11 +931,11 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: false
 
-  /@mdx-js/loader/1.6.22_react@17.0.2:
+  /@mdx-js/loader/1.6.22_react@18.0.0:
     resolution: {integrity: sha512-9CjGwy595NaxAYp0hF9B/A0lH6C8Rms97e2JS9d3jVUtILn6pT5i5IV965ra3lIWc7Rs1GG1tBdVF7dCowYe6Q==}
     dependencies:
       '@mdx-js/mdx': 1.6.22
-      '@mdx-js/react': 1.6.22_react@17.0.2
+      '@mdx-js/react': 1.6.22_react@18.0.0
       loader-utils: 2.0.0
     transitivePeerDependencies:
       - react
@@ -968,12 +968,12 @@ packages:
       - supports-color
     dev: false
 
-  /@mdx-js/react/1.6.22_react@17.0.2:
+  /@mdx-js/react/1.6.22_react@18.0.0:
     resolution: {integrity: sha512-TDoPum4SHdfPiGSAaRBw7ECyI8VaHpK8GJugbJIJuqyh6kzw9ZLJZW3HGL3NNrJGxcAixUvqROm+YuQOo5eXtg==}
     peerDependencies:
       react: ^16.13.1 || ^17.0.0
     dependencies:
-      react: 17.0.2
+      react: 18.0.0
     dev: false
 
   /@mdx-js/util/1.6.22:
@@ -1033,8 +1033,8 @@ packages:
       '@mdx-js/loader': '>=0.15.0'
       '@mdx-js/react': '*'
     dependencies:
-      '@mdx-js/loader': 1.6.22_react@17.0.2
-      '@mdx-js/react': 1.6.22_react@17.0.2
+      '@mdx-js/loader': 1.6.22_react@18.0.0
+      '@mdx-js/react': 1.6.22_react@18.0.0
     dev: false
 
   /@next/react-refresh-utils/12.0.8_react-refresh@0.8.3:
@@ -1727,7 +1727,7 @@ packages:
     dependencies:
       '@vanilla-extract/webpack-plugin': 2.1.5_webpack@5.70.0
       browserslist: 4.19.1
-      next: 12.1.1_11ff11544d2bce3b43fc9d53812dafa4
+      next: 12.1.1_5e10357d46e5e44cc9019db1bbb926c5
     transitivePeerDependencies:
       - supports-color
       - webpack
@@ -3771,16 +3771,16 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /next-seo/5.2.0_8c3675119e28db7583641618775c51dc:
+  /next-seo/5.2.0_7c9c465616ff1526975656dea2907c13:
     resolution: {integrity: sha512-IJNKzYH4ARKHxN6YTN7AYj3CEpZLpL/o6FlDZqWJ/HaOnpjpvLHpQlI57be/N92iafmYwYE+jOU0SQ6T9DIo/Q==}
     peerDependencies:
       next: ^8.1.1-canary.54 || >=9.0.0
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
     dependencies:
-      next: 12.1.1_11ff11544d2bce3b43fc9d53812dafa4
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
+      next: 12.1.1_5e10357d46e5e44cc9019db1bbb926c5
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
     dev: false
 
   /next-sitemap/2.5.14_next@12.1.1:
@@ -3792,10 +3792,10 @@ packages:
     dependencies:
       '@corex/deepmerge': 2.6.148
       minimist: 1.2.6
-      next: 12.1.1_11ff11544d2bce3b43fc9d53812dafa4
+      next: 12.1.1_5e10357d46e5e44cc9019db1bbb926c5
     dev: false
 
-  /next/12.0.8_11ff11544d2bce3b43fc9d53812dafa4:
+  /next/12.0.8_5e10357d46e5e44cc9019db1bbb926c5:
     resolution: {integrity: sha512-g5c1Kuh1F8tSXJn2rVvzYBzqe9EXaR6+rY3/KrQ7y0D9FueRLfHI35wM0DRadDcPSc3+vncspfhYH3jnYE/KjA==}
     engines: {node: '>=12.22.0'}
     hasBin: true
@@ -3819,13 +3819,13 @@ packages:
       jest-worker: 27.0.0-next.5
       node-fetch: 2.6.1
       postcss: 8.2.15
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
       react-is: 17.0.2
       react-refresh: 0.8.3
       stream-browserify: 3.0.0
-      styled-jsx: 5.0.0-beta.6_@babel+core@7.16.12+react@17.0.2
-      use-subscription: 1.5.1_react@17.0.2
+      styled-jsx: 5.0.0-beta.6_@babel+core@7.16.12+react@18.0.0
+      use-subscription: 1.5.1_react@18.0.0
     optionalDependencies:
       '@next/swc-android-arm64': 12.0.8
       '@next/swc-darwin-arm64': 12.0.8
@@ -3843,7 +3843,7 @@ packages:
       - webpack
     dev: true
 
-  /next/12.1.1_11ff11544d2bce3b43fc9d53812dafa4:
+  /next/12.1.1_5e10357d46e5e44cc9019db1bbb926c5:
     resolution: {integrity: sha512-IOfEIAgroMtsoYz6HXpDS+b5WB9WZ+MH266COXGlcpIiYSgUyJf9xV6vF+zY2RPvBJFT4fUW0EVdVnoOmTloDw==}
     engines: {node: '>=12.22.0'}
     hasBin: true
@@ -3864,10 +3864,10 @@ packages:
       '@next/env': 12.1.1
       caniuse-lite: 1.0.30001320
       postcss: 8.4.5
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      styled-jsx: 5.0.1_@babel+core@7.16.12+react@17.0.2
-      use-subscription: 1.5.1_react@17.0.2
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+      styled-jsx: 5.0.1_@babel+core@7.16.12+react@18.0.0
+      use-subscription: 1.5.1_react@18.0.0
     optionalDependencies:
       '@next/swc-android-arm-eabi': 12.1.1
       '@next/swc-android-arm64': 12.1.1
@@ -4174,15 +4174,14 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /react-dom/17.0.2_react@17.0.2:
-    resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
+  /react-dom/18.0.0_react@18.0.0:
+    resolution: {integrity: sha512-XqX7uzmFo0pUceWFCt7Gff6IyIMzFUn7QMZrbrQfGxtaxXZIcGQzoNpRLE3fQLnS4XzLLPMZX2T9TRcSrasicw==}
     peerDependencies:
-      react: 17.0.2
+      react: ^18.0.0
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
-      react: 17.0.2
-      scheduler: 0.20.2
+      react: 18.0.0
+      scheduler: 0.21.0
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -4192,20 +4191,20 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: true
 
-  /react-loading-skeleton/3.0.2_react@17.0.2:
+  /react-loading-skeleton/3.0.2_react@18.0.0:
     resolution: {integrity: sha512-rlALwuZEcjazUDeIy3+fEhm20Uk9Yd/zZGeITU034K2ts5/yEf7RuZaV2FyrPWypIII4LAsFEo9WDTPKp6G0fQ==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
-      react: 17.0.2
+      react: 18.0.0
     dev: false
 
-  /react-loading-skeleton/3.0.3_react@17.0.2:
+  /react-loading-skeleton/3.0.3_react@18.0.0:
     resolution: {integrity: sha512-HPkEqQGwmbg1ImcYA9n4hDiLC3u92xUdU+sSfrv/9l3lNBChAubcl1azjV2WakapdkbA3gko+hPzZkZGIb/9xA==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
-      react: 17.0.2
+      react: 18.0.0
     dev: false
 
   /react-refresh/0.8.3:
@@ -4213,12 +4212,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react/17.0.2:
-    resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
+  /react/18.0.0:
+    resolution: {integrity: sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
 
   /readable-stream/3.6.0:
     resolution: {integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==}
@@ -4381,11 +4379,10 @@ packages:
       xmlchars: 2.2.0
     dev: false
 
-  /scheduler/0.20.2:
-    resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
+  /scheduler/0.21.0:
+    resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==}
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
 
   /schema-utils/3.1.1:
     resolution: {integrity: sha512-Y5PQxS4ITlC+EahLuXaY86TXfR7Dc5lw294alXOq86JAHCihAIZfqv8nNCWvaEJvaC51uN9hbLGeV0cFBdH+Fw==}
@@ -4553,7 +4550,7 @@ packages:
       inline-style-parser: 0.1.1
     dev: false
 
-  /styled-jsx/5.0.0-beta.6_@babel+core@7.16.12+react@17.0.2:
+  /styled-jsx/5.0.0-beta.6_@babel+core@7.16.12+react@18.0.0:
     resolution: {integrity: sha512-b1cM7Xyp2r1lsNpvoZ6wmTI8qxD0557vH2feHakNU8LMkzfJDgTQMul6O7sSYY0GxQ73pKEN69hCDp71w6Q0nA==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -4568,14 +4565,14 @@ packages:
       '@babel/types': 7.15.0
       convert-source-map: 1.7.0
       loader-utils: 1.2.3
-      react: 17.0.2
+      react: 18.0.0
       source-map: 0.7.3
       string-hash: 1.1.3
       stylis: 3.5.4
       stylis-rule-sheet: 0.0.10_stylis@3.5.4
     dev: true
 
-  /styled-jsx/5.0.1_@babel+core@7.16.12+react@17.0.2:
+  /styled-jsx/5.0.1_@babel+core@7.16.12+react@18.0.0:
     resolution: {integrity: sha512-+PIZ/6Uk40mphiQJJI1202b+/dYeTVd9ZnMPR80pgiWbjIwvN2zIp4r9et0BgqBuShh48I0gttPlAXA7WVvBxw==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -4589,7 +4586,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.16.12
-      react: 17.0.2
+      react: 18.0.0
     dev: false
 
   /stylis-rule-sheet/0.0.10_stylis@3.5.4:
@@ -4892,7 +4889,7 @@ packages:
     hasBin: true
     dev: true
 
-  /typewriter-effect/2.18.2_react-dom@17.0.2+react@17.0.2:
+  /typewriter-effect/2.18.2_react-dom@18.0.0+react@18.0.0:
     resolution: {integrity: sha512-I6VLfaICftFgZ3sauoVrvHmqzD2r1t+roopD6pyQ1EV4fmq3kZ4ssfLJk9mPd1VHdnwb9XxSnDH09QHNJ/HrXw==}
     peerDependencies:
       react: 17.x
@@ -4900,8 +4897,8 @@ packages:
     dependencies:
       prop-types: 15.8.0
       raf: 3.4.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
     dev: false
 
   /uhyphen/0.1.0:
@@ -5005,13 +5002,13 @@ packages:
     dependencies:
       punycode: 2.1.1
 
-  /use-subscription/1.5.1_react@17.0.2:
+  /use-subscription/1.5.1_react@18.0.0:
     resolution: {integrity: sha512-Xv2a1P/yReAjAbhylMfFplFKj9GssgTwN7RlcTxBujFQcloStWNDQdc4g4NRWH9xS4i/FDk04vQBptAXoF3VcA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
     dependencies:
       object-assign: 4.1.1
-      react: 17.0.2
+      react: 18.0.0
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
