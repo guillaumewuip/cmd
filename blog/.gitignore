@@ -8,5 +8,5 @@
 /build
 
 public/rss/
-public/sitemap.xml
+public/sitemap*
 public/robots.txt
