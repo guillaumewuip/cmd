@@ -9,7 +9,8 @@
       "outputs": [
         "dist/**",
         "dist-typings/**",
-        ".next/**"
+        ".next/**",
+        "public/rss/**"
       ]
     },
     "dev": {
