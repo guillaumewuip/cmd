@@ -27,9 +27,5 @@ const withVanillaExtract = createVanillaExtractPlugin();
 module.exports = withVanillaExtract(
   withMDX({
     pageExtensions: ["js", "jsx", "tsx", "mdx"],
-    i18n: {
-      locales: ["fr-FR"],
-      defaultLocale: "fr-FR",
-    },
   })
 );
