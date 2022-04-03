@@ -10,10 +10,10 @@
     "lint": "lib-lint \"src/**/*.@(js|ts|tsx)\""
   },
   "devDependencies": {
-    "@cmd/lib-builder": "workspace:*",
     "@cmd/eslint-config": "workspace:*",
+    "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.3"
   },
   "dependencies": {
     "@cmd/ui-tokens": "workspace:*",

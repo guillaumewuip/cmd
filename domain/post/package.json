@@ -11,10 +11,9 @@
     "lint": "lib-lint \"src/**/*.@(js|ts|tsx)\""
   },
   "devDependencies": {
-    "@cmd/lib-builder": "workspace:*",
     "@cmd/eslint-config": "workspace:*",
+    "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "@types/jsdom": "^16.2.13",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.3"
   }
 }
