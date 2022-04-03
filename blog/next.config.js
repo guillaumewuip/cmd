@@ -1,37 +1,35 @@
-const mdx = require('@next/mdx')
-const { default: remarkEmbedder } = require('@remark-embedder/core')
+const mdx = require("@next/mdx");
+const { default: remarkEmbedder } = require("@remark-embedder/core");
 
-const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
+const { createVanillaExtractPlugin } = require("@vanilla-extract/next-plugin");
 
 const MusicPlayerTransformer = {
-  name: 'MusicPlayer',
+  name: "MusicPlayer",
   shouldTransform() {
-    return true
+    return true;
   },
   getHTML(url) {
-    return `<player href="${url}"></player>`
+    return `<player href="${url}"></player>`;
   },
-}
+};
 
 const withMDX = mdx({
   extension: /\.mdx$/,
   options: {
     remarkPlugins: [
-      [remarkEmbedder, { transformers: [MusicPlayerTransformer]}],
-    ]
-  }
-})
+      [remarkEmbedder, { transformers: [MusicPlayerTransformer] }],
+    ],
+  },
+});
 
 const withVanillaExtract = createVanillaExtractPlugin();
 
 module.exports = withVanillaExtract(
-  withMDX(
-    {
-      pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
-      i18n: {
-        locales: ["fr-FR"],
-        defaultLocale: "fr-FR",
-      },
+  withMDX({
+    pageExtensions: ["js", "jsx", "tsx", "mdx"],
+    i18n: {
+      locales: ["fr-FR"],
+      defaultLocale: "fr-FR",
     },
-  ),
-)
+  })
+);
