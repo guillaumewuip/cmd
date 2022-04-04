@@ -8,13 +8,14 @@ import * as NumberFP from "fp-ts/number";
 import { identity, pipe } from "fp-ts/function";
 
 import * as Track from "./Track";
+import * as Volume from "./Volume";
 
 type $Empty = {
+  volume: Volume.Volume;
   autoplayEnabled: boolean;
 };
 
-type $Loaded = {
-  autoplayEnabled: boolean;
+type $Loaded = $Empty & {
   selected: string;
   alreadyPlayed: boolean;
   allTracks: ReadonlyNonEmptyArrayFP.ReadonlyNonEmptyArray<{
@@ -32,6 +33,7 @@ export type Tracks = Union.Type<typeof TracksAPI>;
 export type Empty = ReturnType<typeof TracksAPI.of.Empty>;
 export type Loaded = ReturnType<typeof TracksAPI.of.Loaded>;
 
+export const volume = TracksAPI.lensFromProp("volume").get;
 export const autoplayEnabled = TracksAPI.lensFromProp("autoplayEnabled").get;
 export const setAutoplay = TracksAPI.lensFromProp("autoplayEnabled").set;
 
@@ -41,11 +43,13 @@ export const { fold } = TracksAPI;
 
 export const create = (data: { autoplayEnabled: boolean }) =>
   TracksAPI.of.Empty({
+    volume: Volume.createStart(),
     autoplayEnabled: data.autoplayEnabled,
   });
 
 const toLoaded = (track: Track.Track, weight: number) => (tracks: Empty) =>
   TracksAPI.of.Loaded({
+    volume: volume(tracks),
     autoplayEnabled: autoplayEnabled(tracks),
     selected: Track.id(track),
     alreadyPlayed: false,
