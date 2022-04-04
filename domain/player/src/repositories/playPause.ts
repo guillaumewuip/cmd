@@ -7,12 +7,14 @@ import * as Tracks from "../entities/Tracks";
 import * as Store from "../store";
 
 import * as TrackRepo from "./track";
+import { setVolumeForCurrentTrack } from "./volume";
 
 function selectAndPlayTrack(track: Track.Initialized) {
   return (state: Tracks.Loaded): IO.IO<void> => {
     return pipe(
       Store.write(() => pipe(state, Tracks.selectTrack(track), Tracks.playing)),
-      IO.chain(() => TrackRepo.play(track))
+      IO.chain(() => TrackRepo.play(track)),
+      IO.chain(setVolumeForCurrentTrack)
     );
   };
 }
@@ -25,7 +27,7 @@ export const playOrPause = pipe(
       return IO.of(undefined);
     }
 
-    const selectedTrack = pipe(state, Tracks.selectedTrack);
+    const selectedTrack = Tracks.selectedTrack(state);
 
     // nothing to do here
     if (!Track.isInteractive(selectedTrack)) {

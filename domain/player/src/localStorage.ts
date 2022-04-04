@@ -3,46 +3,58 @@ import * as IOEither from "fp-ts/IOEither";
 import * as IO from "fp-ts/IO";
 import * as Option from "fp-ts/Option";
 import * as Either from "fp-ts/Either";
+import * as D from "io-ts/Decoder";
+import * as C from "io-ts/Codec";
 import { pipe } from "fp-ts/function";
 
-const autoplayEnabledItemName = "cmd-player-autoplayEnabled";
+type LocalStorageIO<T> = {
+  readOrElse: (defaultValue: () => T) => IO.IO<T>;
+  silentWrite: (value: T) => IO.IO<void>;
+};
 
-function parseValue(value: string): Option.Option<boolean> {
-  switch (value) {
-    case "true":
-      return Option.some(true);
+function buildLocalStorageIO<T>(
+  key: string,
+  codec: C.Codec<unknown, string, T>
+): LocalStorageIO<T> {
+  const readOrElse = (defaultValue: () => T) =>
+    pipe(
+      IOEither.tryCatch(LocalStorageFP.getItem(key), Either.toError),
+      IOEither.map((value) =>
+        pipe(
+          value,
+          Option.map(codec.decode),
+          Option.map(Either.getOrElse(defaultValue)),
+          Option.getOrElse(defaultValue)
+        )
+      ),
+      IO.map(Either.getOrElse(defaultValue))
+    );
 
-    case "false":
-      return Option.some(false);
-  }
+  const silentWrite = (value: T): IOEither.IOEither<Error, void> =>
+    IOEither.tryCatch(
+      pipe(value, codec.encode, (serializedValue) =>
+        LocalStorageFP.setItem(key, serializedValue)
+      ),
+      Either.toError
+    );
 
-  return Option.none;
+  return {
+    readOrElse,
+    silentWrite,
+  };
 }
 
-function serializeValue(value: boolean): string {
-  if (value) {
-    return "true";
-  }
+const BooleanCodec = C.make(D.boolean, {
+  encode: String,
+});
 
-  return "false";
-}
-
-export const readLocalStorageAutoplay: IO.IO<boolean> = pipe(
-  IOEither.tryCatch(
-    LocalStorageFP.getItem(autoplayEnabledItemName),
-    Either.toError
-  ),
-  IO.map(Either.getOrElse((): Option.Option<string> => Option.none)),
-  IO.map(Option.chain(parseValue)),
-  IO.map(Option.getOrElse((): boolean => true)) // default true
+export const autoplayEnabled = buildLocalStorageIO(
+  "cmd-player-autoplayEnabled",
+  BooleanCodec
 );
 
-export const writeLocalStorageAutoplay = (
-  value: boolean
-): IOEither.IOEither<Error, void> =>
-  pipe(
-    IOEither.tryCatch(
-      LocalStorageFP.setItem(autoplayEnabledItemName, serializeValue(value)),
-      Either.toError
-    )
-  );
+const NumberCodec = C.make(D.number, {
+  encode: String,
+});
+
+export const volume = buildLocalStorageIO("cmd-player-volume", NumberCodec);

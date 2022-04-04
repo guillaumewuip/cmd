@@ -1,15 +1,19 @@
 import * as IO from "fp-ts/IO";
+import { sequenceS } from "fp-ts/Apply";
 import { pipe } from "fp-ts/function";
 
 import createHook from "zustand";
 import createStore from "zustand/vanilla";
 
 import * as Tracks from "./entities/Tracks";
-import { readLocalStorageAutoplay } from "./localStorage";
+import { autoplayEnabled, volume } from "./localStorage";
 
 const initTracks: IO.IO<Tracks.Tracks> = pipe(
-  readLocalStorageAutoplay,
-  IO.map((autoplayEnabled) => Tracks.create({ autoplayEnabled }))
+  sequenceS(IO.io)({
+    autoplayEnabled: autoplayEnabled.readOrElse(() => true),
+    volume: volume.readOrElse(() => 0.8),
+  }),
+  IO.map(Tracks.create)
 );
 
 const store = createStore<Tracks.Tracks>(initTracks);
