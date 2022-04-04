@@ -5,11 +5,11 @@ import createHook from "zustand";
 import createStore from "zustand/vanilla";
 
 import * as Tracks from "./entities/Tracks";
-import { readLocalStorageAutoplay } from "./localStorage";
+import { autoplayEnabled } from "./localStorage";
 
 const initTracks: IO.IO<Tracks.Tracks> = pipe(
-  readLocalStorageAutoplay,
-  IO.map((autoplayEnabled) => Tracks.create({ autoplayEnabled }))
+  autoplayEnabled.readOrElse(() => true),
+  IO.map((enabled) => Tracks.create({ autoplayEnabled: enabled }))
 );
 
 const store = createStore<Tracks.Tracks>(initTracks);
