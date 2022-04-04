@@ -41,9 +41,9 @@ export const isEmpty = TracksAPI.is.Empty;
 
 export const { fold } = TracksAPI;
 
-export const create = (data: { autoplayEnabled: boolean }) =>
+export const create = (data: { autoplayEnabled: boolean; volume: number }) =>
   TracksAPI.of.Empty({
-    volume: Volume.createStart(),
+    volume: Volume.create(data.volume),
     autoplayEnabled: data.autoplayEnabled,
   });
 

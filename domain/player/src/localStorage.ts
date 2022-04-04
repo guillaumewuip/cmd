@@ -7,10 +7,6 @@ import * as D from "io-ts/Decoder";
 import * as C from "io-ts/Codec";
 import { pipe } from "fp-ts/function";
 
-const BooleanCodec = C.make(D.boolean, {
-  encode: String,
-});
-
 type LocalStorageIO<T> = {
   readOrElse: (defaultValue: () => T) => IO.IO<T>;
   silentWrite: (value: T) => IO.IO<void>;
@@ -48,7 +44,17 @@ function buildLocalStorageIO<T>(
   };
 }
 
+const BooleanCodec = C.make(D.boolean, {
+  encode: String,
+});
+
 export const autoplayEnabled = buildLocalStorageIO(
   "cmd-player-autoplayEnabled",
   BooleanCodec
 );
+
+const NumberCodec = C.make(D.number, {
+  encode: String,
+});
+
+export const volume = buildLocalStorageIO("cmd-player-volume", NumberCodec);

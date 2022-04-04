@@ -10,7 +10,6 @@ const VolumeAPI = Union.of({
 
 export type Volume = Union.Type<typeof VolumeAPI>;
 
-export const createStart = () => VolumeAPI.of.Volume({ value: 0.8 });
 export const create = (value: number) => VolumeAPI.of.Volume({ value });
 
 export const value = VolumeAPI.lensFromProp("value").get;
