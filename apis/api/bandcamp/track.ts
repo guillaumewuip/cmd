@@ -48,6 +48,18 @@ function extractStream(document: Document): string {
   return url
 }
 
+function extractThumbnail(document: Document): string {
+  const link = document.querySelector('link[rel="image_src"]')
+
+  if (!link) {
+    throw new Error(`Can't find image_src link tag`)
+  }
+
+  const href = link.getAttribute('href')
+
+  return href
+}
+
 const handleBandcamp = handleGET(async (req: VercelRequest, res: VercelResponse) => {
   const url = req.query.url
 
@@ -61,10 +73,12 @@ const handleBandcamp = handleGET(async (req: VercelRequest, res: VercelResponse)
   const page = await fetchPage(decodeURIComponent(url))
   const trackId = extractTrackId(page)
   const streamUrl = extractStream(page)
+  const thumbnail = extractThumbnail(page)
 
   res.status(200).json({
     trackId,
     streamUrl,
+    thumbnail,
   })
 })
 

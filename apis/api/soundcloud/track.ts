@@ -5,12 +5,14 @@ import { parseHTML } from 'linkedom';
 
 import { handleGET } from '../../handleRequest'
 
-async function getSoundcloudTrackId(url: string) {
+async function fetchPage(url: string): Promise<Document> {
   const response = await fetch(url)
   const documentString = await response.text()
 
-  const document = parseHTML(documentString).window.document
+  return parseHTML(documentString).window.document
+}
 
+function extractTrackId(document: Document) {
   const metaContentElement = document.querySelector('meta[content^="soundcloud://sounds:"]')
 
   if (!metaContentElement) {
@@ -38,6 +40,18 @@ async function getSoundcloudTrackId(url: string) {
   return id
 }
 
+function extractThumbnail(document: Document): string {
+  const meta = document.querySelector('meta[property="og:image"]')
+
+  if (!meta) {
+    throw new Error(`Can't find og:image meta tag`)
+  }
+
+  const href = meta.getAttribute('content')
+
+  return href
+}
+
 const handleSoundcloud = handleGET(async (req: VercelRequest, res: VercelResponse) => {
   const url = req.query.url
 
@@ -48,10 +62,13 @@ const handleSoundcloud = handleGET(async (req: VercelRequest, res: VercelRespons
     return
   }
 
-  const trackId = await getSoundcloudTrackId(decodeURIComponent(url))
+  const page = await fetchPage(decodeURIComponent(url))
+  const trackId = extractTrackId(page)
+  const thumbnail = extractThumbnail(page)
 
   res.status(200).json({
-    trackId
+    trackId,
+    thumbnail,
   })
   return
 })
