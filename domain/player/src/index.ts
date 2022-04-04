@@ -2,6 +2,7 @@ import * as TrackSource from "./entities/TrackSource";
 import * as Track from "./entities/Track";
 import * as Tracks from "./entities/Tracks";
 import * as Position from "./entities/Position";
+import * as Volume from "./entities/Volume";
 
 import { usePlayer, shallowEqual } from "./store";
 import { playOrPause, play } from "./repositories/playPause";
@@ -18,6 +19,7 @@ export {
   Tracks,
   TrackSource,
   Position,
+  Volume,
   usePlayer,
   shallowEqual,
   playOrPause,
