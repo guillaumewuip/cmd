@@ -13,6 +13,7 @@ import {
   loadSoundcloud,
 } from "./repositories/track";
 import { saveAutoplayChoice } from "./repositories/autoplay";
+import { updateVolume } from "./repositories/volume";
 
 export {
   Track,
@@ -29,4 +30,5 @@ export {
   loadBandcamp,
   loadSoundcloud,
   saveAutoplayChoice,
+  updateVolume,
 };

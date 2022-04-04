@@ -34,6 +34,7 @@ export type Empty = ReturnType<typeof TracksAPI.of.Empty>;
 export type Loaded = ReturnType<typeof TracksAPI.of.Loaded>;
 
 export const volume = TracksAPI.lensFromProp("volume").get;
+export const setVolume = TracksAPI.lensFromProp("volume").set;
 export const autoplayEnabled = TracksAPI.lensFromProp("autoplayEnabled").get;
 export const setAutoplay = TracksAPI.lensFromProp("autoplayEnabled").set;
 

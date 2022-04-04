@@ -73,6 +73,12 @@ function pauseYoutube(source: Source.Youtube): IO.IO<void> {
   return () => (Source.player(source) as any).pauseVideo();
 }
 
+function setVolumeYoutube(volume: number) {
+  return (source: Source.Youtube) => (): IO.IO<void> =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (Source.player(source) as any).setVolume(volume * 100);
+}
+
 function resetSoundcloud(source: Source.Soundcloud): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return () => (Source.widget(source) as any).seekTo(0);
@@ -86,6 +92,12 @@ function playSoundcloud(source: Source.Soundcloud): IO.IO<void> {
 function pauseSoundcloud(source: Source.Soundcloud): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return () => (Source.widget(source) as any).pause();
+}
+
+function setVolumeSoundcloud(volume: number) {
+  return (source: Source.Soundcloud) => (): IO.IO<void> =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (Source.widget(source) as any).setVolume(volume * 100);
 }
 
 function resetBandcamp(source: Source.Bandcamp): IO.IO<void> {
@@ -103,6 +115,14 @@ function pauseBandcamp(source: Source.Bandcamp): IO.IO<void> {
 function playBandcamp(source: Source.Bandcamp): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return () => (Source.audio(source) as any).play();
+}
+
+function setVolumeBandcamp(volume: number) {
+  return (source: Source.Bandcamp): IO.IO<void> =>
+    () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (Source.audio(source) as any).volue = volume;
+    };
 }
 
 export function reset(track: Track.Initialized): IO.IO<void> {
@@ -139,6 +159,19 @@ export function pause(track: Track.Initialized): IO.IO<void> {
       Bandcamp: pauseBandcamp,
     })
   );
+}
+
+export function setVolume(volume: number) {
+  return (track: Track.Initialized): IO.IO<void> =>
+    pipe(
+      track,
+      Track.source,
+      Source.fold({
+        Youtube: setVolumeYoutube(volume),
+        Soundcloud: setVolumeSoundcloud(volume),
+        Bandcamp: setVolumeBandcamp(volume),
+      })
+    );
 }
 
 const aborted = doIfSelectedTrack((track: Track.Initialized) =>
