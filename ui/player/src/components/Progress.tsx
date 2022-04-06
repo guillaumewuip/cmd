@@ -8,7 +8,7 @@ import { pipe } from "fp-ts/function";
 
 import { Monospace } from "@cmd/ui-text";
 
-import { Track, Position } from "@cmd/domain-player";
+import { Track } from "@cmd/domain-player";
 
 import * as styles from "./Progress.css";
 
@@ -96,17 +96,17 @@ function Line({
 export default function Progress({
   track,
 }: {
-  track: Track.PlayingOrPaused | Track.Loading;
+  track: Track.Interactive | Track.Loading;
 }) {
-  const duration = pipe(track, Track.duration);
+  const { duration } = track;
 
   const ratio = pipe(
     track,
     (localTrack) =>
       Track.isInteractive(localTrack)
-        ? Option.some(Track.position(localTrack))
-        : Track.maybePosition(localTrack),
-    Option.map(Position.ratio),
+        ? Option.some(localTrack.position)
+        : localTrack.position,
+    Option.map((localTrack) => localTrack.ratio),
     Option.getOrElse(() => 0)
   );
   return (

@@ -34,10 +34,7 @@ function Source({ track }: { track: Track.Track }) {
   return (
     <div className={styles.source}>
       {Track.isInitialized(track) && (
-        <SourceLink
-          href={Track.externalUrl(track)}
-          source={Track.source(track)}
-        />
+        <SourceLink href={track.externalUrl} source={track.source} />
       )}
     </div>
   );
@@ -63,7 +60,7 @@ export default function TrackBar({ id }: { id: string }) {
         <div className={styles.command}>
           {!Track.isInitialized(track) && <Button.Loading />}
           {Track.isInitialized(track) && (
-            <Button.Play onClick={play(track)} trackName={Track.title(track)} />
+            <Button.Play onClick={play(track)} trackName={track.title} />
           )}
         </div>
 
@@ -80,12 +77,9 @@ export default function TrackBar({ id }: { id: string }) {
         {!Track.isInteractive(track) && <Button.Loading />}
         {Track.isInteractive(track) &&
           (Track.isPlaying(track) ? (
-            <Button.Pause
-              onClick={playOrPause}
-              trackName={Track.title(track)}
-            />
+            <Button.Pause onClick={playOrPause} trackName={track.title} />
           ) : (
-            <Button.Play onClick={playOrPause} trackName={Track.title(track)} />
+            <Button.Play onClick={playOrPause} trackName={track.title} />
           ))}
       </div>
 

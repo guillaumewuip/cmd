@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/function";
 
-import { TrackSource } from "@cmd/domain-player";
+import { Source } from "@cmd/domain-player";
 import * as styles from "./SourceLink.css";
 
 function YoutubeIcon() {
@@ -107,11 +107,11 @@ export default function SourceLink({
   source,
 }: {
   href: string;
-  source: TrackSource.TrackSource;
+  source: Source.Source;
 }) {
   return pipe(
     source,
-    TrackSource.fold({
+    Source.fold({
       Soundcloud: () => <Soundcloud href={href} />,
       Youtube: () => <Youtube href={href} />,
       Bandcamp: () => <Bandcamp href={href} />,

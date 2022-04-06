@@ -12,5 +12,6 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "error",
     "default-case": "off",
     "no-console": "error",
+    'consistent-return': 'off',
   }
 }
