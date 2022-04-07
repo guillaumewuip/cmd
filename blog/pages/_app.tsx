@@ -18,6 +18,7 @@ import {
   Hr,
 } from "@cmd/ui-text";
 import * as Player from "@cmd/ui-player";
+import { EmbedableLink } from "@cmd/domain-player";
 
 import * as Metadata from "../src/metadata";
 
@@ -31,7 +32,7 @@ const mdComponents: MDXProviderComponents = {
   code: (props) => <Code {...props} />,
   blockquote: (props) => <Blockquote {...props} />,
   player: (props) => {
-    const parsed = Player.parseLink(props.href);
+    const parsed = EmbedableLink.parseLink(props.href);
 
     if (Option.isNone(parsed)) {
       return (
