@@ -4,9 +4,7 @@ import { useLayoutEffect, useMemo, useState } from "react";
 import * as Option from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 
-import { register } from "@cmd/domain-player";
-
-import * as EmbedableLink from "../EmbedableLink";
+import { register, EmbedableLink } from "@cmd/domain-player";
 
 import * as Youtube from "./Youtube";
 import * as Soundcloud from "./Soundcloud";
@@ -38,7 +36,7 @@ export function TrackPlayer({
     register({
       id,
       title: title.value,
-      externalUrl: EmbedableLink.href(embedableLink),
+      externalUrl: embedableLink.href,
       weight,
     })();
 
@@ -51,15 +49,11 @@ export function TrackPlayer({
         pipe(
           embedableLink,
           EmbedableLink.fold({
-            Youtube: (link) => (
-              <Youtube.Player id={id} youtubeId={EmbedableLink.trackId(link)} />
+            Youtube: ({ trackId }) => (
+              <Youtube.Player id={id} youtubeId={trackId} />
             ),
-            Soundcloud: (link) => (
-              <Soundcloud.Player id={id} href={EmbedableLink.href(link)} />
-            ),
-            Bandcamp: (link) => (
-              <Bandcamp.Player id={id} href={EmbedableLink.href(link)} />
-            ),
+            Soundcloud: ({ href }) => <Soundcloud.Player id={id} href={href} />,
+            Bandcamp: ({ href }) => <Bandcamp.Player id={id} href={href} />,
           })
         )}
     </div>
