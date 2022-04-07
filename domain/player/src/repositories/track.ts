@@ -474,40 +474,51 @@ export function loadSoundcloud({
 
           return {
             soundcloudId: payload.trackId,
+            thumbnail: payload.thumbnail,
           };
         }, Either.toError),
       Either.isLeft
     ),
 
-    TaskEither.chainIOEitherK(({ soundcloudId }: { soundcloudId: string }) =>
-      IOEither.tryCatch(() => {
-        const src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${soundcloudId}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=false&show_reposts=true&show_teaser=true`;
+    TaskEither.chainIOEitherK(
+      ({
+        soundcloudId,
+        thumbnail,
+      }: {
+        soundcloudId: string;
+        thumbnail: string;
+      }) =>
+        IOEither.tryCatch(() => {
+          const src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${soundcloudId}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=false&show_reposts=true&show_teaser=true`;
 
-        const iframe = document.createElement("iframe");
-        iframe.setAttribute("title", "Embed player");
-        iframe.setAttribute("height", "128");
-        iframe.setAttribute("src", src);
-        iframe.setAttribute("allow", "autoplay");
-        iframe.setAttribute("tabIndex", "-1");
-        iframe.setAttribute("seamless", "true");
-        iframe.setAttribute("src", src);
+          const iframe = document.createElement("iframe");
+          iframe.setAttribute("title", "Embed player");
+          iframe.setAttribute("height", "128");
+          iframe.setAttribute("src", src);
+          iframe.setAttribute("allow", "autoplay");
+          iframe.setAttribute("tabIndex", "-1");
+          iframe.setAttribute("seamless", "true");
+          iframe.setAttribute("src", src);
 
-        container.appendChild(iframe);
+          container.appendChild(iframe);
 
-        return {
-          iframe,
-          soundcloudId,
-        };
-      }, Either.toError)
+          return {
+            iframe,
+            soundcloudId,
+            thumbnail,
+          };
+        }, Either.toError)
     ),
 
     TaskEither.chainIOEitherK(
       ({
         iframe,
         soundcloudId,
+        thumbnail,
       }: {
         iframe: HTMLIFrameElement;
         soundcloudId: string;
+        thumbnail: string;
       }) =>
         IOEither.tryCatch(() => {
           const widget = new window.SC.Widget(iframe);
@@ -518,6 +529,9 @@ export function loadSoundcloud({
 
           const source = Source.createSoundcloud({
             widget,
+            thumbnail: {
+              url: thumbnail,
+            },
           });
 
           widget.bind(window.SC.Widget.Events.ERROR, () => {
@@ -589,60 +603,65 @@ export function loadBandcamp({
 
           return {
             streamUrl: payload.streamUrl,
+            thumbnail: payload.thumbnail,
           };
         }, Either.toError),
       Either.isLeft
     ),
-    TaskEither.chainIOEitherK(({ streamUrl }: { streamUrl: string }) =>
-      IOEither.tryCatch(() => {
-        const audio = new Audio(streamUrl);
+    TaskEither.chainIOEitherK(
+      ({ streamUrl, thumbnail }: { streamUrl: string; thumbnail: string }) =>
+        IOEither.tryCatch(() => {
+          const audio = new Audio(streamUrl);
 
-        const source = Source.createBandcamp({
-          audio,
-        });
+          const source = Source.createBandcamp({
+            audio,
+            thumbnail: {
+              url: thumbnail,
+            },
+          });
 
-        audio.addEventListener("abort", () => {
-          aborted(id)();
-        });
-        audio.addEventListener("error", () => {
-          aborted(id)();
-        });
+          audio.addEventListener("abort", () => {
+            aborted(id)();
+          });
+          audio.addEventListener("error", () => {
+            aborted(id)();
+          });
 
-        audio.addEventListener("loadeddata", () => {
-          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/readyState
-          if (audio.readyState >= 2) {
+          audio.addEventListener("loadeddata", () => {
+            // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/readyState
+            if (audio.readyState >= 2) {
+              paused(id)();
+            }
+          });
+
+          audio.addEventListener("waiting", () => {
+            buffering(id)();
+          });
+
+          audio.addEventListener("play", () => {
+            playing(id)();
+          });
+          audio.addEventListener("playing", () => {
+            playing(id)();
+            durationUpdate(audio.duration)(id)();
+          });
+
+          audio.addEventListener("timeupdate", () =>
+            positionUpdate(() =>
+              Position.create({ ratio: audio.currentTime / audio.duration })
+            )(id)()
+          );
+
+          audio.addEventListener("pause", () => {
             paused(id)();
-          }
-        });
+          });
 
-        audio.addEventListener("waiting", () => {
-          buffering(id)();
-        });
+          audio.addEventListener("ended", () => {
+            ended(id)();
+          });
 
-        audio.addEventListener("play", () => {
-          playing(id)();
-        });
-        audio.addEventListener("playing", () => {
-          playing(id)();
-          durationUpdate(audio.duration)(id)();
-        });
-
-        audio.addEventListener("timeupdate", () =>
-          positionUpdate(() =>
-            Position.create({ ratio: audio.currentTime / audio.duration })
-          )(id)()
-        );
-
-        audio.addEventListener("pause", () => {
-          paused(id)();
-        });
-
-        audio.addEventListener("ended", () => {
-          ended(id)();
-        });
-
-        return source;
-      }, Either.toError)
+          return source;
+        }, Either.toError)
     ),
     Task.chainIOK(
       Either.fold(

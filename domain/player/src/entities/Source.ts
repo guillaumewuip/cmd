@@ -8,11 +8,17 @@ export type Youtube = {
 export type Soundcloud = {
   type: "Soundcloud";
   widget: unknown;
+  thumbnail: {
+    url: string;
+  };
 };
 
 export type Bandcamp = {
   type: "Bandcamp";
   audio: HTMLAudioElement;
+  thumbnail: {
+    url: string;
+  };
 };
 
 export type Source = Youtube | Soundcloud | Bandcamp;
@@ -37,20 +43,35 @@ export function createYoutube({ player }: { player: unknown }): Youtube {
   };
 }
 
-export function createSoundcloud({ widget }: { widget: unknown }): Soundcloud {
+export function createSoundcloud({
+  widget,
+  thumbnail,
+}: {
+  widget: unknown;
+  thumbnail: {
+    url: string;
+  };
+}): Soundcloud {
   return {
     type: "Soundcloud",
     widget,
+    thumbnail,
   };
 }
 
 export function createBandcamp({
   audio,
+  thumbnail,
 }: {
   audio: HTMLAudioElement;
+
+  thumbnail: {
+    url: string;
+  };
 }): Bandcamp {
   return {
     type: "Bandcamp",
     audio,
+    thumbnail,
   };
 }
