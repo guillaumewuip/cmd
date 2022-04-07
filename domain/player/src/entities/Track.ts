@@ -1,173 +1,136 @@
-import * as Union from "@fp51/opaque-union";
 import * as Option from "fp-ts/Option";
-import * as Eq from "fp-ts/Eq";
-import * as StringFP from "fp-ts/string";
 import { pipe } from "fp-ts/function";
+import { createFoldObject } from "@fp51/foldable-helpers";
 
-import * as Source from "./TrackSource";
+import * as Source from "./Source";
 import * as Position from "./Position";
 
-type $Reserved = {
+type Base = {
   id: string;
   title: string;
   externalUrl: string;
 };
 
-type $Aborted = $Reserved;
-
-type $Initialized = $Reserved & {
-  duration: Option.Option<number>; // in seconds
-  source: Source.TrackSource;
+export type Reserved = Base & {
+  type: "Reserved";
 };
 
-type $Loading = $Initialized & {
+export type Aborted = Base & {
+  type: "Aborted";
+};
+
+type BaseInitialized = Base & {
+  duration: Option.Option<number>; // in seconds
+  source: Source.Source;
+};
+
+export type Loading = BaseInitialized & {
+  type: "Loading";
   position: Option.Option<Position.Position>;
 };
 
-type $Playing = $Initialized & {
+export type Playing = BaseInitialized & {
+  type: "Playing";
   position: Position.Position;
 };
 
-type $Paused = $Initialized & {
+export type Paused = BaseInitialized & {
+  type: "Paused";
   position: Position.Position;
 };
 
-const TrackAPI = Union.of({
-  Reserved: Union.type<$Reserved>(),
-  Aborted: Union.type<$Aborted>(),
-  Loading: Union.type<$Loading>(),
-  Playing: Union.type<$Playing>(),
-  Paused: Union.type<$Paused>(),
+export type Track = Reserved | Aborted | Loading | Playing | Paused;
+export type Initialized = Loading | Playing | Paused;
+export type Interactive = Playing | Paused;
+
+export const isReserved = (track: Track): track is Reserved =>
+  track.type === "Reserved";
+export const isAborted = (track: Track): track is Aborted =>
+  track.type === "Aborted";
+export const isLoading = (track: Track): track is Loading =>
+  track.type === "Loading";
+export const isPlaying = (track: Track): track is Playing =>
+  track.type === "Playing";
+export const isPaused = (track: Track): track is Paused =>
+  track.type === "Paused";
+
+export const fold = createFoldObject({
+  Reserved: isReserved,
+  Aborted: isAborted,
+  Loading: isLoading,
+  Playing: isPlaying,
+  Paused: isPaused,
 });
 
-export type Track = Union.Type<typeof TrackAPI>;
-export type Reserved = ReturnType<typeof TrackAPI.of.Reserved>;
-export type Aborted = ReturnType<typeof TrackAPI.of.Aborted>;
-export type Loading = ReturnType<typeof TrackAPI.of.Loading>;
-export type Playing = ReturnType<typeof TrackAPI.of.Playing>;
-export type Paused = ReturnType<typeof TrackAPI.of.Paused>;
+export function isInitialized(track: Track): track is Initialized {
+  return isPlaying(track) || isLoading(track) || isPaused(track);
+}
 
-export const isReserved = TrackAPI.is.Reserved;
-export const isPlaying = TrackAPI.is.Playing;
-export const isPaused = TrackAPI.is.Paused;
-export const isAborted = TrackAPI.is.Aborted;
-export const isLoading = TrackAPI.is.Loading;
-
-export const { fold } = TrackAPI;
-
-export const id = TrackAPI.lensFromProp("id").get;
-export const title = TrackAPI.lensFromProp("title").get;
-export const externalUrl = TrackAPI.lensFromProp("externalUrl").get;
-export const maybePosition = TrackAPI.Loading.lensFromProp("position").get;
-
-export const eqId: Eq.Eq<Track> = Eq.contramap(id)(StringFP.Eq);
-
-const InitializedTrackAPI = Union.omit(TrackAPI, ["Reserved", "Aborted"]);
-export type Initialized = Union.Type<typeof InitializedTrackAPI>;
-
-export const isInitialized = InitializedTrackAPI.is;
-export const source = InitializedTrackAPI.lensFromProp("source").get;
-export const duration = InitializedTrackAPI.lensFromProp("duration").get;
-export const updateDuration = (localDuration: number) =>
-  InitializedTrackAPI.lensFromProp("duration").set(Option.some(localDuration));
-
-const InteractiveTrackAPI = Union.pick(TrackAPI, ["Playing", "Paused"]);
-export type PlayingOrPaused = Union.Type<typeof InteractiveTrackAPI>;
-
-export const isInteractive = InteractiveTrackAPI.is;
-export const position = InteractiveTrackAPI.lensFromProp("position").get;
+export function isInteractive(track: Track): track is Interactive {
+  return isPlaying(track) || isPaused(track);
+}
 
 export const reserved = (data: {
   id: string;
   title: string;
   externalUrl: string;
-}) =>
-  TrackAPI.of.Reserved({
-    id: data.id,
-    title: data.title,
-    externalUrl: data.externalUrl,
-  });
+}): Reserved => ({
+  type: "Reserved",
+  id: data.id,
+  title: data.title,
+  externalUrl: data.externalUrl,
+});
+
+export const aborted = (track: Track): Aborted => ({
+  ...track,
+  type: "Aborted",
+});
 
 export const initialized =
-  (data: { source: Source.TrackSource }) => (track: Track) =>
-    TrackAPI.of.Loading({
-      id: id(track),
-      title: title(track),
-      externalUrl: externalUrl(track),
-      source: data.source,
-      duration: Option.none,
-      position: Option.none,
-    });
-
-export const aborted = (track: Track) =>
-  TrackAPI.of.Aborted({
-    id: id(track),
-    title: title(track),
-    externalUrl: externalUrl(track),
+  ({ source }: { source: Source.Source }) =>
+  (track: Track): Loading => ({
+    ...track,
+    type: "Loading",
+    source,
+    duration: Option.none,
+    position: Option.none,
   });
 
-export const started = (track: Loading) =>
-  TrackAPI.of.Playing({
-    id: id(track),
-    title: title(track),
-    externalUrl: externalUrl(track),
-    source: source(track),
-    duration: duration(track),
-    position: Position.createStart(),
-  });
+export const started = (track: Loading): Playing => ({
+  ...track,
+  type: "Playing",
+  position: Position.start,
+});
 
-export const loaded = (track: Loading) =>
-  TrackAPI.of.Paused({
-    id: id(track),
-    title: title(track),
-    externalUrl: externalUrl(track),
-    source: source(track),
-    duration: duration(track),
-    position: Position.createStart(),
-  });
+export const loaded = (track: Loading): Paused => ({
+  ...track,
+  type: "Paused",
+  position: {
+    ratio: 0,
+  },
+});
 
-export const paused = (track: Playing) =>
-  TrackAPI.of.Paused({
-    id: id(track),
-    title: title(track),
-    externalUrl: externalUrl(track),
-    source: source(track),
-    duration: duration(track),
-    position: position(track),
-  });
+export const paused = (track: Playing): Paused => ({
+  ...track,
+  type: "Paused",
+});
 
-export const resumed = (track: Paused) =>
-  TrackAPI.of.Playing({
-    id: id(track),
-    title: title(track),
-    externalUrl: externalUrl(track),
-    source: source(track),
-    duration: duration(track),
-    position: position(track),
-  });
+export const resumed = (track: Paused): Playing => ({
+  ...track,
+  type: "Playing",
+});
 
-export const buffering = (track: PlayingOrPaused) =>
-  TrackAPI.of.Loading({
-    id: id(track),
-    title: title(track),
-    externalUrl: externalUrl(track),
-    source: source(track),
-    duration: duration(track),
-    position: pipe(track, position, Option.some),
-  });
+export const buffering = (track: Interactive): Loading => ({
+  ...track,
+  type: "Loading",
+  position: Option.some(track.position),
+});
 
-export const buffered = (track: Loading) =>
-  TrackAPI.of.Playing({
-    id: id(track),
-    title: title(track),
-    externalUrl: externalUrl(track),
-    source: source(track),
-    duration: duration(track),
-    position: pipe(
-      track,
-      TrackAPI.Loading.lensFromProp("position").get,
-      Option.getOrElse(Position.createStart)
-    ),
-  });
-
-export const positionChanged = InteractiveTrackAPI.lensFromProp("position").set;
+export const buffered = (track: Loading): Playing => ({
+  ...track,
+  type: "Playing",
+  position: pipe(
+    track.position,
+    Option.getOrElse(() => Position.start)
+  ),
+});

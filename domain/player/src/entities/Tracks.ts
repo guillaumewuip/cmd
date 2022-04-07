@@ -1,19 +1,19 @@
-import * as Union from "@fp51/opaque-union";
-
 import * as ReadonlyNonEmptyArrayFP from "fp-ts/ReadonlyNonEmptyArray";
 import * as ReadonlyArrayFP from "fp-ts/ReadonlyArray";
 import * as Option from "fp-ts/Option";
 import * as Ord from "fp-ts/Ord";
 import * as NumberFP from "fp-ts/number";
-import { identity, pipe } from "fp-ts/function";
+import { pipe } from "fp-ts/function";
 
 import * as Track from "./Track";
 
-type $Empty = {
+export type Empty = {
+  type: "Empty";
   autoplayEnabled: boolean;
 };
 
-type $Loaded = {
+export type Loaded = {
+  type: "Loaded";
   autoplayEnabled: boolean;
   selected: string;
   alreadyPlayed: boolean;
@@ -23,103 +23,81 @@ type $Loaded = {
   }>;
 };
 
-const TracksAPI = Union.of({
-  Empty: Union.type<$Empty>(),
-  Loaded: Union.type<$Loaded>(),
+export type Tracks = Empty | Loaded;
+
+export function isEmpty(track: Tracks): track is Empty {
+  return track.type === "Empty";
+}
+
+export const create = ({
+  autoplayEnabled,
+}: {
+  autoplayEnabled: boolean;
+}): Empty => ({
+  type: "Empty",
+  autoplayEnabled,
 });
 
-export type Tracks = Union.Type<typeof TracksAPI>;
-export type Empty = ReturnType<typeof TracksAPI.of.Empty>;
-export type Loaded = ReturnType<typeof TracksAPI.of.Loaded>;
-
-export const autoplayEnabled = TracksAPI.lensFromProp("autoplayEnabled").get;
-export const setAutoplay = TracksAPI.lensFromProp("autoplayEnabled").set;
-
-export const isEmpty = TracksAPI.is.Empty;
-
-export const { fold } = TracksAPI;
-
-export const create = (data: { autoplayEnabled: boolean }) =>
-  TracksAPI.of.Empty({
-    autoplayEnabled: data.autoplayEnabled,
-  });
-
-const toLoaded = (track: Track.Track, weight: number) => (tracks: Empty) =>
-  TracksAPI.of.Loaded({
-    autoplayEnabled: autoplayEnabled(tracks),
-    selected: Track.id(track),
+const toLoaded =
+  (track: Track.Track, weight: number) =>
+  (tracks: Empty): Loaded => ({
+    ...tracks,
+    type: "Loaded",
+    selected: track.id,
     alreadyPlayed: false,
     allTracks: [{ track, weight }],
   });
 
-const selected = TracksAPI.Loaded.lensFromProp("selected").get;
-const allTracks = TracksAPI.Loaded.lensFromProp("allTracks").get;
-
-export const alreadyPlayed = TracksAPI.Loaded.lensFromProp("alreadyPlayed").get;
-export const playing = TracksAPI.Loaded.lensFromProp("alreadyPlayed").set(true);
-
 const findSelected = (tracks: Loaded): Option.Option<Track.Track> =>
   pipe(
-    tracks,
-    allTracks,
-    ReadonlyArrayFP.findFirst(
-      ({ track }) => Track.id(track) === selected(tracks)
-    ),
+    tracks.allTracks,
+    ReadonlyArrayFP.findFirst(({ track }) => track.id === tracks.selected),
     Option.map(({ track }) => track)
   );
 
-export const isSelected = (id: string) => (tracks: Tracks) =>
-  pipe(
-    tracks,
-    Option.of,
-    Option.chain(
-      fold({
-        Empty: () => Option.none,
-        Loaded: Option.some,
-      })
-    ),
-    Option.chain(findSelected),
-    Option.chain(
-      Option.fromPredicate((localSelected) => Track.id(localSelected) === id)
-    ),
-    Option.fold(
-      () => false,
-      () => true
-    )
-  );
+export const isSelected =
+  (id: string) =>
+  (tracks: Tracks): boolean => {
+    if (tracks.type === "Empty") {
+      return false;
+    }
+
+    return pipe(
+      tracks,
+      findSelected,
+      Option.chain(
+        Option.fromPredicate((localSelected) => localSelected.id === id)
+      ),
+      Option.fold(
+        () => false,
+        () => true
+      )
+    );
+  };
 
 const findTrackIndex =
   (track: Track.Track) =>
   (tracks: Loaded): Option.Option<number> =>
     pipe(
-      tracks,
-      allTracks,
+      tracks.allTracks,
       ReadonlyArrayFP.findIndex(
-        ({ track: localTrack }) => Track.id(localTrack) === Track.id(track)
+        ({ track: localTrack }) => localTrack.id === track.id
       )
     );
 
 export const findTrackById =
   (id: string) =>
-  (tracks: Tracks): Option.Option<Track.Track> =>
-    pipe(
-      tracks,
-      Option.of,
-      Option.chain(
-        fold({
-          Empty: () => Option.none,
-          Loaded: Option.some,
-        })
-      ),
-      Option.chain((localTracks) =>
-        pipe(
-          localTracks,
-          allTracks,
-          ReadonlyArrayFP.findFirst(({ track }) => Track.id(track) === id)
-        )
-      ),
+  (tracks: Tracks): Option.Option<Track.Track> => {
+    if (tracks.type === "Empty") {
+      return Option.none;
+    }
+
+    return pipe(
+      tracks.allTracks,
+      ReadonlyArrayFP.findFirst(({ track }) => track.id === id),
       Option.map(({ track }) => track)
     );
+  };
 
 const trackWithWeightOrd = pipe(
   NumberFP.Ord,
@@ -128,34 +106,31 @@ const trackWithWeightOrd = pipe(
 
 export const addTrack = (track: Track.Track, weight: number) => {
   return (tracks: Tracks): Loaded => {
-    if (TracksAPI.is.Empty(tracks)) {
+    if (tracks.type === "Empty") {
       return toLoaded(track, weight)(tracks);
     }
 
     // add track and sort
-    const loadedTracks = pipe(
-      tracks,
-      TracksAPI.Loaded.lensFromProp("allTracks").modify((localTracks) =>
-        pipe(
-          localTracks,
-          ReadonlyArrayFP.append({ track, weight }),
-          ReadonlyNonEmptyArrayFP.sort(trackWithWeightOrd)
-        )
-      )
-    );
+    const loadedTracks = {
+      ...tracks,
+      allTracks: pipe(
+        tracks.allTracks,
+        ReadonlyArrayFP.append({ track, weight }),
+        ReadonlyNonEmptyArrayFP.sort(trackWithWeightOrd)
+      ),
+    };
 
     // then update selected
 
     const { track: firstTrack } = pipe(
-      loadedTracks,
-      allTracks,
+      loadedTracks.allTracks,
       ReadonlyNonEmptyArrayFP.head
     );
 
-    return pipe(
-      loadedTracks,
-      TracksAPI.Loaded.lensFromProp("selected").set(Track.id(firstTrack))
-    );
+    return {
+      ...loadedTracks,
+      selected: firstTrack.id,
+    };
   };
 };
 
@@ -170,7 +145,7 @@ export const selectedTrack = (tracks: Loaded): Track.Track => {
 };
 
 export const nextTrack = (tracks: Loaded): Option.Option<Track.Track> => {
-  const currentAllTracks = allTracks(tracks);
+  const currentAllTracks = tracks.allTracks;
 
   const currentSelectedTrackIndex = pipe(
     tracks,
@@ -193,53 +168,48 @@ export const selectTrack =
   (track: Track.Track) =>
   (tracks: Loaded): Loaded => {
     return pipe(
-      tracks,
-      allTracks,
-      ReadonlyArrayFP.findFirst(({ track: localTrack }) =>
-        Track.eqId.equals(localTrack, track)
+      tracks.allTracks,
+      ReadonlyArrayFP.findFirst(
+        ({ track: localTrack }) => localTrack.id === track.id
       ),
       Option.fold(
         () => tracks, // do nothing
-        (localSelectedTrack) =>
-          pipe(
-            tracks,
-            TracksAPI.Loaded.lensFromProp("selected").set(
-              Track.id(localSelectedTrack.track)
-            )
-          )
+        ({ track: localSelectedTrack }) => ({
+          ...tracks,
+          selected: localSelectedTrack.id,
+        })
       )
     );
   };
 
-export const modifyIfNotEmpty = (modifier: (track: Loaded) => Loaded) =>
-  TracksAPI.fold<Tracks>({
-    Empty: identity,
-    Loaded: modifier,
-  });
+export const modifyIfNotEmpty =
+  (modifier: (tracks: Loaded) => Loaded) =>
+  (tracks: Tracks): Tracks => {
+    if (tracks.type === "Empty") {
+      return tracks;
+    }
+
+    return modifier(tracks);
+  };
 
 export const modifyTrack =
   (trackId: string, modifier: (track: Track.Track) => Track.Track) =>
   (tracks: Loaded): Loaded => {
-    const trackIndex = pipe(
+    return pipe(
       tracks,
       findTrackById(trackId),
-      Option.chain((track) => findTrackIndex(track)(tracks))
-    );
-
-    return pipe(
-      trackIndex,
-      Option.map((index) =>
-        TracksAPI.Loaded.lensFromProp("allTracks").modify((localTracks) =>
-          pipe(
-            localTracks,
-            ReadonlyNonEmptyArrayFP.modifyAt(index, (trackWithWeight) => ({
-              ...trackWithWeight,
-              track: modifier(trackWithWeight.track),
-            })),
-            Option.getOrElse(() => localTracks)
-          )
-        )(tracks)
-      ),
+      Option.chain((track) => findTrackIndex(track)(tracks)),
+      Option.map((index) => ({
+        ...tracks,
+        allTracks: pipe(
+          tracks.allTracks,
+          ReadonlyNonEmptyArrayFP.modifyAt(index, (trackWithWeight) => ({
+            ...trackWithWeight,
+            track: modifier(trackWithWeight.track),
+          })),
+          Option.getOrElse(() => tracks.allTracks)
+        ),
+      })),
       Option.getOrElse(() => tracks)
     );
   };

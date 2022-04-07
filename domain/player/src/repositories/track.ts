@@ -13,7 +13,7 @@ import { retrying } from "retry-ts/Task";
 
 import * as Tracks from "../entities/Tracks";
 import * as Track from "../entities/Track";
-import * as Source from "../entities/TrackSource";
+import * as Source from "../entities/Source";
 import * as Position from "../entities/Position";
 
 import * as Store from "../store";
@@ -46,7 +46,7 @@ function doIfSelectedTrack(
 
     const selectedTrack = Tracks.selectedTrack(state);
 
-    if (Track.id(selectedTrack) !== trackId) {
+    if (selectedTrack.id !== trackId) {
       return IO.of(undefined);
     }
 
@@ -60,91 +60,88 @@ function doIfSelectedTrack(
 
 function resetYoutube(source: Source.Youtube): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (Source.player(source) as any).seekTo(0);
+  return () => (source.player as any).seekTo(0);
 }
 
 function playYoutube(source: Source.Youtube): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (Source.player(source) as any).playVideo();
+  return () => (source.player as any).playVideo();
 }
 
 function pauseYoutube(source: Source.Youtube): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (Source.player(source) as any).pauseVideo();
+  return () => (source.player as any).pauseVideo();
 }
 
 function resetSoundcloud(source: Source.Soundcloud): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (Source.widget(source) as any).seekTo(0);
+  return () => (source.widget as any).seekTo(0);
 }
 
 function playSoundcloud(source: Source.Soundcloud): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (Source.widget(source) as any).play();
+  return () => (source.widget as any).play();
 }
 
 function pauseSoundcloud(source: Source.Soundcloud): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (Source.widget(source) as any).pause();
+  return () => (source.widget as any).pause();
 }
 
 function resetBandcamp(source: Source.Bandcamp): IO.IO<void> {
   return () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (Source.audio(source) as any).currentTime = 0;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-param-reassign
+    (source.audio as any).currentTime = 0;
   };
 }
 
 function pauseBandcamp(source: Source.Bandcamp): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (Source.audio(source) as any).pause();
+  return () => (source.audio as any).pause();
 }
 
 function playBandcamp(source: Source.Bandcamp): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (Source.audio(source) as any).play();
+  return () => (source.audio as any).play();
 }
 
 export function reset(track: Track.Initialized): IO.IO<void> {
-  return pipe(
-    track,
-    Track.source,
-    Source.fold({
-      Youtube: resetYoutube,
-      Soundcloud: resetSoundcloud,
-      Bandcamp: resetBandcamp,
-    })
-  );
+  switch (track.source.type) {
+    case "Youtube":
+      return resetYoutube(track.source);
+    case "Soundcloud":
+      return resetSoundcloud(track.source);
+    case "Bandcamp":
+      return resetBandcamp(track.source);
+  }
 }
 
 export function play(track: Track.Initialized): IO.IO<void> {
-  return pipe(
-    track,
-    Track.source,
-    Source.fold({
-      Youtube: playYoutube,
-      Soundcloud: playSoundcloud,
-      Bandcamp: playBandcamp,
-    })
-  );
+  switch (track.source.type) {
+    case "Youtube":
+      return playYoutube(track.source);
+    case "Soundcloud":
+      return playSoundcloud(track.source);
+    case "Bandcamp":
+      return playBandcamp(track.source);
+  }
 }
 
 export function pause(track: Track.Initialized): IO.IO<void> {
-  return pipe(
-    track,
-    Track.source,
-    Source.fold({
-      Youtube: pauseYoutube,
-      Soundcloud: pauseSoundcloud,
-      Bandcamp: pauseBandcamp,
-    })
-  );
+  switch (track.source.type) {
+    case "Youtube":
+      return pauseYoutube(track.source);
+    case "Soundcloud":
+      return pauseSoundcloud(track.source);
+    case "Bandcamp":
+      return pauseBandcamp(track.source);
+  }
 }
 
 const aborted = doIfSelectedTrack((track: Track.Initialized) =>
   Store.write(
     Tracks.modifyIfNotEmpty(
-      Tracks.modifyTrack(Track.id(track), () => Track.aborted(track))
+      Tracks.modifyTrack(track.id, () => Track.aborted(track))
     )
   )
 );
@@ -152,7 +149,7 @@ const aborted = doIfSelectedTrack((track: Track.Initialized) =>
 const buffering = doIfSelectedTrack((track: Track.Initialized) =>
   Store.write(
     Tracks.modifyIfNotEmpty(
-      Tracks.modifyTrack(Track.id(track), (localTrack) => {
+      Tracks.modifyTrack(track.id, (localTrack) => {
         if (!Track.isInteractive(localTrack)) {
           return localTrack;
         }
@@ -167,12 +164,15 @@ const positionUpdate = (getPosition: () => Position.Position) =>
   doIfSelectedTrack((track: Track.Initialized) =>
     Store.write(
       Tracks.modifyIfNotEmpty(
-        Tracks.modifyTrack(Track.id(track), (localTrack) => {
+        Tracks.modifyTrack(track.id, (localTrack) => {
           if (!Track.isInteractive(localTrack)) {
             return localTrack;
           }
 
-          return Track.positionChanged(getPosition())(localTrack);
+          return {
+            ...localTrack,
+            position: getPosition(),
+          };
         })
       )
     )
@@ -182,12 +182,15 @@ const durationUpdate = (duration: number) =>
   doIfSelectedTrack((track: Track.Initialized) =>
     Store.write(
       Tracks.modifyIfNotEmpty(
-        Tracks.modifyTrack(Track.id(track), (localTrack) => {
+        Tracks.modifyTrack(track.id, (localTrack) => {
           if (!Track.isInitialized(localTrack)) {
             return localTrack;
           }
 
-          return Track.updateDuration(duration)(localTrack);
+          return {
+            ...localTrack,
+            duration: Option.some(duration),
+          };
         })
       )
     )
@@ -197,7 +200,7 @@ const playing = doIfSelectedTrack((track: Track.Initialized) =>
   Store.write(
     Tracks.modifyIfNotEmpty(
       Tracks.modifyTrack(
-        Track.id(track),
+        track.id,
         Track.fold<Track.Track>({
           Reserved: identity,
           Aborted: identity,
@@ -214,7 +217,7 @@ const paused = doIfSelectedTrack((track: Track.Track) =>
   Store.write(
     Tracks.modifyIfNotEmpty(
       Tracks.modifyTrack(
-        Track.id(track),
+        track.id,
         Track.fold<Track.Track>({
           Reserved: identity,
           Aborted: identity,
@@ -235,7 +238,7 @@ const ended = doIfSelectedTrack((track: Track.Track) =>
           return tracks;
         }
 
-        if (!Tracks.autoplayEnabled(tracks)) {
+        if (!tracks.autoplayEnabled) {
           return tracks;
         }
 
@@ -257,7 +260,7 @@ const ended = doIfSelectedTrack((track: Track.Track) =>
 
       const selectedTrack = Tracks.selectedTrack(tracks);
 
-      if (Track.eqId.equals(selectedTrack, track)) {
+      if (selectedTrack.id === track.id) {
         return IO.of(undefined);
       }
 
@@ -329,7 +332,7 @@ export function loadYoutube({
   return pipe(
     TaskEither.tryCatch(
       () =>
-        new Promise<Source.TrackSource>((resolve, reject) => {
+        new Promise<Source.Source>((resolve, reject) => {
           try {
             window.YT.ready(() => {
               const player = new window.YT.Player(container, {
@@ -381,7 +384,7 @@ export function loadYoutube({
                   const time = player.getCurrentTime();
                   const duration = player.getDuration();
 
-                  const position = Position.create(time / duration);
+                  const position = Position.create({ ratio: time / duration });
 
                   positionUpdate(() => position)(id)();
                 }
@@ -629,7 +632,7 @@ export function loadBandcamp({
 
         audio.addEventListener("timeupdate", () =>
           positionUpdate(() =>
-            Position.create(audio.currentTime / audio.duration)
+            Position.create({ ratio: audio.currentTime / audio.duration })
           )(id)()
         );
 

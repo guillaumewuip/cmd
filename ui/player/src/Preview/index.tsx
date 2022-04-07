@@ -20,7 +20,7 @@ import AbortedText from "../components/AbortedText";
 import * as styles from "./Preview.css";
 
 export function NextTrack({ track }: { track: Track.Initialized }) {
-  return <Button.Next onClick={play(track)} trackName={Track.title(track)} />;
+  return <Button.Next onClick={play(track)} trackName={track.title} />;
 }
 
 export function Preview() {
@@ -30,7 +30,7 @@ export function Preview() {
     return null;
   }
 
-  const autoplayEnabled = Tracks.autoplayEnabled(state);
+  const { autoplayEnabled } = state;
 
   const selectedTrack = Tracks.selectedTrack(state);
 
@@ -39,9 +39,7 @@ export function Preview() {
   if (!Track.isInitialized(selectedTrack) || Track.isAborted(selectedTrack)) {
     return (
       <div
-        className={`${styles.preview} ${
-          !Tracks.alreadyPlayed(state) && styles.hidden
-        }`}
+        className={`${styles.preview} ${!state.alreadyPlayed && styles.hidden}`}
       >
         <div className={styles.currentTrack}>
           <TrackText track={selectedTrack} />
@@ -77,9 +75,7 @@ export function Preview() {
 
   return (
     <div
-      className={`${styles.preview} ${
-        !Tracks.alreadyPlayed(state) && styles.hidden
-      }`}
+      className={`${styles.preview} ${!state.alreadyPlayed && styles.hidden}`}
     >
       <div className={styles.currentTrack}>
         <TrackText track={selectedTrack} />
@@ -94,13 +90,13 @@ export function Preview() {
               (Track.isPlaying(selectedTrack) ? (
                 <Button.Pause
                   size="medium"
-                  trackName={Track.title(selectedTrack)}
+                  trackName={selectedTrack.title}
                   onClick={playOrPause}
                 />
               ) : (
                 <Button.Play
                   size="medium"
-                  trackName={Track.title(selectedTrack)}
+                  trackName={selectedTrack.title}
                   onClick={playOrPause}
                 />
               ))}

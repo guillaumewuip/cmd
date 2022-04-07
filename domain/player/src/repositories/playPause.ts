@@ -11,7 +11,12 @@ import * as TrackRepo from "./track";
 function selectAndPlayTrack(track: Track.Initialized) {
   return (state: Tracks.Loaded): IO.IO<void> => {
     return pipe(
-      Store.write(() => pipe(state, Tracks.selectTrack(track), Tracks.playing)),
+      Store.write(() =>
+        pipe(state, Tracks.selectTrack(track), (tracks) => ({
+          ...tracks,
+          autoplayEnabled: true,
+        }))
+      ),
       IO.chain(() => TrackRepo.play(track))
     );
   };
@@ -19,13 +24,13 @@ function selectAndPlayTrack(track: Track.Initialized) {
 
 export const playOrPause = pipe(
   Store.read,
-  IO.chain((state) => {
+  IO.chain((tracks) => {
     // nothing to do here
-    if (Tracks.isEmpty(state)) {
+    if (Tracks.isEmpty(tracks)) {
       return IO.of(undefined);
     }
 
-    const selectedTrack = pipe(state, Tracks.selectedTrack);
+    const selectedTrack = pipe(tracks, Tracks.selectedTrack);
 
     // nothing to do here
     if (!Track.isInteractive(selectedTrack)) {
@@ -34,7 +39,7 @@ export const playOrPause = pipe(
 
     return Track.isPlaying(selectedTrack)
       ? TrackRepo.pause(selectedTrack)
-      : selectAndPlayTrack(selectedTrack)(state);
+      : selectAndPlayTrack(selectedTrack)(tracks);
   })
 );
 
