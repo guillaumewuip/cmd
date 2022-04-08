@@ -8,7 +8,6 @@ import * as Position from "./Position";
 type Base = {
   id: string;
   title: string;
-  externalUrl: string;
 };
 
 export type Reserved = Base & {
@@ -70,15 +69,10 @@ export function isInteractive(track: Track): track is Interactive {
   return isPlaying(track) || isPaused(track);
 }
 
-export const reserved = (data: {
-  id: string;
-  title: string;
-  externalUrl: string;
-}): Reserved => ({
+export const reserved = (data: { id: string; title: string }): Reserved => ({
   type: "Reserved",
   id: data.id,
   title: data.title,
-  externalUrl: data.externalUrl,
 });
 
 export const aborted = (track: Track): Aborted => ({

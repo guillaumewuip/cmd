@@ -276,18 +276,15 @@ const ended = doIfSelectedTrack((track: Track.Track) =>
 export function reserve({
   id,
   title,
-  externalUrl,
   weight,
 }: {
   id: string;
   title: string;
-  externalUrl: string;
   weight: number;
 }): IO.IO<Track.Reserved> {
   const track = Track.reserved({
     id,
     title,
-    externalUrl,
   });
 
   return pipe(
