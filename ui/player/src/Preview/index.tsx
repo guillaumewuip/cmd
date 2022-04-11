@@ -24,22 +24,24 @@ export function NextTrack({ track }: { track: Track.Initialized }) {
 }
 
 export function Preview() {
-  const state = usePlayer();
+  const tracks = usePlayer();
 
-  if (Tracks.isEmpty(state)) {
+  if (Tracks.isEmpty(tracks)) {
     return null;
   }
 
-  const { autoplayEnabled } = state;
+  const { autoplayEnabled } = tracks;
 
-  const selectedTrack = Tracks.selectedTrack(state);
+  const selectedTrack = Tracks.selectedTrack(tracks);
 
-  const nextTrack = pipe(state, Tracks.nextTrack);
+  const nextTrack = pipe(tracks, Tracks.nextTrack);
 
   if (!Track.isInitialized(selectedTrack) || Track.isAborted(selectedTrack)) {
     return (
       <div
-        className={`${styles.preview} ${!state.alreadyPlayed && styles.hidden}`}
+        className={`${styles.preview} ${
+          !tracks.alreadyPlayed && styles.hidden
+        }`}
       >
         <div className={styles.currentTrack}>
           <TrackText track={selectedTrack} />
@@ -75,7 +77,7 @@ export function Preview() {
 
   return (
     <div
-      className={`${styles.preview} ${!state.alreadyPlayed && styles.hidden}`}
+      className={`${styles.preview} ${!tracks.alreadyPlayed && styles.hidden}`}
     >
       <div className={styles.currentTrack}>
         <TrackText track={selectedTrack} />

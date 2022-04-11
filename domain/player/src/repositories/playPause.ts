@@ -14,7 +14,7 @@ function selectAndPlayTrack(track: Track.Initialized) {
       Store.write(() =>
         pipe(state, Tracks.selectTrack(track), (tracks) => ({
           ...tracks,
-          autoplayEnabled: true,
+          alreadyPlayed: true,
         }))
       ),
       IO.chain(() => TrackRepo.play(track))
@@ -64,7 +64,8 @@ export function play(track: Track.Initialized): IO.IO<void> {
 
       // nothing to do here
       return pipe(
-        IO.of(state),
+        state,
+        IO.of,
         IO.chainFirst(pauseIfNeeded),
         IO.chainFirst(() => TrackRepo.reset(track)),
         IO.chain(selectAndPlayTrack(track))
