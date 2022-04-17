@@ -15,7 +15,7 @@
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "@types/react": "^17.0.43",
+    "@types/react": "^18.0.0",
     "next": "^12.1.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
