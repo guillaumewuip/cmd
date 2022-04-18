@@ -6,7 +6,7 @@ globalStyle("html, body", {
   fontSize: "16px",
 
   "@media": {
-    "prefers-color-scheme: dark": {
+    "(prefers-color-scheme: dark)": {
       filter: "invert(1) hue-rotate(180deg)",
     },
   },
@@ -14,7 +14,7 @@ globalStyle("html, body", {
 
 globalStyle("img, iframe", {
   "@media": {
-    "prefers-color-scheme: dark": {
+    "(prefers-color-scheme: dark)": {
       filter: "invert(1) hue-rotate(-180deg)",
     },
   },
