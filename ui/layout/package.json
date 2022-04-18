@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@cmd/ui-theme": "workspace:*",
-    "@vanilla-extract/css": "^1.6.8",
+    "@vanilla-extract/css": "^1.7.0",
     "@vanilla-extract/css-utils": "^0.1.2"
   },
   "peerDependencies": {

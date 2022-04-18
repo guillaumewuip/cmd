@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "cross-fetch": "^3.1.5",
-    "linkedom": "^0.14.0"
+    "linkedom": "^0.14.7"
   },
   "devDependencies": {
-    "@vercel/node": "^1.12.1"
+    "@vercel/node": "^1.14.1"
   }
 }
