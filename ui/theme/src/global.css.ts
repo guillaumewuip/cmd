@@ -4,9 +4,11 @@ globalStyle("html, body", {
   padding: 0,
   margin: 0,
   fontSize: "16px",
+});
 
+globalStyle(":root", {
   "@media": {
-    "(prefers-color-scheme: dark)": {
+    "screen and (prefers-color-scheme: dark)": {
       filter: "invert(1) hue-rotate(180deg)",
     },
   },
@@ -14,7 +16,7 @@ globalStyle("html, body", {
 
 globalStyle("img, iframe", {
   "@media": {
-    "(prefers-color-scheme: dark)": {
+    "screen and (prefers-color-scheme: dark)": {
       filter: "invert(1) hue-rotate(-180deg)",
     },
   },
