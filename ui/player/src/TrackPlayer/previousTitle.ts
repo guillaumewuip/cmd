@@ -1,9 +1,7 @@
 import * as Option from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 
-export function previousTitle(id: string): Option.Option<string> {
-  const element = document.getElementById(id);
-
+export function previousTitle(element: HTMLElement): Option.Option<string> {
   let preceding: Element | null = element;
 
   while (preceding) {

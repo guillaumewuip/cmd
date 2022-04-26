@@ -59,33 +59,68 @@ function doIfSelectedTrack(
 }
 
 function resetYoutube(source: Source.Youtube): IO.IO<void> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (source.player as any).seekTo(0);
+  return () => {
+    if (Option.isNone(source.player)) {
+      return;
+    }
+
+    source.player.value.seekTo(0);
+  };
 }
 
 function playYoutube(source: Source.Youtube): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (source.player as any).playVideo();
+  return () => {
+    if (Option.isNone(source.player)) {
+      return;
+    }
+
+    source.player.value.playVideo();
+  };
 }
 
 function pauseYoutube(source: Source.Youtube): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (source.player as any).pauseVideo();
+  return () => {
+    if (Option.isNone(source.player)) {
+      return;
+    }
+
+    source.player.value.pauseVideo();
+  };
 }
 
 function resetSoundcloud(source: Source.Soundcloud): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (source.widget as any).seekTo(0);
+  return () => {
+    if (Option.isNone(source.widget)) {
+      return;
+    }
+
+    source.widget.value.seekTo(0);
+  };
 }
 
 function playSoundcloud(source: Source.Soundcloud): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (source.widget as any).play();
+  return () => {
+    if (Option.isNone(source.widget)) {
+      return;
+    }
+
+    source.widget.value.play();
+  };
 }
 
 function pauseSoundcloud(source: Source.Soundcloud): IO.IO<void> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return () => (source.widget as any).pause();
+  return () => {
+    if (Option.isNone(source.widget)) {
+      return;
+    }
+
+    source.widget.value.pause();
+  };
 }
 
 function resetBandcamp(source: Source.Bandcamp): IO.IO<void> {
@@ -273,69 +308,43 @@ const ended = doIfSelectedTrack((track: Track.Track) =>
   )
 );
 
-export function reserve({
-  id,
-  title,
+export function register({
+  track,
   weight,
 }: {
-  id: string;
-  title: string;
+  track: Track.Reserved;
   weight: number;
 }): IO.IO<Track.Reserved> {
-  const track = Track.reserved({
-    id,
-    title,
-  });
-
   return pipe(
     Store.write(Tracks.addTrack(track, weight)),
     IO.map(() => track)
   );
 }
 
-interface YoutubePlayer {
-  // eslint-disable-next-line @typescript-eslint/no-misused-new
-  new (element: HTMLElement, config: object): YoutubePlayer;
-  addEventListener(event: string, callback: (event: unknown) => void): void;
-  getPlayerState(): number;
-  getCurrentTime(): number;
-  getDuration(): number;
-}
-
-declare global {
-  interface Window {
-    YT: {
-      Player: YoutubePlayer;
-      PlayerState: {
-        BUFFERING: number;
-        ENDED: number;
-        PLAYING: number;
-        PAUSED: number;
-      };
-      ready: (cb: () => void) => void; // https://stackoverflow.com/a/62254596
-    };
-  }
-}
-
 export function loadYoutube({
-  id,
-  youtubeId,
-  container,
+  track,
 }: {
-  id: string;
-  youtubeId: string;
-  container: HTMLElement;
+  track: Track.Reserved & { source: Source.Youtube };
 }): Task.Task<void> {
+  const { id, source } = track;
+  const videoId = source.trackId;
+
   return pipe(
     TaskEither.tryCatch(
       () =>
-        new Promise<Source.Source>((resolve, reject) => {
+        new Promise<Source.YoutubePlayer>((resolve, reject) => {
           try {
+            const container = source.container.current;
+
+            if (!container) {
+              throw new Error("Empty Youtube container");
+            }
+
             window.YT.ready(() => {
               const player = new window.YT.Player(container, {
                 height: "390",
                 width: "640",
-                videoId: youtubeId,
+                videoId,
                 events: {
                   onReady: () => {
                     paused(id)();
@@ -369,10 +378,6 @@ export function loadYoutube({
                 },
               });
 
-              const source = Source.createYoutube({
-                player,
-              });
-
               setInterval(() => {
                 if (
                   "getPlayerState" in player &&
@@ -387,7 +392,7 @@ export function loadYoutube({
                 }
               }, 1000);
 
-              resolve(source);
+              resolve(player);
             });
           } catch (error) {
             reject(error);
@@ -398,67 +403,32 @@ export function loadYoutube({
     Task.chainIOK(
       Either.fold(
         () => updateTrack(id, Track.aborted),
-        (source) => updateTrack(id, Track.initialized({ source }))
+        (player) =>
+          updateTrack(id, (localTrack) =>
+            pipe(
+              localTrack,
+              Track.initialized,
+              Track.modifySource(
+                Source.fold<Source.Source>({
+                  Youtube: Source.addPlayer(player),
+                  Soundcloud: identity,
+                  Bandcamp: identity,
+                })
+              )
+            )
+          )
       )
     )
   );
 }
 
-type SoundcloudAudioEvent = {
-  LOAD_PROGRESS: "load_progress";
-  PLAY_PROGRESS: "play_progress";
-  PLAY: "play";
-  PAUSE: "pause";
-  FINISH: "finish";
-  SEEK: "seek";
-};
-
-type SoundcloudUIEvent = {
-  READY: "ready";
-  CLICK_DOWNLOAD: "click_download";
-  CLICK_BUY: "click_buy";
-  OPEN_SHARE_PANEL: "open_share_panel";
-  ERROR: "error";
-};
-
-interface SoundcloudWidget {
-  // eslint-disable-next-line @typescript-eslint/no-misused-new
-  new (element: HTMLElement): SoundcloudWidget;
-  bind(
-    event: SoundcloudAudioEvent[keyof SoundcloudAudioEvent],
-    callback: (state: {
-      relativePosition: number;
-      loadProgress: number;
-      currentPosition: number;
-    }) => void
-  ): void;
-  bind(
-    event: SoundcloudUIEvent[keyof SoundcloudUIEvent],
-    callback: () => void
-  ): void;
-  load(url: string): void;
-  getDuration(cb: (duration: number) => void): number;
-}
-
-declare global {
-  interface Window {
-    SC: {
-      Widget: SoundcloudWidget & {
-        Events: SoundcloudAudioEvent & SoundcloudUIEvent;
-      };
-    };
-  }
-}
-
 export function loadSoundcloud({
-  id,
-  soundcloudUrl,
-  container,
+  track,
 }: {
-  id: string;
-  soundcloudUrl: string;
-  container: HTMLElement;
+  track: Track.Reserved & { source: Source.Soundcloud };
 }): Task.Task<void> {
+  const { id, source } = track;
+
   return pipe(
     retrying(
       taskRetryPolicy,
@@ -466,7 +436,7 @@ export function loadSoundcloud({
         TaskEither.tryCatch(async () => {
           const response = await fetch(
             `${BASE_API}/api/soundcloud/track?url=${encodeURIComponent(
-              soundcloudUrl
+              source.href
             )}`
           );
 
@@ -500,39 +470,18 @@ export function loadSoundcloud({
           iframe.setAttribute("seamless", "true");
           iframe.setAttribute("src", src);
 
+          const container = source.container.current;
+          if (!container) {
+            throw new Error("Empty Soundcloud container");
+          }
+
           container.appendChild(iframe);
 
-          return {
-            iframe,
-            soundcloudId,
-            thumbnail,
-          };
-        }, Either.toError)
-    ),
-
-    TaskEither.chainIOEitherK(
-      ({
-        iframe,
-        soundcloudId,
-        thumbnail,
-      }: {
-        iframe: HTMLIFrameElement;
-        soundcloudId: string;
-        thumbnail: string;
-      }) =>
-        IOEither.tryCatch(() => {
           const widget = new window.SC.Widget(iframe);
 
           // force reload
           const newWidgetUrl = `http://api.soundcloud.com/tracks/${soundcloudId}`;
           widget.load(newWidgetUrl);
-
-          const source = Source.createSoundcloud({
-            widget,
-            thumbnail: {
-              url: thumbnail,
-            },
-          });
 
           widget.bind(window.SC.Widget.Events.ERROR, () => {
             aborted(id)();
@@ -569,25 +518,44 @@ export function loadSoundcloud({
             ended(id)();
           });
 
-          return source;
+          return { thumbnail, widget };
         }, Either.toError)
     ),
     Task.chainIOK(
       Either.fold(
         () => updateTrack(id, Track.aborted),
-        (source) => updateTrack(id, Track.initialized({ source }))
+        ({ thumbnail, widget }) =>
+          updateTrack(id, (localTrack) =>
+            pipe(
+              localTrack,
+              Track.initialized,
+              Track.modifySource(
+                Source.fold<Source.Source>({
+                  Youtube: identity,
+                  Soundcloud: (localSource) =>
+                    pipe(
+                      localSource,
+                      Source.addWidget(widget),
+                      Source.addThumbnail({ url: thumbnail })
+                    ),
+                  Bandcamp: identity,
+                })
+              )
+            )
+          )
       )
     )
   );
 }
 
 export function loadBandcamp({
-  id,
-  bandcampUrl,
+  track,
 }: {
-  id: string;
-  bandcampUrl: string;
+  track: Track.Reserved & { source: Source.Bandcamp };
 }): Task.Task<void> {
+  const { id, source } = track;
+  const { audio, href: bandcampUrl } = source;
+
   return pipe(
     retrying(
       taskRetryPolicy,
@@ -611,14 +579,7 @@ export function loadBandcamp({
     TaskEither.chainIOEitherK(
       ({ streamUrl, thumbnail }: { streamUrl: string; thumbnail: string }) =>
         IOEither.tryCatch(() => {
-          const audio = new Audio(streamUrl);
-
-          const source = Source.createBandcamp({
-            audio,
-            thumbnail: {
-              url: thumbnail,
-            },
-          });
+          audio.src = streamUrl;
 
           audio.addEventListener("abort", () => {
             aborted(id)();
@@ -660,13 +621,26 @@ export function loadBandcamp({
             ended(id)();
           });
 
-          return source;
+          return { thumbnail };
         }, Either.toError)
     ),
     Task.chainIOK(
       Either.fold(
         () => updateTrack(id, Track.aborted),
-        (source) => updateTrack(id, Track.initialized({ source }))
+        ({ thumbnail }) =>
+          updateTrack(id, (localTrack) =>
+            pipe(
+              localTrack,
+              Track.initialized,
+              Track.modifySource(
+                Source.fold<Source.Source>({
+                  Youtube: identity,
+                  Soundcloud: identity,
+                  Bandcamp: Source.addThumbnail({ url: thumbnail }),
+                })
+              )
+            )
+          )
       )
     )
   );

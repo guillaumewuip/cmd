@@ -7,7 +7,7 @@ import * as EmbedableLink from "./entities/EmbedableLink";
 import { usePlayer, shallowEqual } from "./store";
 import { playOrPause, play } from "./repositories/playPause";
 import {
-  reserve,
+  register,
   loadYoutube,
   loadBandcamp,
   loadSoundcloud,
@@ -24,7 +24,7 @@ export {
   shallowEqual,
   playOrPause,
   play,
-  reserve as register,
+  register,
   loadYoutube,
   loadBandcamp,
   loadSoundcloud,

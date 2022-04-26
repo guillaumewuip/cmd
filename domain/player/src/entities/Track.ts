@@ -2,12 +2,14 @@ import * as Option from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 import { createFoldObject } from "@fp51/foldable-helpers";
 
+import * as EmbedableLink from "./EmbedableLink";
 import * as Source from "./Source";
 import * as Position from "./Position";
 
 type Base = {
   id: string;
   title: string;
+  source: Source.Source;
 };
 
 export type Reserved = Base & {
@@ -20,7 +22,6 @@ export type Aborted = Base & {
 
 type BaseInitialized = Base & {
   duration: Option.Option<number>; // in seconds
-  source: Source.Source;
 };
 
 export type Loading = BaseInitialized & {
@@ -39,6 +40,7 @@ export type Paused = BaseInitialized & {
 };
 
 export type Track = Reserved | Aborted | Loading | Playing | Paused;
+export type NonAborted = Exclude<Track, Aborted>;
 export type Initialized = Loading | Playing | Paused;
 export type Interactive = Playing | Paused;
 
@@ -69,10 +71,15 @@ export function isInteractive(track: Track): track is Interactive {
   return isPlaying(track) || isPaused(track);
 }
 
-export const reserved = (data: { id: string; title: string }): Reserved => ({
+export const reserved = (data: {
+  id: string;
+  title: string;
+  source: Source.Source;
+}): Reserved => ({
   type: "Reserved",
   id: data.id,
   title: data.title,
+  source: data.source,
 });
 
 export const aborted = (track: Track): Aborted => ({
@@ -80,15 +87,12 @@ export const aborted = (track: Track): Aborted => ({
   type: "Aborted",
 });
 
-export const initialized =
-  ({ source }: { source: Source.Source }) =>
-  (track: Track): Loading => ({
-    ...track,
-    type: "Loading",
-    source,
-    duration: Option.none,
-    position: Option.none,
-  });
+export const initialized = (track: Track): Loading => ({
+  ...track,
+  type: "Loading",
+  duration: Option.none,
+  position: Option.none,
+});
 
 export const started = (track: Loading): Playing => ({
   ...track,
@@ -128,3 +132,56 @@ export const buffered = (track: Loading): Playing => ({
     Option.getOrElse(() => Position.start)
   ),
 });
+
+export const modifySource =
+  <T extends Track>(modifier: (source: T["source"]) => T["source"]) =>
+  (track: T): T => {
+    return {
+      ...track,
+      source: modifier(track.source),
+    };
+  };
+
+export function foldOnSource<R, T extends Track>(funcs: {
+  Youtube: (track: T & { source: Source.Youtube }) => R;
+  Soundcloud: (track: T & { source: Source.Soundcloud }) => R;
+  Bandcamp: (track: T & { source: Source.Bandcamp }) => R;
+}) {
+  return (track: T): R => {
+    return pipe(
+      track.source,
+      Source.fold({
+        Youtube: () => funcs.Youtube(track as T & { source: Source.Youtube }),
+        Soundcloud: () =>
+          funcs.Soundcloud(track as T & { source: Source.Soundcloud }),
+        Bandcamp: () =>
+          funcs.Bandcamp(track as T & { source: Source.Bandcamp }),
+      })
+    );
+  };
+}
+
+export function create({
+  title,
+  embedableLink,
+}: {
+  title: string;
+  embedableLink: EmbedableLink.EmbedableLink;
+}): Reserved {
+  const id = EmbedableLink.slugify(embedableLink);
+
+  const source = pipe(
+    embedableLink,
+    EmbedableLink.fold<Source.Source>({
+      Youtube: (link) => Source.createYoutube({ embedableLink: link }),
+      Soundcloud: (link) => Source.createSoundcloud({ embedableLink: link }),
+      Bandcamp: (link) => Source.createBandcamp({ embedableLink: link }),
+    })
+  );
+
+  return reserved({
+    id,
+    title,
+    source,
+  });
+}
