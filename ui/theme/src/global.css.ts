@@ -1,12 +1,17 @@
 import { globalStyle } from "@vanilla-extract/css";
 
-globalStyle("html, body", {
-  padding: 0,
-  margin: 0,
+globalStyle("html", {
   fontSize: "16px",
+  backgroundColor: "#fff",
 });
 
-globalStyle(":root", {
+// need to specify backgroundColor too for body to stop propagation
+// and make prefers-color-scheme work
+globalStyle("body", {
+  backgroundColor: "#fff",
+});
+
+globalStyle("body", {
   "@media": {
     "screen and (prefers-color-scheme: dark)": {
       filter: "invert(1) hue-rotate(180deg)",
@@ -20,10 +25,6 @@ globalStyle("img, iframe", {
       filter: "invert(1) hue-rotate(-180deg)",
     },
   },
-});
-
-globalStyle("html", {
-  backgroundColor: "#fff",
 });
 
 globalStyle("*", {
