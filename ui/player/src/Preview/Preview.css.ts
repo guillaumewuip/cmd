@@ -29,7 +29,7 @@ export const preview = style({
       gridRowGap: vars.sizes.xs,
       gridTemplateColumns: "1fr 1fr",
       gridTemplateAreas: `
-        "thumbnail title"
+        "title title"
         "player options"
       `,
     }),
@@ -49,8 +49,7 @@ export const thumbnail = style({
 
   "@media": {
     ...mediaQueries.forPhoneOnly({
-      justifySelf: "center",
-      alignSelf: "end",
+      display: "none",
     }),
   },
 });
