@@ -1,7 +1,7 @@
-export function position(id: string): number {
+export function position(element: HTMLElement): number {
   const result = document.evaluate(
-    `count(.//div[@id='${id}']//preceding::h2)`,
-    document,
+    `count(.//preceding::h2)`,
+    element,
     null,
     XPathResult.NUMBER_TYPE,
     null

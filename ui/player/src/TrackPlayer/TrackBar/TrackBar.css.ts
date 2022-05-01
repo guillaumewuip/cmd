@@ -1,12 +1,12 @@
 import { style } from "@vanilla-extract/css";
-import { vars } from "@cmd/ui-theme";
+import { vars, mediaQueries } from "@cmd/ui-theme";
 
 export const barHeight = "7rem";
 
 const bar = style({
   display: "grid",
   width: "100%",
-  height: barHeight,
+  minHeight: barHeight,
 });
 
 export const abortedBar = style([
@@ -27,19 +27,40 @@ export const abortedBarMessage = style({
 export const notSelectedBar = style([
   bar,
   {
+    marginTop: vars.sizes.s,
+    marginBottom: vars.sizes.xl,
     gridTemplateRows: "1fr 2fr 2fr 1fr",
-    gridTemplateColumns: `minmax(${barHeight}, 1fr) 7fr minmax(${barHeight}, 1fr)`,
+    gridTemplateColumns: `minmax(${barHeight}, 3.6fr) minmax(${barHeight}, 1fr) 7fr minmax(${barHeight}, 1fr)`,
     gridTemplateAreas: `
-      "left top right"
-      "left title right"
-      "left title right"
-      "left bottom right"
+      "thumbnail command top source"
+      "thumbnail command title source"
+      "thumbnail command title source"
+      "thumbnail command bottom source"
     `,
+
+    "@media": {
+      ...mediaQueries.forPhoneOnly({
+        gridTemplateRows: "auto auto auto",
+        gridTemplateColumns: `1fr 3fr 1fr`,
+        gridGap: vars.sizes.s,
+        gridTemplateAreas: `
+          "thumbnail thumbnail thumbnail"
+          "command   title     title"
+          "source    source    source"
+        `,
+      }),
+    },
   },
 ]);
 
+export const thumbnail = style({
+  gridArea: "thumbnail",
+  justifySelf: "stretch",
+  alignSelf: "center",
+});
+
 export const command = style({
-  gridArea: "left",
+  gridArea: "command",
   justifySelf: "center",
   alignSelf: "center",
 });
@@ -81,11 +102,21 @@ export const selectedBar = style([
   notSelectedBar,
   {
     gridTemplateAreas: `
-      "left top right"
-      "left title right"
-      "left progress right"
-      "left bottom right"
+      "thumbnail command top source"
+      "thumbnail command title source"
+      "thumbnail command progress source"
+      "thumbnail command bottom source"
     `,
+
+    "@media": {
+      ...mediaQueries.forPhoneOnly({
+        gridTemplateAreas: `
+          "thumbnail thumbnail thumbnail"
+          "command   title     title"
+          "progress  progress  source"
+        `,
+      }),
+    },
   },
 ]);
 
@@ -95,7 +126,7 @@ export const progress = style({
 });
 
 export const source = style({
-  gridArea: "right",
+  gridArea: "source",
   alignSelf: "center",
   justifySelf: "end",
 });

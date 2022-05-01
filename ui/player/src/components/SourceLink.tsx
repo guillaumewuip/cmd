@@ -102,19 +102,13 @@ function Soundcloud({ href }: { href: string }) {
   );
 }
 
-export default function SourceLink({
-  href,
-  source,
-}: {
-  href: string;
-  source: Source.Source;
-}) {
+export default function SourceLink({ source }: { source: Source.Source }) {
   return pipe(
     source,
     Source.fold({
-      Soundcloud: () => <Soundcloud href={href} />,
-      Youtube: () => <Youtube href={href} />,
-      Bandcamp: () => <Bandcamp href={href} />,
+      Youtube: ({ href }) => <Youtube href={href} />,
+      Soundcloud: ({ href }) => <Soundcloud href={href} />,
+      Bandcamp: ({ href }) => <Bandcamp href={href} />,
     })
   );
 }

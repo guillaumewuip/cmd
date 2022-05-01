@@ -1,6 +1,6 @@
-import AbortedText from "../../components/AbortedText";
+import AbortedText from "../components/AbortedText";
 
-import * as styles from "./TrackBar.css";
+import * as styles from "./Aborted.css";
 
 export default function Aborted() {
   return (

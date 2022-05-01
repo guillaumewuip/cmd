@@ -1,26 +1,12 @@
-import {
-  Tracks,
-  Track,
-  playOrPause,
-  play,
-  usePlayer,
-  shallowEqual,
-} from "@cmd/domain-player";
-
-import * as Eq from "fp-ts/Eq";
-import * as Option from "fp-ts/Option";
-import { pipe } from "fp-ts/function";
+import { Track, playOrPause, play } from "@cmd/domain-player";
 
 import * as styles from "./TrackBar.css";
 
+import TrackThumbnail from "../../components/Thumbnail";
 import SourceLink from "../../components/SourceLink";
 import Progress from "../../components/Progress";
 import * as Button from "../../components/Button";
 import TrackText from "../../components/TrackText";
-
-import Aborted from "./Aborted";
-
-const eqOptionTrack = pipe(shallowEqual, Eq.fromEquals, Option.getEq);
 
 function Title({ track }: { track: Track.Track }) {
   return (
@@ -33,30 +19,31 @@ function Title({ track }: { track: Track.Track }) {
 function Source({ track }: { track: Track.Track }) {
   return (
     <div className={styles.source}>
-      {Track.isInitialized(track) && (
-        <SourceLink href={track.externalUrl} source={track.source} />
-      )}
+      {Track.isInitialized(track) && <SourceLink source={track.source} />}
     </div>
   );
 }
 
-export default function TrackBar({ id }: { id: string }) {
-  const maybeTrack = usePlayer(Tracks.findTrackById(id), eqOptionTrack.equals);
-  const selected = usePlayer(Tracks.isSelected(id));
+function Thumbnail({ track }: { track: Track.Track }) {
+  return (
+    <div className={styles.thumbnail}>
+      <TrackThumbnail source={track.source} />
+    </div>
+  );
+}
 
-  if (Option.isNone(maybeTrack)) {
-    return null;
-  }
-
-  const track = maybeTrack.value;
-
-  if (Track.isAborted(track)) {
-    return <Aborted />;
-  }
-
+export default function TrackBar({
+  track,
+  selected,
+}: {
+  track: Track.NonAborted;
+  selected: boolean;
+}) {
   if (!selected || Track.isReserved(track)) {
     return (
       <div className={styles.notSelectedBar}>
+        <Thumbnail track={track} />
+
         <div className={styles.command}>
           {!Track.isInitialized(track) && <Button.Loading />}
           {Track.isInitialized(track) && (
@@ -73,6 +60,8 @@ export default function TrackBar({ id }: { id: string }) {
 
   return (
     <div className={styles.selectedBar}>
+      <Thumbnail track={track} />
+
       <div className={styles.command}>
         {!Track.isInteractive(track) && <Button.Loading />}
         {Track.isInteractive(track) &&
