@@ -16,6 +16,7 @@ import * as Button from "../components/Button";
 import Progress from "../components/Progress";
 import TrackText from "../components/TrackText";
 import AbortedText from "../components/AbortedText";
+import Thumbnail from "../components/Thumbnail";
 
 import * as styles from "./Preview.css";
 
@@ -43,7 +44,10 @@ export function Preview() {
           !tracks.alreadyPlayed && styles.hidden
         }`}
       >
-        <div className={styles.currentTrack}>
+        <div className={styles.thumbnail}>
+          <Thumbnail source={selectedTrack.source} />
+        </div>
+        <div className={styles.text}>
           <TrackText track={selectedTrack} />
         </div>
         {!Track.isInitialized(selectedTrack) && (
@@ -79,7 +83,10 @@ export function Preview() {
     <div
       className={`${styles.preview} ${!tracks.alreadyPlayed && styles.hidden}`}
     >
-      <div className={styles.currentTrack}>
+      <div className={styles.thumbnail}>
+        <Thumbnail source={selectedTrack.source} />
+      </div>
+      <div className={styles.text}>
         <TrackText track={selectedTrack} />
       </div>
       <div className={styles.player}>

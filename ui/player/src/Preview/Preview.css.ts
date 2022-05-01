@@ -12,10 +12,11 @@ export const preview = style({
     rgba(0, 0, 0, 0.16) 0px -1px 4px;
   `,
   display: "grid",
-  gridTemplateRows: "auto",
-  gridTemplateColumns: "minmax(8rem, 20rem) auto minmax(8rem, 20rem)",
+  gridTemplateRows: "100%",
+  gridTemplateColumns:
+    "min-content minmax(8rem, 20rem) auto minmax(8rem, 20rem)",
   gridTemplateAreas: `
-    "title player options"
+    "thumbnail title player options"
   `,
   gridColumnGap: vars.sizes.s,
   transition: "bottom 0.6s ease-out",
@@ -28,7 +29,7 @@ export const preview = style({
       gridRowGap: vars.sizes.xs,
       gridTemplateColumns: "1fr 1fr",
       gridTemplateAreas: `
-        "title title"
+        "thumbnail title"
         "player options"
       `,
     }),
@@ -39,7 +40,22 @@ export const hidden = style({
   bottom: "-500px",
 });
 
-export const currentTrack = style({
+export const thumbnail = style({
+  gridArea: "thumbnail",
+  alignSelf: "stretch",
+  justifySelf: "center",
+  aspectRatio: "1 / 1",
+  padding: vars.sizes.xs,
+
+  "@media": {
+    ...mediaQueries.forPhoneOnly({
+      justifySelf: "center",
+      alignSelf: "end",
+    }),
+  },
+});
+
+export const text = style({
   gridArea: "title",
   alignSelf: "center",
   justifySelf: "start",
