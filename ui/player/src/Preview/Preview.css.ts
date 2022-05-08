@@ -97,7 +97,7 @@ export const commandBar = style({
   justifySelf: "center",
   display: "grid",
   gridTemplateRows: "auto",
-  gridTemplateColumns: "auto auto auto",
+  gridTemplateColumns: "1fr 1fr 1fr",
   gridTemplateAreas: `
     "leftCommand centerCommand rightCommand"
   `,
@@ -107,6 +107,12 @@ export const commandBar = style({
 export const commandPlayPause = style({
   gridArea: "centerCommand",
   justifySelf: "center",
+  alignSelf: "center",
+});
+
+export const commandPrev = style({
+  gridArea: "leftCommand",
+  justifySelf: "end",
   alignSelf: "center",
 });
 

@@ -144,6 +144,26 @@ export const selectedTrack = (tracks: Loaded): Track.Track => {
   return localSelected.value;
 };
 
+export const prevTrack = (tracks: Loaded): Option.Option<Track.Track> => {
+  const currentAllTracks = tracks.allTracks;
+
+  const currentSelectedTrackIndex = pipe(
+    tracks,
+    findTrackIndex(selectedTrack(tracks))
+  );
+
+  if (Option.isNone(currentSelectedTrackIndex)) {
+    throw new Error("Can't get selected track index");
+  }
+
+  if (currentSelectedTrackIndex.value > 0) {
+    const prevIndex = currentSelectedTrackIndex.value - 1;
+    return Option.some(currentAllTracks[prevIndex].track);
+  }
+
+  return Option.none;
+};
+
 export const nextTrack = (tracks: Loaded): Option.Option<Track.Track> => {
   const currentAllTracks = tracks.allTracks;
 

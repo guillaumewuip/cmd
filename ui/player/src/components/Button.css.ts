@@ -39,6 +39,16 @@ export const svg = style({
   },
 });
 
+export const svgNext = style([svg, {}]);
+
+export const svgPrev = style([
+  svg,
+  {
+    transform: "rotate(180deg)",
+    transformOrigin: "center center",
+  },
+]);
+
 export const svgLoading = style([
   svg,
   {
