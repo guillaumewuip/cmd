@@ -69,6 +69,19 @@ export function Pause({
   );
 }
 
+function NextPrevIcon({ arrow }: { arrow: "next" | "prev" }) {
+  return (
+    <svg
+      className={arrow === "prev" ? styles.svgPrev : styles.svgNext}
+      viewBox="0 0 526 526"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M425 266 73 469V63l352 203Z" />
+      <path d="M342 56h112v413H342z" />
+    </svg>
+  );
+}
+
 export function Next({
   trackName,
   onClick,
@@ -83,14 +96,26 @@ export function Next({
       onClick={onClick}
     >
       <VisuallyHidden>Lancer la lecture de {trackName}</VisuallyHidden>
-      <svg
-        className={styles.svg}
-        viewBox="0 0 526 526"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M425 266 73 469V63l352 203Z" />
-        <path d="M342 56h112v413H342z" />
-      </svg>
+      <NextPrevIcon arrow="next" />
+    </button>
+  );
+}
+
+export function Prev({
+  trackName,
+  onClick,
+}: {
+  trackName: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={classnames(styles.commandButton, styles.small)}
+      onClick={onClick}
+    >
+      <VisuallyHidden>Lancer la lecture de {trackName}</VisuallyHidden>
+      <NextPrevIcon arrow="prev" />
     </button>
   );
 }
