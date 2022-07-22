@@ -1,0 +1,6 @@
+{
+  "extends": "@cmd/lib-builder/api-extractor.json",
+  "dtsRollup": {
+    "enabled": true
+  }
+}
