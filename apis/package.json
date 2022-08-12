@@ -11,6 +11,6 @@
     "linkedom": "^0.14.7"
   },
   "devDependencies": {
-    "@vercel/node": "^1.14.1"
+    "@vercel/node": "^2.0.0"
   }
 }
