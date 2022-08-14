@@ -134,7 +134,7 @@ importers:
       react: ^18.2.0
       retry-ts: ^0.1.4
       typescript: ^4.7.4
-      zustand: ^3.7.2
+      zustand: ^4.0.0
     dependencies:
       '@fp51/foldable-helpers': 1.0.0
       '@types/react': 18.0.17
@@ -144,7 +144,7 @@ importers:
       lodash.throttle: 4.1.1
       react: 18.2.0
       retry-ts: 0.1.4_fp-ts@2.12.2
-      zustand: 3.7.2_react@18.2.0
+      zustand: 4.0.0_react@18.2.0
     devDependencies:
       '@cmd/eslint-config': link:../../dev-tools/lib-linter
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
@@ -4971,16 +4971,20 @@ packages:
       commander: 2.20.3
     dev: false
 
-  /zustand/3.7.2_react@18.2.0:
-    resolution: {integrity: sha512-PIJDIZKtokhof+9+60cpockVOq05sJzHCriyvaLBmEJixseQ1a5Kdov6fWZfWOu5SK9c+FhH1jU0tntLxRJYMA==}
+  /zustand/4.0.0_react@18.2.0:
+    resolution: {integrity: sha512-OrsfQTnRXF1LZ9/vR/IqN9ws5EXUhb149xmPjErZnUrkgxS/gAHGy2dPNIVkVvoxrVe1sIydn4JjF0dYHmGeeQ==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
+      immer: '>=9.0'
       react: '>=16.8'
     peerDependenciesMeta:
+      immer:
+        optional: true
       react:
         optional: true
     dependencies:
       react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
   /zwitch/1.0.5:

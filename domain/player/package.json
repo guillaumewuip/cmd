@@ -26,6 +26,6 @@
     "lodash.throttle": "^4.1.1",
     "react": "^18.2.0",
     "retry-ts": "^0.1.4",
-    "zustand": "^3.7.2"
+    "zustand": "^4.0.0"
   }
 }
