@@ -19,6 +19,7 @@ const withMDX = mdx({
     remarkPlugins: [
       [remarkEmbedder, { transformers: [MusicPlayerTransformer] }],
     ],
+    providerImportSource: "@mdx-js/react",
   },
 });
 
@@ -27,5 +28,8 @@ const withVanillaExtract = createVanillaExtractPlugin();
 module.exports = withVanillaExtract(
   withMDX({
     pageExtensions: ["js", "jsx", "tsx", "mdx"],
+    eslint: {
+      ignoreDuringBuilds: true,
+    },
   })
 );

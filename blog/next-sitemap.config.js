@@ -1,4 +1,4 @@
 module.exports = {
-  siteUrl: 'http://cmd.wuips.com/',
+  siteUrl: "http://cmd.wuips.com/",
   generateRobotsTxt: true,
-}
+};
