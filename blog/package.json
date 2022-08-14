@@ -23,6 +23,7 @@
     "@cmd/ui-theme": "workspace:*",
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
+    "@next/env": "^12.2.5",
     "@next/mdx": "^12.2.5",
     "@remark-embedder/core": "^2.0.0",
     "date-fns": "^2.29.1",
@@ -30,7 +31,7 @@
     "jsdom": "^20.0.0",
     "next": "^12.2.5",
     "next-seo": "^5.5.0",
-    "next-sitemap": "^2.5.20",
+    "next-sitemap": "^3.1.17",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.1.0"
