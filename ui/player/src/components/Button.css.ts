@@ -17,11 +17,11 @@ export const commandButton = style({
   selectors: {
     "&:hover, &:focus": {
       cursor: "pointer",
-      borderColor: vars.colors.dark,
+      borderColor: vars.colors.buttonBackground,
     },
 
     "&:active": {
-      backgroundColor: vars.colors.dark,
+      backgroundColor: vars.colors.buttonBackground,
     },
   },
 });
@@ -30,11 +30,11 @@ export const svg = style({
   gridArea: "content",
   alignSelf: "center",
   justifySelf: "center",
-  fill: vars.colors.dark,
+  fill: vars.colors.buttonBackground,
 
   selectors: {
     [`${commandButton}:active &`]: {
-      fill: vars.colors.white,
+      fill: vars.colors.buttonBackgroundInverted,
     },
   },
 });

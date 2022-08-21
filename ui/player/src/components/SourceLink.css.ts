@@ -1,19 +1,20 @@
 import { style } from "@vanilla-extract/css";
+import { vars } from "@cmd/ui-theme";
 
 const svg = style({
-  filter: "grayscale(1)",
+  filter: vars.colors.playerSourceFilter,
   opacity: 0.8,
   position: "relative",
 
   selectors: {
     "&:hover, &:focus": {
-      filter: "none",
+      filter: vars.colors.playerSourceFilterHover,
       opacity: 1,
     },
 
     "&:active": {
       top: "0.1rem",
-      filter: "none",
+      filter: vars.colors.playerSourceFilterHover,
       opacity: 1,
     },
   },

@@ -78,7 +78,7 @@ export const commandButton = style({
   selectors: {
     "&:hover": {
       cursor: "pointer",
-      borderColor: vars.colors.dark,
+      borderColor: vars.colors.buttonBackground,
     },
   },
 });
@@ -87,7 +87,7 @@ export const svg = style({
   height: `calc(${barHeight} * 0.6)`,
   width: `calc(${barHeight} * 0.6)`,
   padding: `calc(${barHeight} * 0.1)`,
-  fill: vars.colors.dark,
+  fill: vars.colors.buttonBackground,
 });
 
 export const svgLoading = style([svg]);

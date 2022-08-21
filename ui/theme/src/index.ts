@@ -1,5 +1,6 @@
 import "./global.css";
-import { themeClassName, vars } from "./theme.css";
+import { lightThemeClass, darkThemeClass, vars, Vars } from "./theme.css";
 import * as mediaQueries from "./media-queries";
 
-export { themeClassName, vars, mediaQueries };
+export type { Vars };
+export { lightThemeClass, darkThemeClass, vars, mediaQueries };

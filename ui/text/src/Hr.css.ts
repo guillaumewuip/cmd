@@ -5,5 +5,5 @@ export const hr = style({
   margin: `${vars.sizes.m} 0`,
   border: 0,
   textAlign: "center",
-  color: vars.colors.grey,
+  color: vars.colors.dimmedSeparator,
 });

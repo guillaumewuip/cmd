@@ -5,7 +5,8 @@ import * as Option from "fp-ts/Option";
 
 import { MDXProvider } from "@mdx-js/react";
 import { DefaultSeo } from "next-seo";
-import { themeClassName } from "@cmd/ui-theme";
+import { lightThemeClass, darkThemeClass } from "@cmd/ui-theme";
+import { ThemeProvider } from "next-themes";
 import {
   H1,
   H2,
@@ -53,7 +54,13 @@ function MyApp({
   pageProps: object;
 }) {
   return (
-    <div className={themeClassName}>
+    <ThemeProvider
+      attribute="class"
+      value={{
+        light: lightThemeClass,
+        dark: darkThemeClass,
+      }}
+    >
       <DefaultSeo
         openGraph={{
           title: Metadata.site.name,
@@ -73,9 +80,8 @@ function MyApp({
       />
       <MDXProvider components={mdComponents}>
         <Component {...pageProps} />
-        <Player.Preview />
       </MDXProvider>
-    </div>
+    </ThemeProvider>
   );
 }
 

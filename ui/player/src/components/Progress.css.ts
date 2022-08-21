@@ -29,11 +29,11 @@ export const svg = style({
 });
 
 export const backgroundLine = style({
-  stroke: vars.colors.lightgrey,
+  stroke: vars.colors.dimmedSeparator,
   strokeWidth: 3,
 });
 
 export const activeLine = style({
-  stroke: vars.colors.dark,
+  stroke: vars.colors.separator,
   strokeWidth: 5,
 });
