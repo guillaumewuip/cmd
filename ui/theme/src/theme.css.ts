@@ -1,8 +1,10 @@
 import { createTheme, createThemeContract } from "@vanilla-extract/css";
 
-import { breakpoints, sizes, colors, fonts } from "@cmd/ui-tokens";
-
 import { MapLeafNodes, CSSVarFunction } from "@vanilla-extract/private";
+import * as breakpoints from "./values/breakpoints";
+import * as sizes from "./values/sizes";
+import * as colors from "./values/colors";
+import * as fonts from "./values/fonts";
 
 export type Vars = {
   breakpoints: typeof breakpoints;

@@ -404,26 +404,12 @@ importers:
       '@cmd/eslint-config': workspace:*
       '@cmd/lib-builder': workspace:*
       '@cmd/tsconfig': workspace:*
-      '@cmd/ui-tokens': workspace:*
       '@vanilla-extract/css': ^1.7.2
       '@vanilla-extract/private': ^1.0.3
       typescript: ^4.7.4
     dependencies:
-      '@cmd/ui-tokens': link:../tokens
       '@vanilla-extract/css': 1.7.2
       '@vanilla-extract/private': 1.0.3
-    devDependencies:
-      '@cmd/eslint-config': link:../../dev-tools/lib-linter
-      '@cmd/lib-builder': link:../../dev-tools/lib-builder
-      '@cmd/tsconfig': link:../../dev-tools/tsconfig
-      typescript: 4.7.4
-
-  ui/tokens:
-    specifiers:
-      '@cmd/eslint-config': workspace:*
-      '@cmd/lib-builder': workspace:*
-      '@cmd/tsconfig': workspace:*
-      typescript: ^4.7.4
     devDependencies:
       '@cmd/eslint-config': link:../../dev-tools/lib-linter
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
