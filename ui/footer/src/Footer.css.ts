@@ -6,3 +6,9 @@ export const footer = style({
   marginBottom: "6rem",
   textAlign: "center",
 });
+
+export const select = style({
+  fontFamily: vars.fonts.rubik,
+  border: "none",
+  color: vars.colors.accent,
+});
