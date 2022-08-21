@@ -52,6 +52,7 @@ importers:
       next: ^12.2.5
       next-seo: ^5.5.0
       next-sitemap: ^3.1.17
+      next-themes: ^0.2.0
       react: ^18.2.0
       react-dom: ^18.2.0
       react-loading-skeleton: ^3.1.0
@@ -81,6 +82,7 @@ importers:
       next: 12.2.5_twoewwu6sg7cdf3ao6njtbftne
       next-seo: 5.5.0_3xcjr4wz26biff45sz3jtokgje
       next-sitemap: 3.1.17_gzpnnaylvtfluxe3m63vhk6hhm
+      next-themes: 0.2.0_3xcjr4wz26biff45sz3jtokgje
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-loading-skeleton: 3.1.0_react@18.2.0
@@ -4274,6 +4276,18 @@ packages:
       '@next/env': 12.2.5
       minimist: 1.2.6
       next: 12.2.5_twoewwu6sg7cdf3ao6njtbftne
+    dev: false
+
+  /next-themes/0.2.0_3xcjr4wz26biff45sz3jtokgje:
+    resolution: {integrity: sha512-myhpDL4vadBD9YDSHiewqvzorGzB03N84e+3LxCwHRlM/hiBOaW+UsKsQojQAzC7fdcJA0l2ppveXcYaVV+hxQ==}
+    peerDependencies:
+      next: '*'
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      next: 12.2.5_twoewwu6sg7cdf3ao6njtbftne
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /next/12.2.5_twoewwu6sg7cdf3ao6njtbftne:

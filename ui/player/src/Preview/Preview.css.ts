@@ -8,9 +8,7 @@ export const preview = style({
   width: "100%",
   height: "6rem",
   padding: "0 2rem",
-  boxShadow: `
-    rgba(0, 0, 0, 0.16) 0px -1px 4px;
-  `,
+  boxShadow: vars.colors.playerShadow,
   display: "grid",
   gridTemplateRows: "100%",
   gridTemplateColumns:
@@ -20,7 +18,7 @@ export const preview = style({
   `,
   gridColumnGap: vars.sizes.s,
   transition: "bottom 0.6s ease-out",
-  backgroundColor: vars.colors.white,
+  backgroundColor: vars.colors.background,
 
   "@media": {
     ...mediaQueries.forPhoneOnly({

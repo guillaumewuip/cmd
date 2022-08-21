@@ -1,30 +1,8 @@
 import { globalStyle } from "@vanilla-extract/css";
+import { fonts } from "@cmd/ui-tokens";
 
 globalStyle("html", {
-  fontSize: "16px",
-  backgroundColor: "#fff",
-});
-
-// need to specify backgroundColor too for body to stop propagation
-// and make prefers-color-scheme work
-globalStyle("body", {
-  backgroundColor: "#fff",
-});
-
-globalStyle("body", {
-  "@media": {
-    "screen and (prefers-color-scheme: dark)": {
-      filter: "invert(1) hue-rotate(180deg)",
-    },
-  },
-});
-
-globalStyle("img, iframe", {
-  "@media": {
-    "screen and (prefers-color-scheme: dark)": {
-      filter: "invert(1) hue-rotate(-180deg)",
-    },
-  },
+  fontSize: fonts.defaultFontSize,
 });
 
 globalStyle("*", {

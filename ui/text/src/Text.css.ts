@@ -7,7 +7,7 @@ export const paragraph = style({
   fontSize: "1rem",
   lineHeight: "1.5rem",
   marginBottom: vars.sizes.xs,
-  color: vars.colors.dark,
+  color: vars.colors.text,
 });
 
 export const small = style({
@@ -15,7 +15,7 @@ export const small = style({
   fontWeight: 400,
   fontSize: "0.8rem",
   lineHeight: "1rem",
-  color: vars.colors.grey,
+  color: vars.colors.dimmedText,
 });
 
 export const monospace = style([
@@ -25,22 +25,12 @@ export const monospace = style([
   },
 ]);
 
-export const mainTitle = style({
-  fontFamily: "Rubik, Courier, sans-serif",
-  fontWeight: 700,
-  letterSpacing: vars.sizes.xxs,
-  fontSize: "2.6rem",
-  lineHeight: "2.6rem",
-  marginBottom: vars.sizes.s,
-  color: vars.colors.dark,
-});
-
 export const a = style({
-  color: vars.colors.green,
+  color: vars.colors.accent,
 
   selectors: {
     "&:visited": {
-      color: vars.colors.green,
+      color: vars.colors.accent,
     },
 
     "&:hover": {
@@ -60,7 +50,7 @@ export const h1 = style({
   lineHeight: "2.4rem",
   marginTop: vars.sizes.m,
   marginBottom: vars.sizes.l,
-  color: vars.colors.dark,
+  color: vars.colors.title,
 });
 
 export const h2 = style({
@@ -70,7 +60,7 @@ export const h2 = style({
   lineHeight: "1.5rem",
   marginTop: vars.sizes.l,
   marginBottom: vars.sizes.xs,
-  color: vars.colors.dark,
+  color: vars.colors.title,
 });
 
 export const h3 = style({
@@ -80,7 +70,7 @@ export const h3 = style({
   lineHeight: "1.1rem",
   marginTop: 0,
   marginBottom: vars.sizes.s,
-  color: vars.colors.grey,
+  color: vars.colors.subTitle,
 });
 
 export const centered = style({
@@ -88,7 +78,7 @@ export const centered = style({
 });
 
 export const inverted = style({
-  color: vars.colors.white,
+  color: vars.colors.invertedText,
 });
 
 export const noMargin = style({

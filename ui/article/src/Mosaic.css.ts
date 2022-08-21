@@ -39,7 +39,7 @@ export const overlay = style({
   left: 0,
   width: "100%",
   height: "100%",
-  background: vars.colors.dark,
+  background: vars.colors.darkOverlay,
   opacity: 0.2,
 
   selectors: {

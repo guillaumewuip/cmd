@@ -8,5 +8,5 @@ export const mainTitle = style({
   fontSize: "2.6rem",
   lineHeight: "2.6rem",
   marginBottom: vars.sizes.s,
-  color: vars.colors.dark,
+  color: vars.colors.title,
 });

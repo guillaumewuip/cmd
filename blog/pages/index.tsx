@@ -17,6 +17,7 @@ import { Header } from "@cmd/ui-header";
 import { Footer } from "@cmd/ui-footer";
 
 import { generateFeeds } from "@cmd/domain-rss";
+import * as Player from "@cmd/ui-player";
 
 import { getLastPostInfos, getAllPostInfos } from "../src/posts";
 import * as SiteMetadata from "../src/metadata";
@@ -40,7 +41,7 @@ export default function Home({
   const imageUrl = `${SiteMetadata.site.url}${lastCmd.metadata.image.src}`;
 
   return (
-    <div>
+    <Layout.Page>
       <Head>
         <title>{SiteMetadata.site.name}</title>
       </Head>
@@ -105,7 +106,9 @@ export default function Home({
           <Footer />
         </Layout.SmallSection>
       </Layout.Wrapper>
-    </div>
+
+      <Player.Preview />
+    </Layout.Page>
   );
 }
 
