@@ -1,8 +1,8 @@
 import { globalStyle } from "@vanilla-extract/css";
-import { fonts } from "@cmd/ui-tokens";
+import { defaultFontSize } from "./values/fonts";
 
 globalStyle("html", {
-  fontSize: fonts.defaultFontSize,
+  fontSize: defaultFontSize,
 });
 
 globalStyle("*", {
