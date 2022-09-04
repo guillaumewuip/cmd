@@ -14,13 +14,13 @@ import { Article, Mosaic } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
 import { Paragraph, Code, H2, Link, Hr } from "@cmd/ui-text";
 import { Header } from "@cmd/ui-header";
-import { Footer } from "@cmd/ui-footer";
 
 import { generateFeeds } from "@cmd/domain-rss";
 import * as Player from "@cmd/ui-player";
 
 import { getLastPostInfos, getAllPostInfos } from "../src/posts";
 import * as SiteMetadata from "../src/metadata";
+import { Footer } from "../components/Footer";
 
 type Cmd = {
   href: string;
@@ -102,9 +102,9 @@ export default function Home({
             <br />
             Guillaume
           </Paragraph>
-
-          <Footer />
         </Layout.SmallSection>
+
+        <Footer />
       </Layout.Wrapper>
 
       <Player.Preview />
