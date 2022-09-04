@@ -3,6 +3,6 @@ import { vars } from "@cmd/ui-theme";
 
 export const footer = style({
   marginTop: vars.sizes.m,
-  marginBottom: vars.sizes.l,
+  marginBottom: "6rem",
   textAlign: "center",
 });
