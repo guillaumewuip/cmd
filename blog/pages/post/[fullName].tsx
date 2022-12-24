@@ -30,9 +30,7 @@ function Page({ post }: { post: Post.Post }) {
   return (
     <div>
       <Head>
-        <title>
-          {post.infos.metadata.title} - {SiteMetadata.site.name}
-        </title>
+        <title>{title}</title>
       </Head>
 
       <NextSeo
