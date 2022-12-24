@@ -107,7 +107,7 @@ function Soundcloud({
   );
 }
 
-function TrackPlayer({ id }: { id: string }) {
+function ClientTrackPlayer({ id }: { id: string }) {
   const maybeTrack = usePlayer(Tracks.findTrackById(id), eqOptionTrack.equals);
   const selected = usePlayer(Tracks.isSelected(id));
 
@@ -174,7 +174,25 @@ function TrackPlayerAntiCorruptionLayer({
     setId(track.id);
   }, [container, embedableLink, setId]);
 
-  return <div ref={container}>{id && <TrackPlayer id={id} />}</div>;
+  return <div ref={container}>{id && <ClientTrackPlayer id={id} />}</div>;
 }
 
-export { TrackPlayerAntiCorruptionLayer as TrackPlayer };
+export function TrackPlayer({
+  embedableLink,
+}: {
+  embedableLink: EmbedableLink.EmbedableLink;
+}) {
+  const [shouldShowChildren, showChildren] = useState(false);
+
+  useEffect(() => {
+    showChildren(true);
+
+    return () => {
+      showChildren(false);
+    };
+  }, [showChildren]);
+
+  return shouldShowChildren ? (
+    <TrackPlayerAntiCorruptionLayer embedableLink={embedableLink} />
+  ) : null;
+}
