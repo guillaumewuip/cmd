@@ -14,14 +14,14 @@
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "@types/react": "^18.0.17",
+    "@types/react": "^18.0.26",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.9.4"
   },
   "dependencies": {
     "@cmd/ui-theme": "workspace:*",
-    "@vanilla-extract/css": "^1.7.2",
+    "@vanilla-extract/css": "^1.9.2",
     "typewriter-effect": "^2.19.0"
   },
   "peerDependencies": {

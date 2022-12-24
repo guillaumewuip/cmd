@@ -11,22 +11,22 @@
     "lint": "lib-lint \"src/**/*.@(js|ts|tsx)\""
   },
   "devDependencies": {
-    "@babel/core": "^7.18.10",
+    "@babel/core": "^7.20.7",
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "@types/react": "^18.0.17",
+    "@types/react": "^18.0.26",
     "next": "^12.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.9.4"
   },
   "dependencies": {
     "@cmd/domain-post": "workspace:*",
     "@cmd/ui-text": "workspace:*",
     "@cmd/ui-theme": "workspace:*",
-    "@vanilla-extract/css": "^1.7.2",
-    "fp-ts": "^2.12.2"
+    "@vanilla-extract/css": "^1.9.2",
+    "fp-ts": "^2.13.1"
   },
   "peerDependencies": {
     "next": "^12.0.7",
