@@ -12,6 +12,7 @@ import { Article } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
 import { Header } from "@cmd/ui-header";
 
+import * as Player from "@cmd/ui-player";
 import { getPostFromFullname, getAllPostsPaths } from "../../src/posts";
 import * as SiteMetadata from "../../src/metadata";
 import { Footer } from "../../components/Footer";
@@ -56,6 +57,8 @@ function Page({ post }: { post: Post.Post }) {
         />
         <Footer />
       </Layout.Wrapper>
+
+      <Player.Preview />
     </div>
   );
 }
