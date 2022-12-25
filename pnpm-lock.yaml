@@ -31,7 +31,6 @@ importers:
       '@cmd/ui-footer': workspace:*
       '@cmd/ui-header': workspace:*
       '@cmd/ui-layout': workspace:*
-      '@cmd/ui-music-embed': workspace:*
       '@cmd/ui-player': workspace:*
       '@cmd/ui-text': workspace:*
       '@cmd/ui-theme': workspace:*
@@ -67,7 +66,6 @@ importers:
       '@cmd/ui-footer': link:../ui/footer
       '@cmd/ui-header': link:../ui/header
       '@cmd/ui-layout': link:../ui/layout
-      '@cmd/ui-music-embed': link:../ui/music-embed
       '@cmd/ui-player': link:../ui/player
       '@cmd/ui-text': link:../ui/text
       '@cmd/ui-theme': link:../ui/theme
@@ -308,29 +306,6 @@ importers:
       '@cmd/ui-theme': link:../theme
       '@vanilla-extract/css': 1.9.2
       '@vanilla-extract/css-utils': 0.1.3
-    devDependencies:
-      '@cmd/eslint-config': link:../../dev-tools/lib-linter
-      '@cmd/lib-builder': link:../../dev-tools/lib-builder
-      '@cmd/tsconfig': link:../../dev-tools/tsconfig
-      '@types/react': 18.0.26
-      react: 18.2.0
-      typescript: 4.9.4
-
-  ui/music-embed:
-    specifiers:
-      '@cmd/eslint-config': workspace:*
-      '@cmd/lib-builder': workspace:*
-      '@cmd/tsconfig': workspace:*
-      '@cmd/ui-theme': workspace:*
-      '@types/react': ^18.0.26
-      '@vanilla-extract/css': ^1.9.2
-      react: ^18.2.0
-      react-loading-skeleton: ^3.1.0
-      typescript: ^4.9.4
-    dependencies:
-      '@cmd/ui-theme': link:../theme
-      '@vanilla-extract/css': 1.9.2
-      react-loading-skeleton: 3.1.0_react@18.2.0
     devDependencies:
       '@cmd/eslint-config': link:../../dev-tools/lib-linter
       '@cmd/lib-builder': link:../../dev-tools/lib-builder
