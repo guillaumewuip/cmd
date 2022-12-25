@@ -28,7 +28,7 @@ export async function generateFeeds(
     language: "fr-FR",
     image: `http://${siteURL}/logo.svg`,
     favicon: `http://${siteURL}/favicon.ico`,
-    copyright: "All rights reserved 2021, Guillaume Clochard",
+    copyright: "All rights reserved 2023, Guillaume Clochard",
     updated: new Date(), // optional, default = today
     generator: "cmd", // optional, default = 'Feed for Node.js'
     feedLinks: {
