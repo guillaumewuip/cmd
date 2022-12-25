@@ -4,7 +4,6 @@ import { vars, mediaQueries } from "@cmd/ui-theme";
 export const grid = style({
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
-  gridTemplateRows: "repeat(auto-fit, auto)",
   columnGap: vars.sizes.m,
   rowGap: vars.sizes.m,
 
@@ -18,19 +17,15 @@ export const grid = style({
 });
 
 export const article = style({
-  display: "block",
   position: "relative",
 
-  width: "100%",
-  marginBottom: vars.sizes.xs,
+  aspectRatio: "1",
+  lineHeight: 0,
+});
 
-  selectors: {
-    "&::after": {
-      content: "",
-      display: "block",
-      paddingBottom: "100%",
-    },
-  },
+export const nextImage = style({
+  width: "100%",
+  height: "100%",
 });
 
 export const overlay = style({

@@ -55,14 +55,13 @@ export const imageContainer = style({
   position: "relative",
   width: "100%",
   marginBottom: vars.sizes.xs,
+});
 
-  selectors: {
-    "&::after": {
-      content: "",
-      display: "block",
-      paddingBottom: "100%",
-    },
-  },
+export const nextImage = style({
+  width: "100%",
+  objectFit: "contain",
+  objectPosition: "top",
+  height: "auto",
 });
 
 export const caption = style({

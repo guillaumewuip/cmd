@@ -27,10 +27,11 @@ function Image({
     <div className={styles.imageSection}>
       <div className={styles.imageContainer}>
         <NextImage
+          className={styles.nextImage}
           src={src}
           alt={alt}
-          layout="fill"
-          objectFit="cover"
+          width={600}
+          height={600}
           priority
         />
       </div>

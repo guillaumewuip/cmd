@@ -12,10 +12,11 @@ function Article({ href, metadata }: { href: string; metadata: Metadata.Cmd }) {
   return (
     <a className={styles.article} href={href}>
       <NextImage
+        className={styles.nextImage}
         src={metadata.image.src}
         alt={metadata.image.alt}
-        layout="fill"
-        objectFit="cover"
+        width={600}
+        height={600}
       />
       <div className={styles.overlay} />
       <div className={styles.title}>
