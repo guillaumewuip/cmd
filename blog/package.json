@@ -17,7 +17,6 @@
     "@cmd/ui-footer": "workspace:*",
     "@cmd/ui-header": "workspace:*",
     "@cmd/ui-layout": "workspace:*",
-    "@cmd/ui-music-embed": "workspace:*",
     "@cmd/ui-player": "workspace:*",
     "@cmd/ui-text": "workspace:*",
     "@cmd/ui-theme": "workspace:*",
