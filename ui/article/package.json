@@ -29,7 +29,7 @@
     "fp-ts": "^2.13.1"
   },
   "peerDependencies": {
-    "next": "^12.0.7",
+    "next": "^13.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   }
