@@ -23,7 +23,7 @@ const taskRetryPolicy = capDelay(
   Monoid.concat(exponentialBackoff(300), limitRetries(6))
 );
 
-const BASE_API = "https://cmd-apis.vercel.app";
+const BASE_API = "";
 
 function updateTrack(
   trackId: string,
