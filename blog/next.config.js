@@ -27,7 +27,7 @@ const withVanillaExtract = createVanillaExtractPlugin();
 
 module.exports = withVanillaExtract(
   withMDX({
-    pageExtensions: ["js", "jsx", "tsx", "mdx"],
+    pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
     eslint: {
       ignoreDuringBuilds: true,
     },
