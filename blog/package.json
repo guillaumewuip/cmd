@@ -42,7 +42,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.7",
     "@cmd/tsconfig": "workspace:*",
-    "@types/jsdom": "^20.0.1",
+    "@types/jsdom": "^21.0.0",
     "@types/mdx-js__react": "^1.5.5",
     "@types/node": "^18.11.17",
     "@types/react": "^18.0.26",
