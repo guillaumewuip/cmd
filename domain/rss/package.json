@@ -14,8 +14,8 @@
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "@types/node": "^18.11.17",
-    "typescript": "^5.0.0"
+    "@types/node": "^18.15.11",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "@cmd/domain-post": "workspace:*",

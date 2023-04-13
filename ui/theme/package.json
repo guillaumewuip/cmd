@@ -13,10 +13,10 @@
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@vanilla-extract/css": "^1.9.2",
+    "@vanilla-extract/css": "^1.11.0",
     "@vanilla-extract/private": "^1.0.3"
   }
 }
