@@ -13,8 +13,8 @@
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "tslib": "^2.4.1",
-    "typescript": "^5.0.0"
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "@fp51/opaque-union": "^1.0.0",
