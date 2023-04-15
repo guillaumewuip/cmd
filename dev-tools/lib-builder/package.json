@@ -6,9 +6,6 @@
     "lib-dev": "./bin/lib-dev.sh"
   },
   "private": true,
-  "dependencies": {
-    "@microsoft/api-extractor": "^7.34.4"
-  },
   "peerDependencies": {
     "typescript": "*"
   }
