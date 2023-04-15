@@ -10,7 +10,6 @@
     "config:base",
     ":ignoreUnstable",
     ":prImmediately",
-    ":automergeDisabled",
     ":preserveSemverRanges",
     ":rebaseStalePrs",
     ":separateMultipleMajorReleases",
@@ -25,5 +24,14 @@
   "timezone": "Europe/Paris",
   "dryRun": false,
   "onboarding": false,
-  "prCreation":"not-pending"
+  "prCreation":"not-pending",
+
+  "packageRules": [
+    {
+      matchUpdateTypes: ["minor", "patch", "pin", "digest"],
+      automerge: true,
+      automergeType: "pr",
+      platformAutomerge: true,
+    },
+  ],
 }
