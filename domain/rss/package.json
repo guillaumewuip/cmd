@@ -19,8 +19,7 @@
   },
   "dependencies": {
     "@cmd/domain-post": "workspace:*",
-    "date-fns": "^2.29.3",
-    "feed": "^4.2.2",
-    "fp-ts": "^2.13.1"
+    "@cmd/posts": "workspace:*",
+    "feed": "^4.2.2"
   }
 }
