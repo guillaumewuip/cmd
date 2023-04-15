@@ -1,8 +1,8 @@
 import * as IO from "fp-ts/IO";
 import { pipe } from "fp-ts/function";
 
-import createHook from "zustand";
-import createStore from "zustand/vanilla";
+import { useStore } from "zustand";
+import { createStore } from "zustand/vanilla";
 
 import * as Tracks from "./entities/Tracks";
 import { readLocalStorageAutoplay } from "./localStorage";
@@ -20,6 +20,16 @@ export const write =
   () =>
     store.setState(updater);
 
-export const usePlayer = createHook(store);
+export function usePlayer(): Tracks.Tracks;
+export function usePlayer<U>(
+  selector: (state: Tracks.Tracks) => U,
+  equalityFn?: (a: U, b: U) => boolean
+): U;
+export function usePlayer(
+  selector: (state: Tracks.Tracks) => unknown = (state) => state,
+  equalityFn: (a: unknown, b: unknown) => boolean = (a, b) => a === b
+) {
+  return useStore(store, selector, equalityFn);
+}
 
 export { default as shallowEqual } from "zustand/shallow";
