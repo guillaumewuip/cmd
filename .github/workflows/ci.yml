@@ -28,8 +28,8 @@ jobs:
 
       - name: Build
         env:
-          TEAM: ${{ secrets.VERCEL_TEAM }}
-          TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          TURBO_TEAM: ${{ secrets.VERCEL_TEAM }}
+          TURBO_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: pnpm exec turbo run build --api="https://api.vercel.com" --team="$TEAM" --token="$TOKEN"
 
   lint:
