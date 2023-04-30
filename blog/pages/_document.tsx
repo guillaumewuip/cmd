@@ -37,6 +37,12 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+
+        <script
+          data-goatcounter="https://cmd-wuips.goatcounter.com/count"
+          async
+          src="//gc.zgo.at/count.js"
+        />
       </body>
     </Html>
   );

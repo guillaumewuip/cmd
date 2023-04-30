@@ -55,12 +55,6 @@ export function Footer({
           </label>
         )}
       </Small>
-
-      <script
-        data-goatcounter="https://cmd-wuips.goatcounter.com/count"
-        async
-        src="//gc.zgo.at/count.js"
-      />
     </footer>
   );
 }
