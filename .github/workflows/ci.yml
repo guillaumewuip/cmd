@@ -6,6 +6,10 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  TURBO_TEAM: ${{ secrets.VERCEL_TEAM }}
+  TURBO_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,10 +21,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Build
-        env:
-          TURBO_TEAM: ${{ secrets.VERCEL_TEAM }}
-          TURBO_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: pnpm exec turbo run build --api="https://api.vercel.com" --team="$TEAM" --token="$TOKEN"
+        run: pnpm exec turbo run build
 
   lint:
     runs-on: ubuntu-latest
@@ -32,7 +33,4 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Lint
-        env:
-          TEAM: ${{ secrets.VERCEL_TEAM }}
-          TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: pnpm exec turbo run lint --api="https://api.vercel.com" --team="$TEAM" --token="$TOKEN"
+        run: pnpm exec turbo run lint
