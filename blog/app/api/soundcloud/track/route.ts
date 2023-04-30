@@ -1,5 +1,4 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import fetch from "cross-fetch";
+import { NextResponse } from "next/server";
 
 import { parseHTML } from "linkedom";
 
@@ -52,37 +51,27 @@ function extractThumbnail(document: Document): string | null {
   return href;
 }
 
-export default async function handleSoundcloud(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  try {
-    if (req.method !== "GET") {
-      res.status(400);
-      return;
-    }
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const url = searchParams.get("url");
 
-    const { url } = req.query;
-
-    if (!url || Array.isArray(url)) {
-      res.status(400).json({
+  if (!url || Array.isArray(url)) {
+    return NextResponse.json(
+      {
         error: "Missing correct url query parameter",
-      });
-      return;
-    }
-
-    const page = await fetchPage(decodeURIComponent(url));
-    const trackId = extractTrackId(page);
-    const thumbnail = extractThumbnail(page);
-
-    res.status(200).json({
-      trackId,
-      thumbnail,
-    });
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-
-    res.status(500);
+      },
+      {
+        status: 400,
+      }
+    );
   }
+
+  const page = await fetchPage(decodeURIComponent(url));
+  const trackId = extractTrackId(page);
+  const thumbnail = extractThumbnail(page);
+
+  return NextResponse.json({
+    trackId,
+    thumbnail,
+  });
 }
