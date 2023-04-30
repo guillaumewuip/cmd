@@ -2,7 +2,9 @@ import { ReactNode } from "react";
 import NextImage from "next/image";
 
 import { H1, Small } from "@cmd/ui-text";
-import { Metadata } from "@cmd/domain-post";
+import { Post } from "@cmd/domain-post";
+
+import { format, parseISO } from "date-fns";
 
 import * as styles from "./Article.css";
 
@@ -14,30 +16,22 @@ function Column({ children }: { children: React.ReactNode }) {
   return <div className={styles.left}>{children}</div>;
 }
 
-function Image({
-  src,
-  alt,
-  caption,
-}: {
-  src: string;
-  alt: string;
-  caption?: string;
-}) {
+function Image({ image }: { image: Post.Image }) {
   return (
     <div className={styles.imageSection}>
       <div className={styles.imageContainer}>
         <NextImage
           className={styles.nextImage}
-          src={src}
-          alt={alt}
+          src={image.src}
+          alt={image.alt}
           width={600}
           height={600}
           priority
         />
       </div>
-      {caption && (
+      {image.caption && (
         <div className={styles.caption}>
-          <Small>{caption}</Small>
+          <Small>{image.caption}</Small>
         </div>
       )}
     </div>
@@ -53,33 +47,29 @@ function Title({ children }: { children: React.ReactNode }) {
 }
 
 export function Article({
-  metadata,
-  createdAt,
+  post,
   content,
 }: {
-  metadata: Metadata.Cmd;
-  createdAt: string;
+  post: Post.Post;
   content: ReactNode;
 }) {
+  const publicationDate = format(parseISO(post.publishedAt), "dd/MM/yyyy");
+
   return (
     <Wrapper>
       <Title>
-        <H1>{metadata.title}</H1>
+        <H1>{post.title}</H1>
       </Title>
 
       <Column>
-        <Image
-          src={metadata.image.src}
-          alt={metadata.image.alt}
-          caption={metadata.image.caption}
-        />
+        <Image image={post.image} />
       </Column>
 
       <Content>
         {content}
 
         <div className={styles.metadata}>
-          <Small>Publié le {createdAt}</Small>
+          <Small>Publié le {publicationDate}</Small>
         </div>
       </Content>
     </Wrapper>

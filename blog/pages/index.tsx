@@ -1,44 +1,38 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 
 import { NextSeo } from "next-seo";
 
-import * as ReadonlyArrayFP from "fp-ts/ReadonlyArray";
-import { pipe } from "fp-ts/function";
-
-import { Infos, Metadata } from "@cmd/domain-post";
+import { posts, lastPost, PostContent } from "@cmd/posts";
 
 import { Article, Mosaic } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
 import { Paragraph, Code, H2, Link, Hr } from "@cmd/ui-text";
 import { Header } from "@cmd/ui-header";
 
+import { Post } from "@cmd/domain-post";
 import { generateFeeds } from "@cmd/domain-rss";
 import * as Player from "@cmd/ui-player";
 
-import { getLastPostInfos, getAllPostInfos } from "../src/posts";
 import * as SiteMetadata from "../src/metadata";
+import { components } from "../src/mdxComponents";
+import { postUrl } from "../src/postUrl";
 import { Footer } from "../components/Footer";
-
-type Cmd = {
-  href: string;
-  metadata: Metadata.Cmd;
-};
 
 export default function Home({
   lastCmd,
   previousCmds,
 }: {
-  lastCmd: Infos.Infos;
-  previousCmds: ReadonlyArray<Cmd>;
+  lastCmd: Post.Post;
+  previousCmds: {
+    image: Post.Image;
+    relativeUrl: string;
+    title: string;
+    id: string;
+  }[];
 }) {
-  const PostContent = dynamic(
-    () => import(`../_posts/${lastCmd.fullName}.mdx`)
-  );
-
-  const imageUrl = `${SiteMetadata.site.url}${lastCmd.metadata.image.src}`;
+  const imageUrl = `${SiteMetadata.site.url}${lastCmd.image.src}`;
 
   return (
     <Layout.Page>
@@ -81,9 +75,8 @@ export default function Home({
         </Layout.SmallSection>
 
         <Article
-          metadata={lastCmd.metadata}
-          createdAt={lastCmd.createdAt}
-          content={<PostContent />}
+          post={lastCmd}
+          content={<PostContent post={lastCmd} components={components} />}
         />
 
         <Layout.SmallSection>
@@ -113,25 +106,21 @@ export default function Home({
 }
 
 export async function getStaticProps() {
-  const lastCmd = await getLastPostInfos();
-  const previousCmds = await getAllPostInfos();
-
-  await generateFeeds(previousCmds, {
+  await generateFeeds({
+    siteBaseURL: SiteMetadata.site.url,
+    postRelativeURL: postUrl,
     outputDir: "./public/rss",
   });
 
-  const cmds: ReadonlyArray<Cmd> = pipe(
-    previousCmds,
-    ReadonlyArrayFP.map((post) => ({
-      href: `/post/${post.infos.fullName}`,
-      metadata: post.infos.metadata,
-    }))
-  );
-
   return {
     props: {
-      lastCmd: lastCmd.infos,
-      previousCmds: cmds,
+      lastCmd: lastPost,
+      previousCmds: posts.map((post) => ({
+        image: post.image,
+        relativeUrl: postUrl(post),
+        title: post.title,
+        id: post.id,
+      })),
     },
   };
 }
