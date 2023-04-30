@@ -12,6 +12,8 @@ import { Preview } from "../../../components/Player";
 import { Header } from "../../../components/Header";
 import { components } from "../../../components/MDXComponents";
 
+import * as styles from "./fix.css";
+
 export async function generateStaticParams() {
   const params = posts.map((post) => ({
     fullName: post.id,
@@ -69,6 +71,7 @@ export default async function Page({
           content={<PostContent post={post} components={components} />}
         />
         <Footer />
+        <span className={styles.nothing}>fix</span>
       </Layout.Wrapper>
 
       <Preview />

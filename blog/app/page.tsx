@@ -16,6 +16,8 @@ import { components } from "../components/MDXComponents";
 
 import * as BlogMetadata from "../metadata";
 
+import * as styles from "./fix.css";
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: BlogMetadata.site.name,
@@ -94,6 +96,7 @@ export default async function Home() {
         </Layout.SmallSection>
 
         <Footer />
+        <span className={styles.nothing}>fix</span>
       </Layout.Wrapper>
 
       <Preview />
