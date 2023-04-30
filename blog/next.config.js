@@ -3,12 +3,18 @@ const { createVanillaExtractPlugin } = require("@vanilla-extract/next-plugin");
 const withVanillaExtract = createVanillaExtractPlugin();
 
 module.exports = withVanillaExtract({
-  pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    appDir: true,
+    typedRoutes: true,
+  },
   webpack: (config) => {
+    // To fix "Module not found: Can't resolve 'canvas'" error
+    // eslint-disable-next-line no-param-reassign
     config.externals = [...config.externals, "canvas", "jsdom"];
+
     return config;
   },
 });

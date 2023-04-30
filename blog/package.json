@@ -22,12 +22,12 @@
     "@cmd/ui-text": "workspace:*",
     "@cmd/ui-theme": "workspace:*",
     "@next/env": "^13.3.0",
+    "@vanilla-extract/next-plugin": "^2.1.2",
     "@vercel/node": "^2.10.3",
-    "cross-fetch": "^3.1.5",
     "date-fns": "^2.29.3",
     "fp-ts": "^2.13.1",
     "linkedom": "^0.14.25",
-    "next": "^13.3.0",
+    "next": "^13.3.2",
     "next-seo": "^6.0.0",
     "next-sitemap": "^4.0.7",
     "next-themes": "^0.2.1",
@@ -36,13 +36,10 @@
     "react-loading-skeleton": "^3.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
     "@cmd/tsconfig": "workspace:*",
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
-    "@vanilla-extract/next-plugin": "^2.1.2",
-    "typescript": "^5.0.4",
-    "webpack": "^5.79.0"
+    "typescript": "^5.0.4"
   }
 }
