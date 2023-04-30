@@ -7,5 +7,6 @@
   },
   "devDependencies": {
     "turbo": "^1.9.1"
-  }
+  },
+  "packageManager": "pnpm@8.3.1"
 }
