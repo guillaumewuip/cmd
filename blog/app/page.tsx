@@ -1,51 +1,47 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
-import Head from "next/head";
-
-import { NextSeo } from "next-seo";
+import type { Metadata } from "next";
 
 import { posts, lastPost, PostContent } from "@cmd/posts";
 
 import { Article, Mosaic } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
 import { Paragraph, Code, H2, Link, Hr } from "@cmd/ui-text";
-import { Header } from "@cmd/ui-header";
-
-import { Post } from "@cmd/domain-post";
 import { generateFeeds } from "@cmd/domain-rss";
-import * as Player from "@cmd/ui-player";
 
-import * as SiteMetadata from "../src/metadata";
-import { components } from "../src/mdxComponents";
-import { postUrl } from "../src/postUrl";
 import { Footer } from "../components/Footer";
+import { Preview } from "../components/Player";
+import { Header } from "../components/Header";
+import { components } from "../components/MDXComponents";
 
-export default function Home({
-  lastCmd,
-  previousCmds,
-}: {
-  lastCmd: Post.Post;
-  previousCmds: {
-    image: Post.Image;
-    relativeUrl: string;
-    title: string;
-    id: string;
-  }[];
-}) {
-  const imageUrl = `${SiteMetadata.site.url}${lastCmd.image.src}`;
+import * as BlogMetadata from "../metadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: BlogMetadata.site.name,
+    openGraph: {
+      type: "website",
+      images: lastPost.image.src,
+    },
+  };
+}
+
+export default async function Home() {
+  await generateFeeds({
+    siteBaseURL: BlogMetadata.site.url,
+    postRelativeURL: BlogMetadata.postUrl,
+    outputDir: "./public/rss",
+  });
+
+  const cmds = posts.map((post) => ({
+    image: post.image,
+    relativeUrl: BlogMetadata.postUrl(post),
+    title: post.title,
+    id: post.id,
+  }));
 
   return (
     <Layout.Page>
-      <Head>
-        <title>{SiteMetadata.site.name}</title>
-      </Head>
-
-      <NextSeo
-        openGraph={{
-          images: [{ url: imageUrl }],
-        }}
-      />
-
       <Layout.Wrapper>
         <Layout.SmallSection>
           <Header />
@@ -75,8 +71,8 @@ export default function Home({
         </Layout.SmallSection>
 
         <Article
-          post={lastCmd}
-          content={<PostContent post={lastCmd} components={components} />}
+          post={lastPost}
+          content={<PostContent post={lastPost} components={components} />}
         />
 
         <Layout.SmallSection>
@@ -85,7 +81,7 @@ export default function Home({
             même :
           </H2>
 
-          <Mosaic posts={previousCmds} />
+          <Mosaic posts={cmds} />
 
           <Hr />
 
@@ -100,27 +96,7 @@ export default function Home({
         <Footer />
       </Layout.Wrapper>
 
-      <Player.Preview />
+      <Preview />
     </Layout.Page>
   );
-}
-
-export async function getStaticProps() {
-  await generateFeeds({
-    siteBaseURL: SiteMetadata.site.url,
-    postRelativeURL: postUrl,
-    outputDir: "./public/rss",
-  });
-
-  return {
-    props: {
-      lastCmd: lastPost,
-      previousCmds: posts.map((post) => ({
-        image: post.image,
-        relativeUrl: postUrl(post),
-        title: post.title,
-        id: post.id,
-      })),
-    },
-  };
 }

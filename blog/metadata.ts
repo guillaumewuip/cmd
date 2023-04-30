@@ -1,3 +1,5 @@
+import { Post } from "@cmd/domain-post";
+
 export const site = {
   name: "cmd - cerfeuil et musique douce",
   url: "http://cmd.wuips.com",
@@ -11,3 +13,5 @@ export const author = {
     id: "@guillaumewuip",
   },
 };
+
+export const postUrl = (post: Post.Post) => `/post/${post.id}`;
