@@ -107,8 +107,10 @@ export default function Progress({
         ? Option.some(localTrack.position)
         : localTrack.position,
     Option.map((localTrack) => localTrack.ratio),
+    Option.chain(Option.fromNullable),
     Option.getOrElse(() => 0)
   );
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.timeLeft}>

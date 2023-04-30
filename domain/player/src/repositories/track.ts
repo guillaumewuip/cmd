@@ -501,11 +501,14 @@ export function loadSoundcloud({
           widget.bind(
             window.SC.Widget.Events.PLAY_PROGRESS,
             throttle(({ relativePosition, currentPosition }) => {
-              positionUpdate(() => Position.create(relativePosition))(id)();
+              const duration = currentPosition / 1000 / relativePosition;
+              const newPosition = Position.create({ ratio: relativePosition });
 
-              if (relativePosition) {
+              positionUpdate(() => newPosition)(id)();
+
+              if (!Number.isNaN(duration)) {
                 // millis to seconds conversion
-                durationUpdate(currentPosition / 1000 / relativePosition)(id)();
+                durationUpdate(duration)(id)();
               }
             }, 1000)
           );
