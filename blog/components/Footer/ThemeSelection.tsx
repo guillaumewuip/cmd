@@ -1,8 +1,10 @@
-import { Footer as UIFooter } from "@cmd/ui-footer";
+"use client";
+
+import { ThemeSelection as UIThemeSelection } from "@cmd/ui-footer";
 import { useTheme } from "next-themes";
 import { useReducer, useEffect } from "react";
 
-export function Footer() {
+export function ThemeSelection() {
   const [mounted, setMounted] = useReducer(() => true, false);
   const { theme, setTheme } = useTheme();
 
@@ -10,5 +12,7 @@ export function Footer() {
     setMounted();
   }, []);
 
-  return <UIFooter theme={mounted && { current: theme, onChange: setTheme }} />;
+  if (!mounted) return null;
+
+  return <UIThemeSelection current={theme} onChange={setTheme} />;
 }

@@ -1,3 +1,3 @@
-import { Footer } from "./Footer";
+import { Footer, ThemeSelection } from "./Footer";
 
-export { Footer };
+export { Footer, ThemeSelection };
