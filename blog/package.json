@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build && next-sitemap",
     "start": "next start",
-    "lint": "lib-lint \"@(pages|src)/**/*.@(js|ts|tsx)\""
+    "lint": "lib-lint \"@(app|components)/**/*.@(js|ts|tsx) *.@(js|ts|tsx)\""
   },
   "dependencies": {
     "@cmd/domain-player": "workspace:*",
