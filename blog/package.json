@@ -21,25 +21,23 @@
     "@cmd/ui-player": "workspace:*",
     "@cmd/ui-text": "workspace:*",
     "@cmd/ui-theme": "workspace:*",
-    "@next/env": "^13.3.0",
     "@vanilla-extract/next-plugin": "^2.1.2",
-    "@vercel/node": "^2.10.3",
-    "date-fns": "^2.29.3",
-    "fp-ts": "^2.13.1",
-    "linkedom": "^0.14.25",
-    "next": "^13.3.2",
+    "date-fns": "^2.30.0",
+    "fp-ts": "^2.14.0",
+    "linkedom": "^0.14.26",
+    "next": "^13.4.1",
     "next-seo": "^6.0.0",
-    "next-sitemap": "^4.0.7",
+    "next-sitemap": "^4.0.9",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-loading-skeleton": "^3.2.0"
+    "react-loading-skeleton": "^3.3.0"
   },
   "devDependencies": {
     "@cmd/tsconfig": "workspace:*",
     "@types/node": "^18.15.11",
-    "@types/react": "^18.0.35",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.5",
+    "@types/react-dom": "^18.2.4",
     "typescript": "^5.0.4"
   }
 }
