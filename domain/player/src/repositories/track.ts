@@ -438,7 +438,8 @@ export function loadSoundcloudThumbnail({
       () =>
         TaskEither.tryCatch(async () => {
           const response = await fetch(
-            `${BASE_API}/api/soundcloud/track?url=${encodeURIComponent(href)}`
+            `${BASE_API}/api/soundcloud/track?url=${encodeURIComponent(href)}`,
+            { cache: "no-store" }
           );
 
           const payload = await response.json();
@@ -565,7 +566,9 @@ export function loadBandcampThumbnail({
       () =>
         TaskEither.tryCatch(async () => {
           const response = await fetch(
-            `${BASE_API}/api/bandcamp/track?url=${encodeURIComponent(href)}`
+            `${BASE_API}/api/bandcamp/track?url=${encodeURIComponent(href)}`,
+
+            { cache: "no-store" }
           );
 
           const payload = await response.json();
