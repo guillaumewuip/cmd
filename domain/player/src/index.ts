@@ -10,7 +10,9 @@ import {
   register,
   loadYoutube,
   loadBandcamp,
+  loadBandcampThumbnail,
   loadSoundcloud,
+  loadSoundcloudThumbnail,
 } from "./repositories/track";
 import { saveAutoplayChoice } from "./repositories/autoplay";
 
@@ -27,6 +29,8 @@ export {
   register,
   loadYoutube,
   loadBandcamp,
+  loadBandcampThumbnail,
   loadSoundcloud,
+  loadSoundcloudThumbnail,
   saveAutoplayChoice,
 };

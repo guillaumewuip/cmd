@@ -1,4 +1,15 @@
-import { Track, playOrPause, play } from "@cmd/domain-player";
+import {
+  Track,
+  playOrPause,
+  play,
+  usePlayer,
+  Tracks,
+  shallowEqual,
+} from "@cmd/domain-player";
+
+import * as Eq from "fp-ts/Eq";
+import * as Option from "fp-ts/Option";
+import { pipe } from "fp-ts/function";
 
 import * as styles from "./TrackBar.css";
 
@@ -7,6 +18,10 @@ import SourceLink from "../../components/SourceLink";
 import Progress from "../../components/Progress";
 import * as Button from "../../components/Button";
 import TrackText from "../../components/TrackText";
+
+import Aborted from "../Aborted";
+
+const eqOptionTrack = pipe(shallowEqual, Eq.fromEquals, Option.getEq);
 
 function Title({ track }: { track: Track.Track }) {
   return (
@@ -32,13 +47,20 @@ function Thumbnail({ track }: { track: Track.Track }) {
   );
 }
 
-export default function TrackBar({
-  track,
-  selected,
-}: {
-  track: Track.NonAborted;
-  selected: boolean;
-}) {
+export default function TrackBar({ id }: { id: string }) {
+  const maybeTrack = usePlayer(Tracks.findTrackById(id), eqOptionTrack.equals);
+  const selected = usePlayer(Tracks.isSelected(id));
+
+  if (Option.isNone(maybeTrack)) {
+    return null;
+  }
+
+  const track = maybeTrack.value;
+
+  if (Track.isAborted(track)) {
+    return <Aborted />;
+  }
+
   if (!selected || Track.isReserved(track)) {
     return (
       <div className={styles.notSelectedBar}>

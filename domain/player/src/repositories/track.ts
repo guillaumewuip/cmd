@@ -1,7 +1,6 @@
 import * as Option from "fp-ts/Option";
 import * as Either from "fp-ts/Either";
 import * as IO from "fp-ts/IO";
-import * as IOEither from "fp-ts/IOEither";
 import * as Task from "fp-ts/Task";
 import * as TaskEither from "fp-ts/TaskEither";
 import { identity, pipe } from "fp-ts/function";
@@ -422,22 +421,24 @@ export function loadYoutube({
   );
 }
 
-export function loadSoundcloud({
-  track,
+export function loadSoundcloudThumbnail({
+  href,
 }: {
-  track: Track.Reserved & { source: Source.Soundcloud };
-}): Task.Task<void> {
-  const { id, source } = track;
-
+  href: string;
+}): TaskEither.TaskEither<
+  Error,
+  {
+    soundcloudId: string;
+    thumbnail: string;
+  }
+> {
   return pipe(
     retrying(
       taskRetryPolicy,
       () =>
         TaskEither.tryCatch(async () => {
           const response = await fetch(
-            `${BASE_API}/api/soundcloud/track?url=${encodeURIComponent(
-              source.href
-            )}`
+            `${BASE_API}/api/soundcloud/track?url=${encodeURIComponent(href)}`
           );
 
           const payload = await response.json();
@@ -448,86 +449,87 @@ export function loadSoundcloud({
           };
         }, Either.toError),
       Either.isLeft
-    ),
+    )
+  );
+}
 
-    TaskEither.chainIOEitherK(
-      ({
-        soundcloudId,
-        thumbnail,
-      }: {
-        soundcloudId: string;
-        thumbnail: string;
-      }) =>
-        IOEither.tryCatch(() => {
-          const src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${soundcloudId}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=false&show_reposts=true&show_teaser=true`;
+export function loadSoundcloud({
+  track,
+}: {
+  track: Track.Reserved & { source: Source.Soundcloud };
+}): Task.Task<void> {
+  const { id, source } = track;
 
-          const iframe = document.createElement("iframe");
-          iframe.setAttribute("title", "Embed player");
-          iframe.setAttribute("height", "128");
-          iframe.setAttribute("src", src);
-          iframe.setAttribute("allow", "autoplay");
-          iframe.setAttribute("tabIndex", "-1");
-          iframe.setAttribute("seamless", "true");
-          iframe.setAttribute("src", src);
+  return pipe(
+    TaskEither.tryCatch(async () => {
+      const src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${source.soundcloudId}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=false&show_reposts=true&show_teaser=true`;
 
-          const container = source.container.current;
-          if (!container) {
-            throw new Error("Empty Soundcloud container");
+      const iframe = document.createElement("iframe");
+      iframe.setAttribute("title", "Embed player");
+      iframe.setAttribute("height", "128");
+      iframe.setAttribute("src", src);
+      iframe.setAttribute("allow", "autoplay");
+      iframe.setAttribute("tabIndex", "-1");
+      iframe.setAttribute("seamless", "true");
+      iframe.setAttribute("src", src);
+
+      const container = source.container.current;
+      if (!container) {
+        throw new Error("Empty Soundcloud container");
+      }
+
+      container.appendChild(iframe);
+
+      const widget = new window.SC.Widget(iframe);
+
+      // force reload
+      const newWidgetUrl = `http://api.soundcloud.com/tracks/${source.soundcloudId}`;
+      widget.load(newWidgetUrl);
+
+      widget.bind(window.SC.Widget.Events.ERROR, () => {
+        aborted(id)();
+      });
+      widget.bind(window.SC.Widget.Events.READY, () => {
+        paused(id)();
+      });
+
+      widget.bind(window.SC.Widget.Events.LOAD_PROGRESS, () => {
+        buffering(id)();
+      });
+
+      widget.bind(window.SC.Widget.Events.PLAY, () => {
+        playing(id)();
+      });
+
+      widget.bind(
+        window.SC.Widget.Events.PLAY_PROGRESS,
+        throttle(({ relativePosition, currentPosition }) => {
+          const duration = currentPosition / 1000 / relativePosition;
+          const newPosition = Position.create({ ratio: relativePosition });
+
+          positionUpdate(() => newPosition)(id)();
+
+          if (!Number.isNaN(duration)) {
+            // millis to seconds conversion
+            durationUpdate(duration)(id)();
           }
+        }, 1000)
+      );
 
-          container.appendChild(iframe);
+      widget.bind(window.SC.Widget.Events.PAUSE, () => {
+        paused(id)();
+      });
 
-          const widget = new window.SC.Widget(iframe);
+      widget.bind(window.SC.Widget.Events.FINISH, () => {
+        ended(id)();
+      });
 
-          // force reload
-          const newWidgetUrl = `http://api.soundcloud.com/tracks/${soundcloudId}`;
-          widget.load(newWidgetUrl);
-
-          widget.bind(window.SC.Widget.Events.ERROR, () => {
-            aborted(id)();
-          });
-          widget.bind(window.SC.Widget.Events.READY, () => {
-            paused(id)();
-          });
-
-          widget.bind(window.SC.Widget.Events.LOAD_PROGRESS, () => {
-            buffering(id)();
-          });
-
-          widget.bind(window.SC.Widget.Events.PLAY, () => {
-            playing(id)();
-          });
-
-          widget.bind(
-            window.SC.Widget.Events.PLAY_PROGRESS,
-            throttle(({ relativePosition, currentPosition }) => {
-              const duration = currentPosition / 1000 / relativePosition;
-              const newPosition = Position.create({ ratio: relativePosition });
-
-              positionUpdate(() => newPosition)(id)();
-
-              if (!Number.isNaN(duration)) {
-                // millis to seconds conversion
-                durationUpdate(duration)(id)();
-              }
-            }, 1000)
-          );
-
-          widget.bind(window.SC.Widget.Events.PAUSE, () => {
-            paused(id)();
-          });
-
-          widget.bind(window.SC.Widget.Events.FINISH, () => {
-            ended(id)();
-          });
-
-          return { thumbnail, widget };
-        }, Either.toError)
-    ),
+      return { widget };
+    }, Either.toError),
     Task.chainIOK(
       Either.fold(
         () => updateTrack(id, Track.aborted),
-        ({ thumbnail, widget }) =>
+        ({ widget }) =>
           updateTrack(id, (localTrack) =>
             pipe(
               localTrack,
@@ -535,12 +537,7 @@ export function loadSoundcloud({
               Track.modifySource(
                 Source.fold<Source.Source>({
                   Youtube: identity,
-                  Soundcloud: (localSource) =>
-                    pipe(
-                      localSource,
-                      Source.addWidget(widget),
-                      Source.addThumbnail({ url: thumbnail })
-                    ),
+                  Soundcloud: Source.addWidget(widget),
                   Bandcamp: identity,
                 })
               )
@@ -551,23 +548,24 @@ export function loadSoundcloud({
   );
 }
 
-export function loadBandcamp({
-  track,
+export function loadBandcampThumbnail({
+  href,
 }: {
-  track: Track.Reserved & { source: Source.Bandcamp };
-}): Task.Task<void> {
-  const { id, source } = track;
-  const { audio, href: bandcampUrl } = source;
-
+  href: string;
+}): TaskEither.TaskEither<
+  Error,
+  {
+    streamUrl: string;
+    thumbnail: string;
+  }
+> {
   return pipe(
     retrying(
       taskRetryPolicy,
       () =>
         TaskEither.tryCatch(async () => {
           const response = await fetch(
-            `${BASE_API}/api/bandcamp/track?url=${encodeURIComponent(
-              bandcampUrl
-            )}`
+            `${BASE_API}/api/bandcamp/track?url=${encodeURIComponent(href)}`
           );
 
           const payload = await response.json();
@@ -578,72 +576,66 @@ export function loadBandcamp({
           };
         }, Either.toError),
       Either.isLeft
-    ),
-    TaskEither.chainIOEitherK(
-      ({ streamUrl, thumbnail }: { streamUrl: string; thumbnail: string }) =>
-        IOEither.tryCatch(() => {
-          audio.src = streamUrl;
+    )
+  );
+}
 
-          audio.addEventListener("abort", () => {
-            aborted(id)();
-          });
-          audio.addEventListener("error", () => {
-            aborted(id)();
-          });
+export function loadBandcamp({
+  track,
+}: {
+  track: Track.Reserved & { source: Source.Bandcamp };
+}): Task.Task<void> {
+  const { id, source } = track;
+  const { audio, streamUrl } = source;
 
-          audio.addEventListener("loadeddata", () => {
-            // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/readyState
-            if (audio.readyState >= 2) {
-              paused(id)();
-            }
-          });
+  return pipe(
+    TaskEither.tryCatch(async () => {
+      audio.src = streamUrl;
 
-          audio.addEventListener("waiting", () => {
-            buffering(id)();
-          });
+      audio.addEventListener("abort", () => {
+        aborted(id)();
+      });
+      audio.addEventListener("error", () => {
+        aborted(id)();
+      });
 
-          audio.addEventListener("play", () => {
-            playing(id)();
-          });
-          audio.addEventListener("playing", () => {
-            playing(id)();
-            durationUpdate(audio.duration)(id)();
-          });
+      audio.addEventListener("loadeddata", () => {
+        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/readyState
+        if (audio.readyState >= 2) {
+          paused(id)();
+        }
+      });
 
-          audio.addEventListener("timeupdate", () =>
-            positionUpdate(() =>
-              Position.create({ ratio: audio.currentTime / audio.duration })
-            )(id)()
-          );
+      audio.addEventListener("waiting", () => {
+        buffering(id)();
+      });
 
-          audio.addEventListener("pause", () => {
-            paused(id)();
-          });
+      audio.addEventListener("play", () => {
+        playing(id)();
+      });
+      audio.addEventListener("playing", () => {
+        playing(id)();
+        durationUpdate(audio.duration)(id)();
+      });
 
-          audio.addEventListener("ended", () => {
-            ended(id)();
-          });
+      audio.addEventListener("timeupdate", () =>
+        positionUpdate(() =>
+          Position.create({ ratio: audio.currentTime / audio.duration })
+        )(id)()
+      );
 
-          return { thumbnail };
-        }, Either.toError)
-    ),
+      audio.addEventListener("pause", () => {
+        paused(id)();
+      });
+
+      audio.addEventListener("ended", () => {
+        ended(id)();
+      });
+    }, Either.toError),
     Task.chainIOK(
       Either.fold(
         () => updateTrack(id, Track.aborted),
-        ({ thumbnail }) =>
-          updateTrack(id, (localTrack) =>
-            pipe(
-              localTrack,
-              Track.initialized,
-              Track.modifySource(
-                Source.fold<Source.Source>({
-                  Youtube: identity,
-                  Soundcloud: identity,
-                  Bandcamp: Source.addThumbnail({ url: thumbnail }),
-                })
-              )
-            )
-          )
+        () => updateTrack(id, Track.initialized)
       )
     )
   );
