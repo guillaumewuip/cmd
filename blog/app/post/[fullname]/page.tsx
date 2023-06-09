@@ -6,9 +6,10 @@ import { posts, postFromId, PostContent, excerpt } from "@cmd/posts";
 import { Article } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
 
+import { Preview } from "@cmd/ui-player";
+
 import * as SiteMetadata from "../../../metadata";
 import { Footer } from "../../../components/Footer";
-import { Preview } from "../../../components/Player";
 import { Header } from "../../../components/Header";
 import { components } from "../../../components/MDXComponents";
 

@@ -9,8 +9,8 @@ import * as Layout from "@cmd/ui-layout";
 import { Paragraph, Code, H2, Link, Hr } from "@cmd/ui-text";
 import { generateFeeds } from "@cmd/domain-rss";
 
+import { Preview } from "@cmd/ui-player";
 import { Footer } from "../components/Footer";
-import { Preview } from "../components/Player";
 import { Header } from "../components/Header";
 import { components } from "../components/MDXComponents";
 

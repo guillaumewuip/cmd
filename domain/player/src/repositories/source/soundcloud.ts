@@ -1,12 +1,16 @@
-import { NextResponse } from "next/server";
+import * as Either from "fp-ts/Either";
+import * as TaskEither from "fp-ts/TaskEither";
 
-import { parseHTML } from "linkedom";
+import { retry } from "./retry";
 
 async function fetchPage(url: string): Promise<Document> {
   const response = await fetch(url);
-  const documentString = await response.text();
+  const markup = await response.text();
 
-  return parseHTML(documentString).window.document;
+  const { JSDOM } = await import("jsdom");
+  const { document } = new JSDOM(markup).window;
+
+  return document;
 }
 
 function extractTrackId(document: Document) {
@@ -39,7 +43,7 @@ function extractTrackId(document: Document) {
   return id;
 }
 
-function extractThumbnail(document: Document): string | null {
+function extractThumbnail(document: Document): string {
   const meta = document.querySelector('meta[property="og:image"]');
 
   if (!meta) {
@@ -48,30 +52,30 @@ function extractThumbnail(document: Document): string | null {
 
   const href = meta.getAttribute("content");
 
-  return href;
+  return href || "";
 }
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const url = searchParams.get("url");
-
-  if (!url || Array.isArray(url)) {
-    return NextResponse.json(
-      {
-        error: "Missing correct url query parameter",
-      },
-      {
-        status: 400,
-      }
-    );
+export function fetchSoundcloudInfos({
+  href,
+}: {
+  href: string;
+}): TaskEither.TaskEither<
+  Error,
+  {
+    soundcloudId: string;
+    thumbnail: string;
   }
+> {
+  return retry(() =>
+    TaskEither.tryCatch(async () => {
+      const page = await fetchPage(href);
+      const soundcloudId = extractTrackId(page);
+      const thumbnail = extractThumbnail(page);
 
-  const page = await fetchPage(decodeURIComponent(url));
-  const trackId = extractTrackId(page);
-  const thumbnail = extractThumbnail(page);
-
-  return NextResponse.json({
-    trackId,
-    thumbnail,
-  });
+      return {
+        soundcloudId,
+        thumbnail,
+      };
+    }, Either.toError)
+  );
 }

@@ -1,10 +1,8 @@
-import React from "react";
-
 import { getMDXComponent } from "next-contentlayer/hooks";
 
 import { Post } from "@cmd/domain-post";
 
-export function PostContent({
+export async function PostContent({
   post,
   components,
 }: {
@@ -29,10 +27,8 @@ export function PostContent({
     player: (props: any) => JSX.Element;
   };
 }) {
-  const MDXContent = React.useMemo(
-    () => getMDXComponent(post.content),
-    [post.content]
-  );
+  console.log("PostContent");
+  const MDXContent = getMDXComponent(post.content);
 
   return <MDXContent components={components} />;
 }

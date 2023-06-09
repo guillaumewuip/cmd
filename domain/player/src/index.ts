@@ -10,11 +10,13 @@ import {
   register,
   loadYoutube,
   loadBandcamp,
-  loadBandcampThumbnail,
   loadSoundcloud,
-  loadSoundcloudThumbnail,
 } from "./repositories/track";
 import { saveAutoplayChoice } from "./repositories/autoplay";
+import {
+  fetchBandcampInfos,
+  fetchSoundcloudInfos,
+} from "./repositories/source";
 
 export {
   Track,
@@ -29,8 +31,8 @@ export {
   register,
   loadYoutube,
   loadBandcamp,
-  loadBandcampThumbnail,
   loadSoundcloud,
-  loadSoundcloudThumbnail,
   saveAutoplayChoice,
+  fetchBandcampInfos,
+  fetchSoundcloudInfos,
 };

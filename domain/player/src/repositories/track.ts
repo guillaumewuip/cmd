@@ -7,22 +7,12 @@ import { identity, pipe } from "fp-ts/function";
 
 import throttle from "lodash.throttle";
 
-import { capDelay, exponentialBackoff, limitRetries, Monoid } from "retry-ts";
-import { retrying } from "retry-ts/Task";
-
 import * as Tracks from "../entities/Tracks";
 import * as Track from "../entities/Track";
 import * as Source from "../entities/Source";
 import * as Position from "../entities/Position";
 
 import * as Store from "../store";
-
-const taskRetryPolicy = capDelay(
-  6000,
-  Monoid.concat(exponentialBackoff(300), limitRetries(6))
-);
-
-const BASE_API = "";
 
 function updateTrack(
   trackId: string,
@@ -421,39 +411,6 @@ export function loadYoutube({
   );
 }
 
-export function loadSoundcloudThumbnail({
-  href,
-}: {
-  href: string;
-}): TaskEither.TaskEither<
-  Error,
-  {
-    soundcloudId: string;
-    thumbnail: string;
-  }
-> {
-  return pipe(
-    retrying(
-      taskRetryPolicy,
-      () =>
-        TaskEither.tryCatch(async () => {
-          const response = await fetch(
-            `${BASE_API}/api/soundcloud/track?url=${encodeURIComponent(href)}`,
-            { cache: "no-store" }
-          );
-
-          const payload = await response.json();
-
-          return {
-            soundcloudId: payload.trackId,
-            thumbnail: payload.thumbnail,
-          };
-        }, Either.toError),
-      Either.isLeft
-    )
-  );
-}
-
 export function loadSoundcloud({
   track,
 }: {
@@ -545,40 +502,6 @@ export function loadSoundcloud({
             )
           )
       )
-    )
-  );
-}
-
-export function loadBandcampThumbnail({
-  href,
-}: {
-  href: string;
-}): TaskEither.TaskEither<
-  Error,
-  {
-    streamUrl: string;
-    thumbnail: string;
-  }
-> {
-  return pipe(
-    retrying(
-      taskRetryPolicy,
-      () =>
-        TaskEither.tryCatch(async () => {
-          const response = await fetch(
-            `${BASE_API}/api/bandcamp/track?url=${encodeURIComponent(href)}`,
-
-            { cache: "no-store" }
-          );
-
-          const payload = await response.json();
-
-          return {
-            streamUrl: payload.streamUrl,
-            thumbnail: payload.thumbnail,
-          };
-        }, Either.toError),
-      Either.isLeft
     )
   );
 }
