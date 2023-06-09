@@ -96,7 +96,7 @@ export default async function Home() {
         </Layout.SmallSection>
 
         <Footer />
-        <span className={styles.nothing}>fix</span>
+        <span className={styles.fix} />
       </Layout.Wrapper>
 
       <Preview />
