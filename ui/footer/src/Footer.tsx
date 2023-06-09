@@ -1,5 +1,6 @@
 import { Link, Small } from "@cmd/ui-text";
 
+import React from "react";
 import * as styles from "./Footer.css";
 
 type Theme = "system" | "light" | "dark";
@@ -17,16 +18,36 @@ const parseTheme = (maybeTheme: string): Theme => {
   }
 };
 
-export function Footer({
-  theme,
+export function ThemeSelection({
+  current,
+  onChange,
 }: {
-  theme:
-    | {
-        current: Theme | string | undefined;
-        onChange: (newTheme: Theme) => void;
-      }
-    | false;
+  current: Theme | string | undefined;
+  onChange: (newTheme: Theme) => void;
 }) {
+  return (
+    <label htmlFor="theme">
+      Theme:
+      <select
+        className={styles.select}
+        name="theme"
+        id="theme"
+        value={current}
+        onChange={(event) => {
+          const newTheme = parseTheme(event.target.value);
+
+          onChange(newTheme);
+        }}
+      >
+        <option value="system">sytème</option>
+        <option value="light">clair</option>
+        <option value="dark">sombre</option>
+      </select>
+    </label>
+  );
+}
+
+export function Footer({ theme }: { theme?: React.ReactNode }) {
   return (
     <footer className={styles.footer}>
       <Small>
@@ -34,26 +55,7 @@ export function Footer({
         <Link href="/rss/feed.xml">RSS</Link> -{" "}
         <Link href="https://guillaume.wuips.com">Contact</Link> -{" "}
         <Link href="https://github.com/guillaumewuip/cmd">Github</Link> -{" "}
-        {theme && (
-          <label htmlFor="theme">
-            Theme:
-            <select
-              className={styles.select}
-              name="theme"
-              id="theme"
-              value={theme.current}
-              onChange={(event) => {
-                const newTheme = parseTheme(event.target.value);
-
-                theme.onChange(newTheme);
-              }}
-            >
-              <option value="system">sytème</option>
-              <option value="light">clair</option>
-              <option value="dark">sombre</option>
-            </select>
-          </label>
-        )}
+        {theme && theme}
       </Small>
     </footer>
   );

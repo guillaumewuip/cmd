@@ -46,6 +46,9 @@ importers:
       '@cmd/ui-theme':
         specifier: workspace:*
         version: link:../ui/theme
+      '@vanilla-extract/css':
+        specifier: ^1.11.0
+        version: 1.11.1
       '@vanilla-extract/next-plugin':
         specifier: ^2.1.3
         version: 2.1.3(@types/node@18.15.11)(next@13.4.4)(webpack@5.86.0)
@@ -55,6 +58,9 @@ importers:
       fp-ts:
         specifier: ^2.16.0
         version: 2.16.0
+      jsdom:
+        specifier: ^22.1.0
+        version: 22.1.0
       linkedom:
         specifier: ^0.14.26
         version: 0.14.26
@@ -4482,7 +4488,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 20.2.5
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false

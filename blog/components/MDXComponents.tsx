@@ -10,8 +10,8 @@ import {
   Link,
   Hr,
 } from "@cmd/ui-text";
-import * as Player from "@cmd/ui-player";
 import { EmbedableLink } from "@cmd/domain-player";
+import { TrackPlayer } from "./Player";
 
 export const components = {
   h1: (props: { children: React.ReactNode }) => <H1 {...props} />,
@@ -35,6 +35,6 @@ export const components = {
       );
     }
 
-    return <Player.TrackPlayer embedableLink={parsed.value} />;
+    return <TrackPlayer embedableLink={parsed.value} />;
   },
 };
