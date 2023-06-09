@@ -58,6 +58,9 @@ importers:
       fp-ts:
         specifier: ^2.16.0
         version: 2.16.0
+      jsdom:
+        specifier: ^22.1.0
+        version: 22.1.0
       linkedom:
         specifier: ^0.14.26
         version: 0.14.26
