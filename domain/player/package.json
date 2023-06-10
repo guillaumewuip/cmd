@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@fp51/foldable-helpers": "^1.0.0",
-    "@types/react": "^18.2.9",
+    "@types/react": "^18.2.11",
     "classnames": "^2.3.2",
     "fp-ts": "^2.16.0",
     "fp-ts-local-storage": "^1.0.3",
