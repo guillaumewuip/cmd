@@ -72,7 +72,7 @@ export default async function Page({
           content={<PostContent post={post} components={components} />}
         />
         <Footer />
-        <span className={styles.nothing}>fix</span>
+        <span className={styles.nothing} />
       </Layout.Wrapper>
 
       <Preview />
