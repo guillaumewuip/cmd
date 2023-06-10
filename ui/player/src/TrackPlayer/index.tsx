@@ -8,11 +8,11 @@ import {
   EmbedableLink,
 } from "@cmd/domain-player";
 
-import { PlayerClientWrapper } from "./PlayerClientWrapper";
-
-import { BandcampClient } from "./Bandcamp";
-import { YoutubeClient } from "./Youtube";
-import { SoundcloudClient } from "./Soundcloud";
+import {
+  BandcampClient,
+  YoutubeClient,
+  SoundcloudClient,
+} from "./TrackPlayerClient";
 
 async function Soundcloud({
   embedableLink,
@@ -28,16 +28,11 @@ async function Soundcloud({
   }
 
   return (
-    <PlayerClientWrapper>
-      {(infos) => (
-        <SoundcloudClient
-          embedableLink={embedableLink}
-          soundcloudId={result.right.soundcloudId}
-          thumbnail={result.right.thumbnail}
-          {...infos}
-        />
-      )}
-    </PlayerClientWrapper>
+    <SoundcloudClient
+      embedableLink={embedableLink}
+      soundcloudId={result.right.soundcloudId}
+      thumbnail={result.right.thumbnail}
+    />
   );
 }
 
@@ -55,16 +50,11 @@ async function Bandcamp({
   }
 
   return (
-    <PlayerClientWrapper>
-      {(infos) => (
-        <BandcampClient
-          embedableLink={embedableLink}
-          streamUrl={result.right.streamUrl}
-          thumbnail={result.right.thumbnail}
-          {...infos}
-        />
-      )}
-    </PlayerClientWrapper>
+    <BandcampClient
+      embedableLink={embedableLink}
+      streamUrl={result.right.streamUrl}
+      thumbnail={result.right.thumbnail}
+    />
   );
 }
 
@@ -73,11 +63,7 @@ async function Youtube({
 }: {
   embedableLink: EmbedableLink.Youtube;
 }) {
-  return (
-    <PlayerClientWrapper>
-      {(infos) => <YoutubeClient embedableLink={embedableLink} {...infos} />}
-    </PlayerClientWrapper>
-  );
+  return <YoutubeClient embedableLink={embedableLink} />;
 }
 
 export async function TrackPlayer({
@@ -85,22 +71,15 @@ export async function TrackPlayer({
 }: {
   embedableLink: EmbedableLink.EmbedableLink;
 }) {
-  console.log("track player", { embedableLink });
-
-  // @ts-expect-error toto
-  if (1 === 2) {
-    return pipe(
-      embedableLink,
-      EmbedableLink.fold({
-        // @ts-expect-error server components
-        Youtube: (link) => <Youtube embedableLink={link} />,
-        // @ts-expect-error server components
-        Bandcamp: (link) => <Bandcamp embedableLink={link} />,
-        // @ts-expect-error server components
-        Soundcloud: (link) => <Soundcloud embedableLink={link} />,
-      })
-    );
-  }
-
-  return "track player";
+  return pipe(
+    embedableLink,
+    EmbedableLink.fold({
+      // @ts-expect-error server components
+      Youtube: (link) => <Youtube embedableLink={link} />,
+      // @ts-expect-error server components
+      Bandcamp: (link) => <Bandcamp embedableLink={link} />,
+      // @ts-expect-error server components
+      Soundcloud: (link) => <Soundcloud embedableLink={link} />,
+    })
+  );
 }
