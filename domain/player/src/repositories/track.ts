@@ -458,6 +458,7 @@ export function loadSoundcloud({
         widget.load(newWidgetUrl);
 
         widget.bind(window.SC.Widget.Events.ERROR, (error: unknown) => {
+          // eslint-disable-next-line no-console
           console.error(error);
           aborted(id)();
         });
