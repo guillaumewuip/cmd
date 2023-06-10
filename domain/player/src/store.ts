@@ -1,9 +1,9 @@
 import * as IO from "fp-ts/IO";
 import { pipe } from "fp-ts/function";
 
-import { useStore } from "zustand";
-import { createStore } from "zustand/vanilla";
+import { useStore, createStore } from "zustand";
 
+import { shallow } from "zustand/shallow";
 import * as Tracks from "./entities/Tracks";
 import { readLocalStorageAutoplay } from "./localStorage";
 
@@ -32,4 +32,4 @@ export function usePlayer(
   return useStore(store, selector, equalityFn);
 }
 
-export { default as shallowEqual } from "zustand/shallow";
+export { shallow as shallowEqual };
