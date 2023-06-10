@@ -1,198 +1,85 @@
-import { useLayoutEffect, useEffect, useRef, useState } from "react";
-
-import * as Eq from "fp-ts/Eq";
-import * as Option from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 
+import * as Either from "fp-ts/Either";
+
 import {
-  register,
-  loadBandcamp,
-  loadSoundcloud,
-  loadYoutube,
-  usePlayer,
-  shallowEqual,
-  Tracks,
-  Track,
-  Source,
+  fetchBandcampInfos,
+  fetchSoundcloudInfos,
   EmbedableLink,
 } from "@cmd/domain-player";
 
-import { VisuallyAndAriaHidden } from "../components/Hidden";
+import {
+  BandcampClient,
+  YoutubeClient,
+  SoundcloudClient,
+} from "./TrackPlayerClient";
 
-import Aborted from "./Aborted";
-import TrackBar from "./TrackBar";
-
-import { previousTitle } from "./previousTitle";
-import { position } from "./position";
-
-const eqOptionTrack = pipe(shallowEqual, Eq.fromEquals, Option.getEq);
-
-function Bandcamp({
-  track,
-  selected,
+async function Soundcloud({
+  embedableLink,
 }: {
-  track: Track.NonAborted & { source: Source.Bandcamp };
-  selected: boolean;
+  embedableLink: EmbedableLink.Soundcloud;
 }) {
-  useEffect(() => {
-    if (!Track.isReserved(track)) {
-      return;
-    }
+  const result = await fetchSoundcloudInfos({
+    href: embedableLink.href,
+  })();
 
-    loadBandcamp({
-      track,
-    })();
-  }, [track]);
-
-  return <TrackBar track={track} selected={selected} />;
-}
-
-function Youtube({
-  track,
-  selected,
-}: {
-  track: Track.NonAborted & { source: Source.Youtube };
-  selected: boolean;
-}) {
-  const ref = track.source.container;
-
-  useEffect(() => {
-    if (!Track.isReserved(track)) {
-      return;
-    }
-
-    loadYoutube({
-      track,
-    })();
-  }, [track]);
-
-  return (
-    <>
-      <VisuallyAndAriaHidden>
-        <div ref={ref} tabIndex={-1} />
-      </VisuallyAndAriaHidden>
-
-      <TrackBar track={track} selected={selected} />
-    </>
-  );
-}
-
-function Soundcloud({
-  track,
-  selected,
-}: {
-  track: Track.NonAborted & { source: Source.Soundcloud };
-  selected: boolean;
-}) {
-  const ref = track.source.container;
-
-  useEffect(() => {
-    if (!Track.isReserved(track)) {
-      return;
-    }
-
-    loadSoundcloud({
-      track,
-    })();
-  }, [track]);
-
-  return (
-    <>
-      <VisuallyAndAriaHidden>
-        <div ref={ref} tabIndex={-1} />
-      </VisuallyAndAriaHidden>
-
-      <TrackBar track={track} selected={selected} />
-    </>
-  );
-}
-
-function ClientTrackPlayer({ id }: { id: string }) {
-  const maybeTrack = usePlayer(Tracks.findTrackById(id), eqOptionTrack.equals);
-  const selected = usePlayer(Tracks.isSelected(id));
-
-  if (Option.isNone(maybeTrack)) {
-    return null;
+  if (Either.isLeft(result)) {
+    throw result.left;
   }
 
-  const track = maybeTrack.value;
-
-  return Track.isAborted(track) ? (
-    <Aborted />
-  ) : (
-    pipe(
-      track,
-      Track.foldOnSource({
-        // eslint-disable-next-line react/no-unstable-nested-components
-        Youtube: (localTrack) => (
-          <Youtube track={localTrack} selected={selected} />
-        ),
-        // eslint-disable-next-line react/no-unstable-nested-components
-        Soundcloud: (localTrack) => (
-          <Soundcloud track={localTrack} selected={selected} />
-        ),
-        // eslint-disable-next-line react/no-unstable-nested-components
-        Bandcamp: (localTrack) => (
-          <Bandcamp track={localTrack} selected={selected} />
-        ),
-      })
-    )
+  return (
+    <SoundcloudClient
+      embedableLink={embedableLink}
+      soundcloudId={result.right.soundcloudId}
+      thumbnail={result.right.thumbnail}
+    />
   );
 }
 
-function TrackPlayerAntiCorruptionLayer({
+async function Bandcamp({
   embedableLink,
 }: {
-  embedableLink: EmbedableLink.EmbedableLink;
+  embedableLink: EmbedableLink.Bandcamp;
 }) {
-  const container = useRef(null);
+  const result = await fetchBandcampInfos({
+    href: embedableLink.href,
+  })();
 
-  const [id, setId] = useState<string | null>(null);
+  if (Either.isLeft(result)) {
+    throw result.left;
+  }
 
-  useLayoutEffect(() => {
-    if (!container.current) {
-      throw new Error(`Container is not mounted`);
-    }
-
-    const title = previousTitle(container.current);
-    const weight = position(container.current);
-
-    if (Option.isNone(title)) {
-      throw new Error(`Can't find title for track`);
-    }
-
-    const track = Track.create({
-      title: title.value,
-      embedableLink,
-    });
-
-    register({
-      track,
-      weight,
-    })();
-
-    setId(track.id);
-  }, [container, embedableLink, setId]);
-
-  return <div ref={container}>{id && <ClientTrackPlayer id={id} />}</div>;
+  return (
+    <BandcampClient
+      embedableLink={embedableLink}
+      streamUrl={result.right.streamUrl}
+      thumbnail={result.right.thumbnail}
+    />
+  );
 }
 
-export function TrackPlayer({
+async function Youtube({
+  embedableLink,
+}: {
+  embedableLink: EmbedableLink.Youtube;
+}) {
+  return <YoutubeClient embedableLink={embedableLink} />;
+}
+
+export async function TrackPlayer({
   embedableLink,
 }: {
   embedableLink: EmbedableLink.EmbedableLink;
 }) {
-  const [shouldShowChildren, showChildren] = useState(false);
-
-  useEffect(() => {
-    showChildren(true);
-
-    return () => {
-      showChildren(false);
-    };
-  }, [showChildren]);
-
-  return shouldShowChildren ? (
-    <TrackPlayerAntiCorruptionLayer embedableLink={embedableLink} />
-  ) : null;
+  return pipe(
+    embedableLink,
+    EmbedableLink.fold({
+      // @ts-expect-error server components
+      Youtube: (link) => <Youtube embedableLink={link} />,
+      // @ts-expect-error server components
+      Bandcamp: (link) => <Bandcamp embedableLink={link} />,
+      // @ts-expect-error server components
+      Soundcloud: (link) => <Soundcloud embedableLink={link} />,
+    })
+  );
 }

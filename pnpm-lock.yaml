@@ -148,6 +148,9 @@ importers:
       fp-ts-local-storage:
         specifier: ^1.0.3
         version: 1.0.3(fp-ts@2.16.0)
+      jsdom:
+        specifier: ^22.1.0
+        version: 22.1.0
       lodash.throttle:
         specifier: ^4.1.1
         version: 4.1.1
@@ -170,6 +173,9 @@ importers:
       '@cmd/tsconfig':
         specifier: workspace:*
         version: link:../../dev-tools/tsconfig
+      '@types/jsdom':
+        specifier: ^21.1.1
+        version: 21.1.1
       '@types/lodash.throttle':
         specifier: ^4.1.7
         version: 4.1.7
@@ -1959,7 +1965,7 @@ packages:
   /@types/jsdom@21.1.1:
     resolution: {integrity: sha512-cZFuoVLtzKP3gmq9eNosUL1R50U+USkbLtUQ1bYVgl/lKp0FZM7Cq4aIHAL8oIvQ17uSHi7jXPtfDOdjPwBE7A==}
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 20.2.5
       '@types/tough-cookie': 4.0.2
       parse5: 7.1.2
     dev: true

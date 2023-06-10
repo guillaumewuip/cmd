@@ -1,4 +1,5 @@
 import { getMDXComponent } from "next-contentlayer/hooks";
+import { JSDOM } from "jsdom";
 
 import { Post } from "@cmd/domain-post";
 
@@ -11,7 +12,6 @@ export const excerpt = async (post: Post.Post) => {
   const { default: ReactDOMServer } = await import("react-dom/server");
   const markup = ReactDOMServer.renderToStaticMarkup(<MDXContent />);
 
-  const { JSDOM } = await import("jsdom");
   const { document } = new JSDOM(markup).window;
 
   // take all paragraphs before the first h2

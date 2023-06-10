@@ -1,3 +1,5 @@
+"use client";
+
 import * as Option from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 

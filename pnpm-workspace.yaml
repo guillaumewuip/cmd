@@ -1,5 +1,4 @@
 packages:
-  - 'apis'
   - 'dev-tools/*'
   - 'ui/*'
   - 'domain/*'

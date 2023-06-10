@@ -75,7 +75,7 @@ interface SoundcloudWidget {
   ): void;
   bind(
     event: SoundcloudUIEvent[keyof SoundcloudUIEvent],
-    callback: () => void
+    callback: (...data: unknown[]) => void
   ): void;
   load(url: string): void;
   getDuration(cb: (duration: number) => void): number;
@@ -98,7 +98,8 @@ export type Soundcloud = {
   type: "Soundcloud";
   href: string;
   container: RefObject<HTMLDivElement>;
-  thumbnail: Option.Option<Thumbnail>;
+  soundcloudId: string;
+  thumbnail: Thumbnail;
   widget: Option.Option<SoundcloudWidget>;
 };
 
@@ -106,7 +107,8 @@ export type Bandcamp = {
   type: "Bandcamp";
   href: string;
   audio: HTMLAudioElement;
-  thumbnail: Option.Option<Thumbnail>;
+  streamUrl: string;
+  thumbnail: Thumbnail;
 };
 
 export type Source = Youtube | Soundcloud | Bandcamp;
@@ -138,30 +140,32 @@ export function createYoutube({
   };
 }
 
-export function createSoundcloud({
-  embedableLink,
-}: {
+export function createSoundcloud(props: {
+  soundcloudId: string;
   embedableLink: EmbedableLink.Soundcloud;
+  thumbnail: string;
 }): Soundcloud {
   return {
     type: "Soundcloud",
-    href: embedableLink.href,
+    href: props.embedableLink.href,
     container: createRef(),
-    thumbnail: Option.none,
+    soundcloudId: props.soundcloudId,
+    thumbnail: { url: props.thumbnail },
     widget: Option.none,
   };
 }
 
-export function createBandcamp({
-  embedableLink,
-}: {
+export function createBandcamp(props: {
   embedableLink: EmbedableLink.Bandcamp;
+  streamUrl: string;
+  thumbnail: string;
 }): Bandcamp {
   return {
     type: "Bandcamp",
-    href: embedableLink.href,
+    href: props.embedableLink.href,
     audio: new Audio(),
-    thumbnail: Option.none,
+    streamUrl: props.streamUrl,
+    thumbnail: { url: props.thumbnail },
   };
 }
 
@@ -183,23 +187,13 @@ export function addWidget(widget: SoundcloudWidget) {
   };
 }
 
-export function addThumbnail(localThumbnail: Thumbnail) {
-  return (source: Source & { thumbnail: Option.Option<Thumbnail> }) => {
-    return {
-      ...source,
-      thumbnail: Option.some(localThumbnail),
-    };
-  };
-}
-
-export function thumbnail(source: Source): Option.Option<Thumbnail> {
+export function thumbnail(source: Source): Thumbnail {
   return pipe(
     source,
     fold({
-      Youtube: ({ trackId }) =>
-        Option.some({
-          url: `https://img.youtube.com/vi/${trackId}/hqdefault.jpg`,
-        }),
+      Youtube: ({ trackId }) => ({
+        url: `https://img.youtube.com/vi/${trackId}/hqdefault.jpg`,
+      }),
       Soundcloud: ({ thumbnail: localThumbnail }) => localThumbnail,
       Bandcamp: ({ thumbnail: localThumbnail }) => localThumbnail,
     })

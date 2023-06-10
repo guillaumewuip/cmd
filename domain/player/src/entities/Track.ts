@@ -2,7 +2,6 @@ import * as Option from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 import { createFoldObject } from "@fp51/foldable-helpers";
 
-import * as EmbedableLink from "./EmbedableLink";
 import * as Source from "./Source";
 import * as Position from "./Position";
 
@@ -71,11 +70,11 @@ export function isInteractive(track: Track): track is Interactive {
   return isPlaying(track) || isPaused(track);
 }
 
-export const reserved = (data: {
+export const reserved = <S extends Source.Source>(data: {
   id: string;
   title: string;
-  source: Source.Source;
-}): Reserved => ({
+  source: S;
+}): Reserved & { source: S } => ({
   type: "Reserved",
   id: data.id,
   title: data.title,
@@ -161,24 +160,15 @@ export function foldOnSource<R, T extends Track>(funcs: {
   };
 }
 
-export function create({
+export function create<S extends Source.Source>({
+  id,
   title,
-  embedableLink,
+  source,
 }: {
+  id: string;
   title: string;
-  embedableLink: EmbedableLink.EmbedableLink;
-}): Reserved {
-  const id = EmbedableLink.slugify(embedableLink);
-
-  const source = pipe(
-    embedableLink,
-    EmbedableLink.fold<Source.Source>({
-      Youtube: (link) => Source.createYoutube({ embedableLink: link }),
-      Soundcloud: (link) => Source.createSoundcloud({ embedableLink: link }),
-      Bandcamp: (link) => Source.createBandcamp({ embedableLink: link }),
-    })
-  );
-
+  source: S;
+}): Reserved & { source: S } {
   return reserved({
     id,
     title,
