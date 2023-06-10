@@ -14,6 +14,8 @@ import * as Position from "../entities/Position";
 
 import * as Store from "../store";
 
+import { retry } from "./retry";
+
 function updateTrack(
   trackId: string,
   modifier: (track: Track.Track) => Track.Track
@@ -319,79 +321,89 @@ export function loadYoutube({
   const videoId = source.trackId;
 
   return pipe(
-    TaskEither.tryCatch(
-      () =>
-        new Promise<Source.YoutubePlayer>((resolve, reject) => {
-          try {
-            const container = source.container.current;
+    retry(() =>
+      TaskEither.tryCatch(
+        () =>
+          new Promise<Source.YoutubePlayer>((resolve, reject) => {
+            try {
+              const container = source.container.current;
 
-            if (!container) {
-              throw new Error("Empty Youtube container");
-            }
+              if (!container) {
+                throw new Error("Empty Youtube container");
+              }
 
-            window.YT.ready(() => {
-              const player = new window.YT.Player(container, {
-                height: "390",
-                width: "640",
-                videoId,
-                events: {
-                  onReady: () => {
-                    paused(id)();
+              window.YT.ready(() => {
+                const player = new window.YT.Player(container, {
+                  height: "390",
+                  width: "640",
+                  videoId,
+                  events: {
+                    onReady: () => {
+                      paused(id)();
+                    },
+                    onError: (error: unknown) => {
+                      // eslint-disable-next-line no-console
+                      console.error(error);
+                      aborted(id)();
+                    },
+                    onStateChange: ({ data: event }: { data: unknown }) => {
+                      switch (event) {
+                        case window.YT.PlayerState.BUFFERING:
+                          buffering(id)();
+                          break;
+
+                        case window.YT.PlayerState.ENDED:
+                          ended(id)();
+                          break;
+
+                        case window.YT.PlayerState.PLAYING:
+                          playing(id)();
+                          durationUpdate(player.getDuration())(id)();
+                          break;
+
+                        case window.YT.PlayerState.PAUSED:
+                          paused(id)();
+                          break;
+
+                        default:
+                          break;
+                      }
+                    },
                   },
-                  onError: () => {
-                    aborted(id)();
-                  },
-                  onStateChange: ({ data: event }: { data: unknown }) => {
-                    switch (event) {
-                      case window.YT.PlayerState.BUFFERING:
-                        buffering(id)();
-                        break;
+                });
 
-                      case window.YT.PlayerState.ENDED:
-                        ended(id)();
-                        break;
+                setInterval(() => {
+                  if (
+                    "getPlayerState" in player &&
+                    player.getPlayerState() === window.YT.PlayerState.PLAYING
+                  ) {
+                    const time = player.getCurrentTime();
+                    const duration = player.getDuration();
 
-                      case window.YT.PlayerState.PLAYING:
-                        playing(id)();
-                        durationUpdate(player.getDuration())(id)();
-                        break;
+                    const position = Position.create({
+                      ratio: time / duration,
+                    });
 
-                      case window.YT.PlayerState.PAUSED:
-                        paused(id)();
-                        break;
+                    positionUpdate(() => position)(id)();
+                  }
+                }, 1000);
 
-                      default:
-                        break;
-                    }
-                  },
-                },
+                resolve(player);
               });
-
-              setInterval(() => {
-                if (
-                  "getPlayerState" in player &&
-                  player.getPlayerState() === window.YT.PlayerState.PLAYING
-                ) {
-                  const time = player.getCurrentTime();
-                  const duration = player.getDuration();
-
-                  const position = Position.create({ ratio: time / duration });
-
-                  positionUpdate(() => position)(id)();
-                }
-              }, 1000);
-
-              resolve(player);
-            });
-          } catch (error) {
-            reject(error);
-          }
-        }),
-      Either.toError
+            } catch (error) {
+              reject(error);
+            }
+          }),
+        Either.toError
+      )
     ),
     Task.chainIOK(
       Either.fold(
-        () => updateTrack(id, Track.aborted),
+        (error) => {
+          // eslint-disable-next-line no-console
+          console.error(error);
+          return aborted(id);
+        },
         (player) =>
           updateTrack(id, (localTrack) =>
             pipe(
@@ -419,74 +431,81 @@ export function loadSoundcloud({
   const { id, source } = track;
 
   return pipe(
-    TaskEither.tryCatch(async () => {
-      const src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${source.soundcloudId}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=false&show_reposts=true&show_teaser=true`;
+    retry(() =>
+      TaskEither.tryCatch(async () => {
+        const src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${source.soundcloudId}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=true&show_user=false&show_reposts=true&show_teaser=true`;
 
-      const iframe = document.createElement("iframe");
-      iframe.setAttribute("title", "Embed player");
-      iframe.setAttribute("height", "128");
-      iframe.setAttribute("src", src);
-      iframe.setAttribute("allow", "autoplay");
-      iframe.setAttribute("tabIndex", "-1");
-      iframe.setAttribute("seamless", "true");
-      iframe.setAttribute("src", src);
+        const iframe = document.createElement("iframe");
+        iframe.setAttribute("title", "Embed player");
+        iframe.setAttribute("height", "128");
+        iframe.setAttribute("src", src);
+        iframe.setAttribute("allow", "autoplay");
+        iframe.setAttribute("tabIndex", "-1");
+        iframe.setAttribute("seamless", "true");
+        iframe.setAttribute("src", src);
 
-      const container = source.container.current;
-      if (!container) {
-        throw new Error("Empty Soundcloud container");
-      }
+        const container = source.container.current;
+        if (!container) {
+          throw new Error("Empty Soundcloud container");
+        }
 
-      container.appendChild(iframe);
+        container.appendChild(iframe);
 
-      const widget = new window.SC.Widget(iframe);
+        const widget = new window.SC.Widget(iframe);
 
-      // force reload
-      const newWidgetUrl = `http://api.soundcloud.com/tracks/${source.soundcloudId}`;
-      widget.load(newWidgetUrl);
+        // force reload
+        const newWidgetUrl = `http://api.soundcloud.com/tracks/${source.soundcloudId}`;
+        widget.load(newWidgetUrl);
 
-      widget.bind(window.SC.Widget.Events.ERROR, () => {
-        aborted(id)();
-      });
-      widget.bind(window.SC.Widget.Events.READY, () => {
-        paused(id)();
-      });
+        widget.bind(window.SC.Widget.Events.ERROR, (error: unknown) => {
+          console.error(error);
+          aborted(id)();
+        });
+        widget.bind(window.SC.Widget.Events.READY, () => {
+          paused(id)();
+        });
 
-      widget.bind(window.SC.Widget.Events.LOAD_PROGRESS, () => {
-        buffering(id)();
-      });
+        widget.bind(window.SC.Widget.Events.LOAD_PROGRESS, () => {
+          buffering(id)();
+        });
 
-      widget.bind(window.SC.Widget.Events.PLAY, () => {
-        playing(id)();
-      });
+        widget.bind(window.SC.Widget.Events.PLAY, () => {
+          playing(id)();
+        });
 
-      widget.bind(
-        window.SC.Widget.Events.PLAY_PROGRESS,
-        throttle(({ relativePosition, currentPosition }) => {
-          const duration = currentPosition / 1000 / relativePosition;
-          const newPosition = Position.create({ ratio: relativePosition });
+        widget.bind(
+          window.SC.Widget.Events.PLAY_PROGRESS,
+          throttle(({ relativePosition, currentPosition }) => {
+            const duration = currentPosition / 1000 / relativePosition;
+            const newPosition = Position.create({ ratio: relativePosition });
 
-          positionUpdate(() => newPosition)(id)();
+            positionUpdate(() => newPosition)(id)();
 
-          if (!Number.isNaN(duration)) {
-            // millis to seconds conversion
-            durationUpdate(duration)(id)();
-          }
-        }, 1000)
-      );
+            if (!Number.isNaN(duration)) {
+              // millis to seconds conversion
+              durationUpdate(duration)(id)();
+            }
+          }, 1000)
+        );
 
-      widget.bind(window.SC.Widget.Events.PAUSE, () => {
-        paused(id)();
-      });
+        widget.bind(window.SC.Widget.Events.PAUSE, () => {
+          paused(id)();
+        });
 
-      widget.bind(window.SC.Widget.Events.FINISH, () => {
-        ended(id)();
-      });
+        widget.bind(window.SC.Widget.Events.FINISH, () => {
+          ended(id)();
+        });
 
-      return { widget };
-    }, Either.toError),
+        return { widget };
+      }, Either.toError)
+    ),
     Task.chainIOK(
       Either.fold(
-        () => updateTrack(id, Track.aborted),
+        (error) => {
+          // eslint-disable-next-line no-console
+          console.error(error);
+          return aborted(id);
+        },
         ({ widget }) =>
           updateTrack(id, (localTrack) =>
             pipe(
@@ -515,52 +534,62 @@ export function loadBandcamp({
   const { audio, streamUrl } = source;
 
   return pipe(
-    TaskEither.tryCatch(async () => {
-      audio.src = streamUrl;
+    retry(() =>
+      TaskEither.tryCatch(async () => {
+        audio.src = streamUrl;
 
-      audio.addEventListener("abort", () => {
-        aborted(id)();
-      });
-      audio.addEventListener("error", () => {
-        aborted(id)();
-      });
+        audio.addEventListener("abort", (error: unknown) => {
+          // eslint-disable-next-line no-console
+          console.error(error);
+          aborted(id)();
+        });
+        audio.addEventListener("error", (error: unknown) => {
+          // eslint-disable-next-line no-console
+          console.error(error);
+          aborted(id)();
+        });
 
-      audio.addEventListener("loadeddata", () => {
-        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/readyState
-        if (audio.readyState >= 2) {
+        audio.addEventListener("loadeddata", () => {
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/readyState
+          if (audio.readyState >= 2) {
+            paused(id)();
+          }
+        });
+
+        audio.addEventListener("waiting", () => {
+          buffering(id)();
+        });
+
+        audio.addEventListener("play", () => {
+          playing(id)();
+        });
+        audio.addEventListener("playing", () => {
+          playing(id)();
+          durationUpdate(audio.duration)(id)();
+        });
+
+        audio.addEventListener("timeupdate", () =>
+          positionUpdate(() =>
+            Position.create({ ratio: audio.currentTime / audio.duration })
+          )(id)()
+        );
+
+        audio.addEventListener("pause", () => {
           paused(id)();
-        }
-      });
+        });
 
-      audio.addEventListener("waiting", () => {
-        buffering(id)();
-      });
-
-      audio.addEventListener("play", () => {
-        playing(id)();
-      });
-      audio.addEventListener("playing", () => {
-        playing(id)();
-        durationUpdate(audio.duration)(id)();
-      });
-
-      audio.addEventListener("timeupdate", () =>
-        positionUpdate(() =>
-          Position.create({ ratio: audio.currentTime / audio.duration })
-        )(id)()
-      );
-
-      audio.addEventListener("pause", () => {
-        paused(id)();
-      });
-
-      audio.addEventListener("ended", () => {
-        ended(id)();
-      });
-    }, Either.toError),
+        audio.addEventListener("ended", () => {
+          ended(id)();
+        });
+      }, Either.toError)
+    ),
     Task.chainIOK(
       Either.fold(
-        () => updateTrack(id, Track.aborted),
+        (error) => {
+          // eslint-disable-next-line no-console
+          console.error(error);
+          return aborted(id);
+        },
         () => updateTrack(id, Track.initialized)
       )
     )

@@ -58,6 +58,7 @@ export default function TrackBar({ id }: { id: string }) {
   const track = maybeTrack.value;
 
   if (Track.isAborted(track)) {
+    console.log("Aborted", { track });
     return <Aborted />;
   }
 

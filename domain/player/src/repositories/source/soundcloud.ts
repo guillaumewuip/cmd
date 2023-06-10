@@ -1,7 +1,7 @@
 import * as Either from "fp-ts/Either";
 import * as TaskEither from "fp-ts/TaskEither";
 
-import { retry } from "./retry";
+import { retry } from "../retry";
 
 async function fetchPage(url: string): Promise<Document> {
   const response = await fetch(url);

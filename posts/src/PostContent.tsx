@@ -27,7 +27,6 @@ export async function PostContent({
     player: (props: any) => JSX.Element;
   };
 }) {
-  console.log("PostContent");
   const MDXContent = getMDXComponent(post.content);
 
   return <MDXContent components={components} />;

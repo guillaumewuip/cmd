@@ -35,8 +35,6 @@ export const components = {
       );
     }
 
-    console.log("player", { parsed });
-
     return <TrackPlayer key={parsed.value.href} embedableLink={parsed.value} />;
   },
 };

@@ -75,7 +75,7 @@ interface SoundcloudWidget {
   ): void;
   bind(
     event: SoundcloudUIEvent[keyof SoundcloudUIEvent],
-    callback: () => void
+    callback: (...data: unknown[]) => void
   ): void;
   load(url: string): void;
   getDuration(cb: (duration: number) => void): number;
