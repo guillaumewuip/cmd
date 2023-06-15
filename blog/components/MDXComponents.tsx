@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import * as Option from "fp-ts/Option";
 
 import {
@@ -35,6 +36,11 @@ export const components = {
       );
     }
 
-    return <TrackPlayer key={parsed.value.href} embedableLink={parsed.value} />;
+    // TODO fallback
+    return (
+      <Suspense fallback={null}>
+        <TrackPlayer key={parsed.value.href} embedableLink={parsed.value} />
+      </Suspense>
+    );
   },
 };
