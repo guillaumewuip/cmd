@@ -16,7 +16,7 @@
     "@cmd/tsconfig": "workspace:*",
     "@types/react": "^18.2.11",
     "react": "^18.2.0",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.5"
   },
   "dependencies": {
     "@cmd/ui-theme": "workspace:*",
