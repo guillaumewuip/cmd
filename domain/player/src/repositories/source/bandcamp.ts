@@ -4,10 +4,7 @@ import * as TaskEither from "fp-ts/TaskEither";
 import { retry } from "../retry";
 
 async function fetchPage(url: string): Promise<Document> {
-  const response = await fetch(url, {
-    // @ts-expect-error next fetch cache
-    next: { revalidate: 60 },
-  });
+  const response = await fetch(url);
   const markup = await response.text();
 
   const { JSDOM } = await import("jsdom");

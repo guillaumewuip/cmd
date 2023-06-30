@@ -52,4 +52,4 @@ export default function RootLayout({
   );
 }
 
-export const revalidate = 43200; // 12h - needed for bandcamp stream url that have a lifetime limit
+export const revalidate = 60; // 1m - needed for bandcamp stream url that have a lifetime limit
