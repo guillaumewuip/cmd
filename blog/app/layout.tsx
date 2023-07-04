@@ -1,5 +1,6 @@
 import { Rubik } from "next/font/google";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -51,6 +52,7 @@ export default function RootLayout({
           data-goatcounter="https://cmd-wuips.goatcounter.com/count"
           src="//gc.zgo.at/count.js"
         />
+        <Analytics />
       </body>
     </html>
   );

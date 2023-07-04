@@ -23,6 +23,7 @@
     "@cmd/ui-theme": "workspace:*",
     "@vanilla-extract/css": "^1.11.0",
     "@vanilla-extract/next-plugin": "^2.1.3",
+    "@vercel/analytics": "^1.0.1",
     "date-fns": "^2.30.0",
     "fp-ts": "^2.16.0",
     "jsdom": "^22.1.0",
