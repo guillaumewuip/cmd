@@ -47,6 +47,10 @@ export default function RootLayout({
         <ThemeProvider>{children}</ThemeProvider>
         <Script src="https://www.youtube.com/iframe_api" />
         <Script src="https://w.soundcloud.com/player/api.js" />
+        <Script
+          data-goatcounter="https://cmd-wuips.goatcounter.com/count"
+          src="//gc.zgo.at/count.js"
+        />
       </body>
     </html>
   );
