@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -65,8 +69,8 @@ importers:
         specifier: ^22.1.0
         version: 22.1.0
       linkedom:
-        specifier: ^0.14.26
-        version: 0.14.26
+        specifier: ^0.15.0
+        version: 0.15.0
       next:
         specifier: ^13.4.7
         version: 13.4.7(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
@@ -4669,8 +4673,8 @@ packages:
       type-check: 0.4.0
     dev: false
 
-  /linkedom@0.14.26:
-    resolution: {integrity: sha512-mK6TrydfFA7phrnp+1j57ycBwFI5bGSW6YXlw9acHoqF+mP/y+FooEYYyniOt5Ot57FSKB3iwmnuQ1UUyNLm5A==}
+  /linkedom@0.15.0:
+    resolution: {integrity: sha512-GV8tczICn5VvUjArfA/ZGfres4MBtsKa7DnuHLNbFtZfyYE7DhgQeRqJek+rgoYD5WJakFBVCGqEhyKXztq7aA==}
     dependencies:
       css-select: 5.1.0
       cssom: 0.5.0
