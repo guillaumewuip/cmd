@@ -10,7 +10,7 @@ import * as BlogMetadata from "../metadata";
 import { ThemeProvider } from "../components/ThemeProvider";
 
 const azeretMono = Azeret_Mono({
-  weight: ["700", "900"],
+  weight: ["500", "700", "900"],
   subsets: ["latin"],
   variable: "--font-Azeret_Mono",
 });

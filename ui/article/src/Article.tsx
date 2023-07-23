@@ -8,15 +8,9 @@ import { format, parseISO } from "date-fns";
 
 import * as styles from "./Article.css";
 
-function Wrapper({ children }: { children: React.ReactNode }) {
-  return <article className={styles.article}>{children}</article>;
-}
+export function Image({ post }: { post: Post.Post }) {
+  const { image } = post;
 
-function Column({ children }: { children: React.ReactNode }) {
-  return <div className={styles.left}>{children}</div>;
-}
-
-function Image({ image }: { image: Post.Image }) {
   return (
     <div className={styles.imageSection}>
       <div className={styles.imageContainer}>
@@ -38,15 +32,7 @@ function Image({ image }: { image: Post.Image }) {
   );
 }
 
-function Content({ children }: { children: React.ReactNode }) {
-  return <div className={styles.right}>{children}</div>;
-}
-
-function Title({ children }: { children: React.ReactNode }) {
-  return <div className={styles.title}>{children}</div>;
-}
-
-export function Article({
+export function Text({
   post,
   content,
 }: {
@@ -56,22 +42,14 @@ export function Article({
   const publicationDate = format(parseISO(post.publishedAt), "dd/MM/yyyy");
 
   return (
-    <Wrapper>
-      <Title>
-        <H1>{post.title}</H1>
-      </Title>
+    <div className={styles.text}>
+      <H1>{post.title}</H1>
 
-      <Column>
-        <Image image={post.image} />
-      </Column>
+      {content}
 
-      <Content>
-        {content}
-
-        <div className={styles.metadata}>
-          <Small>Publié le {publicationDate}</Small>
-        </div>
-      </Content>
-    </Wrapper>
+      <div className={styles.metadata}>
+        <Small>Publié le {publicationDate}</Small>
+      </div>
+    </div>
   );
 }

@@ -11,4 +11,4 @@ export const headingLight = "var(--font-Schibsted_Grotesk)";
 
 export const text = "var(--font-Schibsted_Grotesk)";
 
-export const defaultFontSize = "16px";
+export const defaultFontSize = "20px";

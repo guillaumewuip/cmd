@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { vars, mediaQueries } from "@cmd/ui-theme";
 
-export const barHeight = "7rem";
+export const barHeight = "9rem";
 
 const bar = style({
   display: "grid",
@@ -30,7 +30,7 @@ export const notSelectedBar = style([
     marginTop: vars.sizes.s,
     marginBottom: vars.sizes.xl,
     gridTemplateRows: "1fr 2fr 2fr 1fr",
-    gridTemplateColumns: `minmax(${barHeight}, 3.6fr) minmax(${barHeight}, 1fr) 7fr minmax(${barHeight}, 1fr)`,
+    gridTemplateColumns: `${barHeight} minmax(${barHeight}, 1fr) 7fr minmax(${barHeight}, 1fr)`,
     gridTemplateAreas: `
       "thumbnail command top source"
       "thumbnail command title source"

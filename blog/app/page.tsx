@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import type { Metadata } from "next";
 
@@ -6,7 +5,7 @@ import { posts, lastPost, PostContent } from "@cmd/posts";
 
 import { Article, Mosaic } from "@cmd/ui-article";
 import Layout from "@cmd/ui-layout";
-import { Paragraph, Code, H2, Link, Hr } from "@cmd/ui-text";
+import { ColumnHeader } from "@cmd/ui-text";
 import { generateFeeds } from "@cmd/domain-rss";
 
 import { Preview } from "@cmd/ui-player";
@@ -49,31 +48,32 @@ export default async function Home() {
           <Header />
         </Layout.Header>
 
-        <Layout.Content>
-          <Layout.Content.Main>
-            <Article
-              post={lastPost}
-              content={<PostContent post={lastPost} components={components} />}
-            />
-          </Layout.Content.Main>
+        <Layout.Illustration.Header>
+          <ColumnHeader>la photo</ColumnHeader>
+        </Layout.Illustration.Header>
+        <Layout.Illustration.Content>
+          <Article.Image post={lastPost} />
+        </Layout.Illustration.Content>
 
-          <Layout.Content.Nav>
-            <H2>
-              Toutes les <Code>cmd</Code> passées listées bien comme il faut ici
-              même :
-            </H2>
+        <Layout.Main.Header>
+          <ColumnHeader>le cmd</ColumnHeader>
+        </Layout.Main.Header>
+        <Layout.Main.Content>
+          <Article.Text
+            post={lastPost}
+            content={<PostContent post={lastPost} components={components} />}
+          />
+          <Footer />
+        </Layout.Main.Content>
 
-            <Mosaic posts={cmds} />
-          </Layout.Content.Nav>
-
-          <Layout.Content.Footer>
-            <Footer />
-          </Layout.Content.Footer>
-        </Layout.Content>
+        <Layout.Nav>
+          <Mosaic posts={cmds} />
+        </Layout.Nav>
 
         <Layout.Player>
           <Preview />
         </Layout.Player>
+
         <span className={styles.fix} />
       </>
     </Layout>

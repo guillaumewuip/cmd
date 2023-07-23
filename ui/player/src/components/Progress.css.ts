@@ -30,10 +30,10 @@ export const svg = style({
 
 export const backgroundLine = style({
   stroke: vars.colors.dimmedSeparator,
-  strokeWidth: 3,
+  strokeWidth: 6,
 });
 
 export const activeLine = style({
-  stroke: vars.colors.separator,
-  strokeWidth: 5,
+  stroke: vars.colors.accent,
+  strokeWidth: 6,
 });

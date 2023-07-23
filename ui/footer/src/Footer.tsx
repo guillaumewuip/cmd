@@ -49,12 +49,14 @@ export function ThemeSelection({
 
 export function Footer({ theme }: { theme?: React.ReactNode }) {
   return (
-    <Small>
-      <Link href="/">cerfeuil et musique douce</Link> -{" "}
-      <Link href="/rss/feed.xml">RSS</Link> -{" "}
-      <Link href="https://guillaume.wuips.com">Contact</Link> -{" "}
-      <Link href="https://github.com/guillaumewuip/cmd">Github</Link> -{" "}
-      {theme && theme}
-    </Small>
+    <footer className={styles.footer}>
+      <Small>
+        <Link href="/">cerfeuil et musique douce</Link> -{" "}
+        <Link href="/rss/feed.xml">RSS</Link> -{" "}
+        <Link href="https://guillaume.wuips.com">Contact</Link> -{" "}
+        <Link href="https://github.com/guillaumewuip/cmd">Github</Link> -{" "}
+        {theme && theme}
+      </Small>
+    </footer>
   );
 }

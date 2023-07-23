@@ -2,7 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { vars, mediaQueries } from "@cmd/ui-theme";
 
 export const preview = style({
-  height: "14rem", // TODO theme
   display: "grid",
   gridTemplateRows: `auto ${vars.sizes.s}`,
   gridTemplateColumns: "100%",
@@ -10,6 +9,7 @@ export const preview = style({
     "content"
     "progress"
   `,
+  height: "100%",
 });
 
 export const content = style({
@@ -137,4 +137,5 @@ export const progress = style({
   gridArea: "progress",
   alignSelf: "stretch",
   justifySelf: "stretch",
+  backgroundColor: vars.colors.background,
 });

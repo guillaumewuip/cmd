@@ -11,7 +11,7 @@ export const grid = style({
 
   "@media": {
     ...mediaQueries.forDesktopOnly({
-      gridTemplateColumns: "repeat(5, 1fr)",
+      gridTemplateColumns: "repeat(4, 1fr)",
     }),
   },
 });

@@ -6,32 +6,31 @@ export default function Page({ children }: PropsWithChildren) {
 }
 
 Page.Header = function Header({ children }: PropsWithChildren) {
-  return (
-    <header className={styles.header}>
-      <div className={styles.headerContent}>{children}</div>
-    </header>
-  );
+  return <header className={styles.header}>{children}</header>;
 };
 
 Page.Player = function Player({ children }: PropsWithChildren) {
   return <div className={styles.player}>{children}</div>;
 };
 
-// export needed here for TS
-export function Content({ children }: PropsWithChildren) {
-  return <div className={styles.content}>{children}</div>;
-}
-
-Content.Main = function Main({ children }: PropsWithChildren) {
-  return <main className={styles.main}>{children}</main>;
+Page.Illustration = {
+  Header: function Illustration({ children }: PropsWithChildren) {
+    return <div className={styles.illustrationHeader}>{children}</div>;
+  },
+  Content: function Illustration({ children }: PropsWithChildren) {
+    return <div className={styles.illustration}>{children}</div>;
+  },
 };
 
-Content.Nav = function Nav({ children }: PropsWithChildren) {
+Page.Main = {
+  Header: function Main({ children }: PropsWithChildren) {
+    return <div className={styles.mainHeader}>{children}</div>;
+  },
+  Content: function Main({ children }: PropsWithChildren) {
+    return <main className={styles.main}>{children}</main>;
+  },
+};
+
+Page.Nav = function Nav({ children }: PropsWithChildren) {
   return <nav className={styles.nav}>{children}</nav>;
 };
-
-Content.Footer = function Footer({ children }: PropsWithChildren) {
-  return <footer className={styles.footer}>{children}</footer>;
-};
-
-Page.Content = Content;

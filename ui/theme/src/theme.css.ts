@@ -90,7 +90,7 @@ export const vars: MapLeafNodes<Vars, CSSVarFunction> =
     sizes,
     colors: lightColors,
     fonts,
-    border: `${sizes.xs} solid ${colors.dark}`,
+    border: `${sizes.s} solid ${colors.dark}`,
   });
 
 export const lightThemeClass = createTheme(vars, {
@@ -98,7 +98,7 @@ export const lightThemeClass = createTheme(vars, {
   sizes,
   colors: lightColors,
   fonts,
-  border: `${sizes.xs} solid ${colors.dark}`,
+  border: `${sizes.s} solid ${colors.dark}`,
 });
 
 export const darkThemeClass = createTheme(vars, {
@@ -106,5 +106,5 @@ export const darkThemeClass = createTheme(vars, {
   sizes,
   colors: darkColors,
   fonts,
-  border: `${sizes.xs} solid ${colors.white}`,
+  border: `${sizes.s} solid ${colors.white}`,
 });

@@ -2,28 +2,25 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "@cmd/ui-theme";
 
 export const page = style({
-  display: "grid",
-  gridTemplateColumns: `fit-content(50%) auto`,
-  gridTemplateRows: `auto fit-content(50%) `,
-  gridTemplateAreas: `
-    "header content"
-    "header player"
-  `,
-  background: vars.colors.background,
   height: "100vh",
-  overflow: "hidden",
+  width: "100vw",
+
+  display: "grid",
+  gridTemplateColumns: `10rem min-content auto minmax(15%, 25%)`, // TODO theme
+  gridTemplateRows: `10rem auto 10rem`, // TODO theme
+  gridTemplateAreas: `
+    "header illustrationHeader mainHeader nav"
+    "header illustration main nav"
+    "header player player player"
+  `,
+
+  background: vars.colors.background,
+  border: vars.border,
 });
 
 export const header = style({
   gridArea: "header",
-  alignSelf: "stretch",
   borderRight: vars.border,
-});
-
-export const headerContent = style({
-  transform: "rotate(-180deg)",
-  writingMode: "vertical-rl",
-  height: "100%",
 });
 
 export const player = style({
@@ -31,30 +28,37 @@ export const player = style({
   borderTop: vars.border,
 });
 
-export const content = style({
-  gridArea: "content",
-
+export const illustrationHeader = style({
+  gridArea: "illustrationHeader",
+  borderRight: vars.border,
+  borderBottom: vars.border,
   display: "grid",
-  gridTemplateColumns: `auto 25%`,
-  gridTemplateRows: `auto fit-content(80%)`,
-  gridTemplateAreas: `
-    "main nav"
-    "footer footer"
-  `,
-  overflowY: "scroll",
+  alignItems: "center",
+});
+
+export const illustration = style({
+  gridArea: "illustration",
+  padding: vars.sizes.l,
+  borderRight: vars.border,
+});
+
+export const mainHeader = style({
+  gridArea: "mainHeader",
+  borderRight: vars.border,
+  borderBottom: vars.border,
+  display: "grid",
+  alignItems: "center",
 });
 
 export const main = style({
   gridArea: "main",
+  overflowY: "scroll",
+  padding: vars.sizes.l,
+  borderRight: vars.border,
 });
 
 export const nav = style({
   gridArea: "nav",
-});
-
-export const footer = style({
-  gridArea: "footer",
-  marginTop: vars.sizes.m,
-  marginBottom: "6rem",
-  textAlign: "center",
+  overflowY: "scroll",
+  padding: vars.sizes.l,
 });

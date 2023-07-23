@@ -4,19 +4,16 @@ import * as styles from "./Text.css";
 
 export function Paragraph({
   children,
-  centered = false,
   inverted = false,
   noMargin = false,
 }: {
   children: React.ReactNode;
-  centered?: boolean;
   inverted?: boolean;
   noMargin?: boolean;
 }) {
   return (
     <p
       className={classnames(styles.paragraph, {
-        [styles.centered]: centered,
         [styles.inverted]: inverted,
         [styles.noMargin]: noMargin,
       })}
@@ -74,4 +71,8 @@ export function Blockquote({ children }: { children: React.ReactNode }) {
 
 export function Monospace({ children }: { children: React.ReactNode }) {
   return <span className={styles.monospace}>{children}</span>;
+}
+
+export function ColumnHeader({ children }: { children: React.ReactNode }) {
+  return <h2 className={classnames(styles.columnHeader)}>{children}</h2>;
 }
