@@ -2,7 +2,7 @@ import { style, globalStyle } from "@vanilla-extract/css";
 import { vars } from "@cmd/ui-theme";
 
 export const paragraph = style({
-  fontFamily: vars.fonts.rubik,
+  fontFamily: vars.fonts.headingLight,
   fontWeight: 400,
   fontSize: "1rem",
   lineHeight: "1.5rem",
@@ -11,7 +11,7 @@ export const paragraph = style({
 });
 
 export const small = style({
-  fontFamily: vars.fonts.rubik,
+  fontFamily: vars.fonts.text,
   fontWeight: 400,
   fontSize: "0.8rem",
   lineHeight: "1rem",
@@ -44,8 +44,8 @@ export const a = style({
 });
 
 export const h1 = style({
-  fontFamily: vars.fonts.rubik,
-  fontWeight: 600,
+  fontFamily: vars.fonts.heading,
+  fontWeight: 700,
   fontSize: "2.2rem",
   lineHeight: "2.4rem",
   marginTop: vars.sizes.m,
@@ -54,8 +54,8 @@ export const h1 = style({
 });
 
 export const h2 = style({
-  fontFamily: vars.fonts.rubik,
-  fontWeight: 600,
+  fontFamily: vars.fonts.headingLight,
+  fontWeight: 700,
   fontSize: "1.3rem",
   lineHeight: "1.5rem",
   marginTop: vars.sizes.l,
@@ -64,7 +64,7 @@ export const h2 = style({
 });
 
 export const h3 = style({
-  fontFamily: vars.fonts.rubik,
+  fontFamily: vars.fonts.headingLight,
   fontWeight: 400,
   fontSize: "1rem",
   lineHeight: "1.1rem",

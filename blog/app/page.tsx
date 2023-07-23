@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { posts, lastPost, PostContent } from "@cmd/posts";
 
 import { Article, Mosaic } from "@cmd/ui-article";
-import * as Layout from "@cmd/ui-layout";
+import Layout from "@cmd/ui-layout";
 import { Paragraph, Code, H2, Link, Hr } from "@cmd/ui-text";
 import { generateFeeds } from "@cmd/domain-rss";
 
@@ -43,63 +43,39 @@ export default async function Home() {
   }));
 
   return (
-    <Layout.Page>
-      <Layout.Wrapper>
-        <Layout.SmallSection>
+    <Layout>
+      <>
+        <Layout.Header>
           <Header />
-          <Paragraph>
-            Hello ! Et bienvenue sur cerfeuil et musique douce a.k.a.{" "}
-            <Code>cmd</Code> pour les intimes. Ici je partage régulièrement la
-            bonne musique que je découvre au quotidien sur les internets et
-            ailleurs (et oui, parfois en vrai avec de vrais gens et de vrais
-            sons, c'est incroyable).
-          </Paragraph>
+        </Layout.Header>
 
-          <Paragraph>
-            On y trouve principalement de l'électro, de l'ambient, de la techno,
-            de l'experimental mais aussi du funk, de la synth-pop, de la disco,
-            du rock, etc. Bref, un peu toute musique chouette dénichée à droite
-            à gauche. À déguster avec une bonne part de{" "}
-            <Link href="https://www.instagram.com/mmpsev/">
-              tarte au cerfeuil
-            </Link>{" "}
-            (d'où le nom).
-          </Paragraph>
+        <Layout.Content>
+          <Layout.Content.Main>
+            <Article
+              post={lastPost}
+              content={<PostContent post={lastPost} components={components} />}
+            />
+          </Layout.Content.Main>
 
-          <Paragraph>
-            Sans plus attendre, la dernière <Code>cmd</Code>, vous m'en direz
-            des nouvelles :
-          </Paragraph>
-        </Layout.SmallSection>
+          <Layout.Content.Nav>
+            <H2>
+              Toutes les <Code>cmd</Code> passées listées bien comme il faut ici
+              même :
+            </H2>
 
-        <Article
-          post={lastPost}
-          content={<PostContent post={lastPost} components={components} />}
-        />
+            <Mosaic posts={cmds} />
+          </Layout.Content.Nav>
 
-        <Layout.SmallSection>
-          <H2>
-            Toutes les <Code>cmd</Code> passées listées bien comme il faut ici
-            même :
-          </H2>
+          <Layout.Content.Footer>
+            <Footer />
+          </Layout.Content.Footer>
+        </Layout.Content>
 
-          <Mosaic posts={cmds} />
-
-          <Hr />
-
-          <Paragraph>
-            Voilà, c'est tout pour aujourd'hui, merci d'être passé !
-            <br />
-            <br />
-            Guillaume
-          </Paragraph>
-        </Layout.SmallSection>
-
-        <Footer />
+        <Layout.Player>
+          <Preview />
+        </Layout.Player>
         <span className={styles.fix} />
-      </Layout.Wrapper>
-
-      <Preview />
-    </Layout.Page>
+      </>
+    </Layout>
   );
 }

@@ -33,6 +33,7 @@ export type Vars = {
     playerSourceFilterHover: string;
   };
   fonts: typeof fonts;
+  border: string;
 };
 
 const lightColors: Vars["colors"] = {
@@ -89,6 +90,7 @@ export const vars: MapLeafNodes<Vars, CSSVarFunction> =
     sizes,
     colors: lightColors,
     fonts,
+    border: `${sizes.xs} solid ${colors.dark}`,
   });
 
 export const lightThemeClass = createTheme(vars, {
@@ -96,6 +98,7 @@ export const lightThemeClass = createTheme(vars, {
   sizes,
   colors: lightColors,
   fonts,
+  border: `${sizes.xs} solid ${colors.dark}`,
 });
 
 export const darkThemeClass = createTheme(vars, {
@@ -103,4 +106,5 @@ export const darkThemeClass = createTheme(vars, {
   sizes,
   colors: darkColors,
   fonts,
+  border: `${sizes.xs} solid ${colors.white}`,
 });

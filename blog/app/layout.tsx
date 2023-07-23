@@ -1,4 +1,5 @@
-import { Rubik } from "next/font/google";
+// eslint-disable-next-line camelcase
+import { Schibsted_Grotesk, Azeret_Mono } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -8,11 +9,17 @@ import * as BlogMetadata from "../metadata";
 
 import { ThemeProvider } from "../components/ThemeProvider";
 
-const rubik = Rubik({
-  weight: ["400", "600", "700"],
-  style: ["normal", "italic"],
+const azeretMono = Azeret_Mono({
+  weight: ["700", "900"],
   subsets: ["latin"],
-  display: "swap",
+  variable: "--font-Azeret_Mono",
+});
+
+const schibstedGrotesk = Schibsted_Grotesk({
+  weight: ["400", "700"],
+  style: ["italic", "normal"],
+  subsets: ["latin"],
+  variable: "--font-Schibsted_Grotesk",
 });
 
 export const metadata = {
@@ -43,7 +50,11 @@ export default function RootLayout({
 }) {
   // suppressHydrationWarning needed for https://github.com/pacocoursey/next-themes/blob/a385b8d865bbb317ff73a5b6c1319ae566f7d6f1/README.md?plain=1#L108
   return (
-    <html lang="fr" className={rubik.className} suppressHydrationWarning>
+    <html
+      lang="fr"
+      className={`${azeretMono.variable} ${schibstedGrotesk.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
         <Script src="https://www.youtube.com/iframe_api" />

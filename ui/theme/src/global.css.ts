@@ -3,6 +3,7 @@ import { defaultFontSize } from "./values/fonts";
 
 globalStyle("html", {
   fontSize: defaultFontSize,
+  overflow: "hidden",
 });
 
 globalStyle("*", {

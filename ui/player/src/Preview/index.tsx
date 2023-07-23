@@ -68,11 +68,6 @@ function Player({
           )}
         </div>
       </div>
-      {Track.isInitialized(track) && (
-        <div className={styles.progress}>
-          <Progress track={track} />
-        </div>
-      )}
     </div>
   );
 }
@@ -110,9 +105,7 @@ export function Preview() {
   const prevTrack = pipe(tracks, Tracks.prevTrack);
 
   return (
-    <div
-      className={`${styles.preview} ${!tracks.alreadyPlayed && styles.hidden}`}
-    >
+    <div className={`${styles.preview}`}>
       <div className={styles.thumbnail}>
         <Thumbnail source={selectedTrack.source} />
       </div>
@@ -130,6 +123,12 @@ export function Preview() {
       )}
 
       <AutoPlay autoplayEnabled={autoplayEnabled} />
+
+      {Track.isInitialized(selectedTrack) && (
+        <div className={styles.progress}>
+          <Progress track={selectedTrack} />
+        </div>
+      )}
     </div>
   );
 }

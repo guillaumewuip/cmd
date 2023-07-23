@@ -2,22 +2,18 @@ import { style } from "@vanilla-extract/css";
 import { vars, mediaQueries } from "@cmd/ui-theme";
 
 export const preview = style({
-  position: "fixed",
-  bottom: 0,
-  left: 0,
-  width: "100%",
-  height: "6rem",
-  padding: "0 2rem",
-  boxShadow: vars.colors.playerShadow,
+  height: "14rem", // TODO theme
+  padding: `${vars.sizes.s}`,
   display: "grid",
-  gridTemplateRows: "100%",
+  gridTemplateRows: "auto auto fit-content(50%)",
   gridTemplateColumns:
     "min-content minmax(8rem, 20rem) auto minmax(8rem, 20rem)",
   gridTemplateAreas: `
-    "thumbnail title player options"
+    "thumbnail title none options"
+    "thumbnail player none options"
+    "progress progress progres"
   `,
   gridColumnGap: vars.sizes.s,
-  transition: "bottom 0.6s ease-out",
   backgroundColor: vars.colors.background,
 
   "@media": {
@@ -34,16 +30,11 @@ export const preview = style({
   },
 });
 
-export const hidden = style({
-  bottom: "-500px",
-});
-
 export const thumbnail = style({
   gridArea: "thumbnail",
   alignSelf: "stretch",
   justifySelf: "center",
   aspectRatio: "1 / 1",
-  padding: vars.sizes.xs,
 
   "@media": {
     ...mediaQueries.forPhoneOnly({
@@ -120,18 +111,6 @@ export const commandNext = style({
   alignSelf: "center",
 });
 
-export const progress = style({
-  gridArea: "bottom",
-  alignSelf: "start",
-  justifySelf: "stretch",
-
-  "@media": {
-    ...mediaQueries.forPhoneOnly({
-      display: "none",
-    }),
-  },
-});
-
 export const aborted = style({
   gridArea: "player",
   alignSelf: "center",
@@ -165,4 +144,10 @@ export const autoPlayLabel = style({
 
 export const autoPlayButton = style({
   gridArea: "button",
+});
+
+export const progress = style({
+  gridArea: "progress",
+  alignSelf: "stretch",
+  justifySelf: "stretch",
 });
