@@ -5,25 +5,19 @@ import { VisuallyHidden } from "./Hidden";
 
 import * as styles from "./Button.css";
 
-type Size = "large" | "medium" | "small";
+// type Size = "large" | "medium" | "small";
 
 export function Play({
   trackName,
-  size = "large",
   onClick,
 }: {
   trackName: string;
-  size?: Size;
   onClick: () => void;
 }) {
   return (
     <button
       type="button"
-      className={classnames(styles.commandButton, {
-        [styles.large]: size === "large",
-        [styles.medium]: size === "medium",
-        [styles.small]: size === "small",
-      })}
+      className={classnames(styles.commandButton, styles.large)}
       onClick={onClick}
     >
       <VisuallyHidden>Lancer la lecture de {trackName}</VisuallyHidden>
@@ -40,21 +34,15 @@ export function Play({
 
 export function Pause({
   trackName,
-  size = "large",
   onClick,
 }: {
   trackName: string;
-  size?: Size;
   onClick: () => void;
 }) {
   return (
     <button
       type="button"
-      className={classnames(styles.commandButton, {
-        [styles.large]: size === "large",
-        [styles.medium]: size === "medium",
-        [styles.small]: size === "small",
-      })}
+      className={classnames(styles.commandButton, styles.large)}
       onClick={onClick}
     >
       <VisuallyHidden>Suspendre la lecture de {trackName}</VisuallyHidden>
@@ -92,7 +80,7 @@ export function Next({
   return (
     <button
       type="button"
-      className={classnames(styles.commandButton, styles.small)}
+      className={classnames(styles.commandButton, styles.medium)}
       onClick={onClick}
     >
       <VisuallyHidden>Lancer la lecture de {trackName}</VisuallyHidden>
@@ -111,7 +99,7 @@ export function Prev({
   return (
     <button
       type="button"
-      className={classnames(styles.commandButton, styles.small)}
+      className={classnames(styles.commandButton, styles.medium)}
       onClick={onClick}
     >
       <VisuallyHidden>Lancer la lecture de {trackName}</VisuallyHidden>
@@ -213,16 +201,12 @@ function useRotate() {
   return quarter * 90;
 }
 
-export function Loading({ size = "large" }: { size?: Size }) {
+export function Loading() {
   const deg = useRotate();
 
   return (
     <svg
-      className={classnames(styles.svgLoading, {
-        [styles.large]: size === "large",
-        [styles.medium]: size === "medium",
-        [styles.small]: size === "small",
-      })}
+      className={classnames(styles.svgLoading, styles.large)}
       viewBox="0 0 526 526"
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -42,8 +42,22 @@ export function H1({ children }: { children: React.ReactNode }) {
   return <h1 className={styles.h1}>{children}</h1>;
 }
 
-export function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className={styles.h2}>{children}</h2>;
+export function H2({
+  children,
+  noMargin = false,
+}: {
+  children: React.ReactNode;
+  noMargin?: boolean;
+}) {
+  return (
+    <h2
+      className={classnames(styles.h2, {
+        [styles.noMargin]: noMargin,
+      })}
+    >
+      {children}
+    </h2>
+  );
 }
 
 export function H3({ children }: { children: React.ReactNode }) {

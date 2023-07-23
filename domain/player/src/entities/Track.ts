@@ -70,6 +70,20 @@ export function isInteractive(track: Track): track is Interactive {
   return isPlaying(track) || isPaused(track);
 }
 
+export function hasTimeInfos(
+  track: Track
+): track is Initialized & { duration: Option.Some<number> } {
+  if (isReserved(track) || isAborted(track)) {
+    return false;
+  }
+
+  if (Option.isNone(track.duration)) {
+    return false;
+  }
+
+  return true;
+}
+
 export const reserved = <S extends Source.Source>(data: {
   id: string;
   title: string;

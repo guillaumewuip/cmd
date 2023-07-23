@@ -15,13 +15,13 @@ export const commandButton = style({
   textAlign: "center",
 
   selectors: {
-    "&:hover, &:focus": {
+    "&:hover, &:focus, &:active": {
       cursor: "pointer",
-      borderColor: vars.colors.buttonBackground,
+      backgroundColor: vars.colors.buttonBackground,
     },
 
     "&:active": {
-      backgroundColor: vars.colors.buttonBackground,
+      borderRadius: "0",
     },
   },
 });
@@ -33,9 +33,10 @@ export const svg = style({
   fill: vars.colors.buttonBackground,
 
   selectors: {
-    [`${commandButton}:active &`]: {
-      fill: vars.colors.buttonBackgroundInverted,
-    },
+    [`${commandButton}:hover &,${commandButton}:active &, ${commandButton}:focus &`]:
+      {
+        fill: vars.colors.buttonBackgroundInverted,
+      },
   },
 });
 
@@ -59,8 +60,8 @@ export const svgLoading = style([
 ]);
 
 export const large = style({
-  height: calc.multiply(vars.sizes.m, 3),
-  width: calc.multiply(vars.sizes.m, 3),
+  height: calc.multiply(vars.sizes.m, 4),
+  width: calc.multiply(vars.sizes.m, 4),
   padding: vars.sizes.s,
 
   "@media": {

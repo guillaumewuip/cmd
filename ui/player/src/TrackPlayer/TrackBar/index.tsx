@@ -11,13 +11,13 @@ import * as Eq from "fp-ts/Eq";
 import * as Option from "fp-ts/Option";
 import { pipe } from "fp-ts/function";
 
+import { Paragraph } from "@cmd/ui-text";
 import * as styles from "./TrackBar.css";
 
 import TrackThumbnail from "../../components/Thumbnail";
 import SourceLink from "../../components/SourceLink";
 import Progress from "../../components/Progress";
 import * as Button from "../../components/Button";
-import TrackText from "../../components/TrackText";
 
 import Aborted from "../Aborted";
 
@@ -26,7 +26,7 @@ const eqOptionTrack = pipe(shallowEqual, Eq.fromEquals, Option.getEq);
 function Title({ track }: { track: Track.Track }) {
   return (
     <div className={styles.title}>
-      <TrackText track={track} />
+      <Paragraph>{track.title}</Paragraph>
     </div>
   );
 }

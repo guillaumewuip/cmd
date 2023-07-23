@@ -3,31 +3,39 @@ import { vars, mediaQueries } from "@cmd/ui-theme";
 
 export const preview = style({
   height: "14rem", // TODO theme
-  padding: `${vars.sizes.s}`,
   display: "grid",
-  gridTemplateRows: "auto auto fit-content(50%)",
-  gridTemplateColumns:
-    "min-content minmax(8rem, 20rem) auto minmax(8rem, 20rem)",
+  gridTemplateRows: `auto ${vars.sizes.s}`,
+  gridTemplateColumns: "100%",
   gridTemplateAreas: `
-    "thumbnail title none options"
-    "thumbnail player none options"
-    "progress progress progres"
+    "content"
+    "progress"
+  `,
+});
+
+export const content = style({
+  padding: vars.sizes.s,
+  display: "grid",
+  gridTemplateRows: `100%`,
+  gridTemplateColumns:
+    "fit-content(20%) fit-content(20%) auto fit-content(20%) fit-content(20%)",
+  gridTemplateAreas: `
+    "thumbnail leftButtons title rightButtons options"
   `,
   gridColumnGap: vars.sizes.s,
   backgroundColor: vars.colors.background,
 
-  "@media": {
-    ...mediaQueries.forPhoneOnly({
-      height: "8rem",
-      gridTemplateRows: "auto auto",
-      gridRowGap: vars.sizes.xs,
-      gridTemplateColumns: "1fr 1fr",
-      gridTemplateAreas: `
-        "title title"
-        "player options"
-      `,
-    }),
-  },
+  // "@media": {
+  //   ...mediaQueries.forPhoneOnly({
+  //     height: "8rem",
+  //     gridTemplateRows: "auto auto",
+  //     gridRowGap: vars.sizes.xs,
+  //     gridTemplateColumns: "1fr 1fr",
+  //     gridTemplateAreas: `
+  //       "title title"
+  //       "player options"
+  //     `,
+  //   }),
+  // },
 });
 
 export const thumbnail = style({
@@ -43,7 +51,7 @@ export const thumbnail = style({
   },
 });
 
-export const text = style({
+export const title = style({
   gridArea: "title",
   alignSelf: "center",
   justifySelf: "start",
@@ -56,28 +64,14 @@ export const text = style({
   },
 });
 
-export const player = style({
-  gridArea: "player",
+export const leftButtons = style({
+  gridArea: "leftButtons",
   alignSelf: "center",
-  justifySelf: "stretch",
-  display: "grid",
-  gridTemplateRows: "2fr 1fr",
-  gridTemplateColumns: "auto",
-  gridTemplateAreas: `
-    "top"
-    "bottom"
-  `,
+});
 
-  "@media": {
-    ...mediaQueries.forPhoneOnly({
-      justifySelf: "start",
-      alignSelf: "start",
-      gridTemplateAreas: `
-        "top"
-        "top"
-      `,
-    }),
-  },
+export const rightButtons = style({
+  gridArea: "rightButtons",
+  alignSelf: "center",
 });
 
 export const commandBar = style({
@@ -86,17 +80,11 @@ export const commandBar = style({
   justifySelf: "center",
   display: "grid",
   gridTemplateRows: "auto",
-  gridTemplateColumns: "1fr 1fr 1fr",
+  gridTemplateColumns: "1fr 1fr",
   gridTemplateAreas: `
-    "leftCommand centerCommand rightCommand"
+    "leftCommand rightCommand"
   `,
   gridColumnGap: vars.sizes.xs,
-});
-
-export const commandPlayPause = style({
-  gridArea: "centerCommand",
-  justifySelf: "center",
-  alignSelf: "center",
 });
 
 export const commandPrev = style({
@@ -111,29 +99,28 @@ export const commandNext = style({
   alignSelf: "center",
 });
 
-export const aborted = style({
-  gridArea: "player",
-  alignSelf: "center",
-  justifySelf: "center",
-});
-
-export const autoPlay = style({
+export const options = style({
   gridArea: "options",
   alignSelf: "center",
   justifySelf: "end",
-  display: "grid",
-  gridTemplateRows: "auto",
-  gridTemplateColumns: "auto min-content",
-  gridTemplateAreas: `
-    "label button"
-  `,
-  gridColumnGap: vars.sizes.xs,
 
   "@media": {
     ...mediaQueries.forPhoneOnly({
       alignSelf: "start",
     }),
   },
+});
+
+export const autoPlay = style({
+  display: "grid",
+  gridTemplateRows: "auto auto",
+  gridTemplateColumns: "auto",
+  gridTemplateAreas: `
+    "button"
+    "label"
+  `,
+  justifyItems: "center",
+  gridColumnGap: vars.sizes.xs,
 });
 
 export const autoPlayLabel = style({

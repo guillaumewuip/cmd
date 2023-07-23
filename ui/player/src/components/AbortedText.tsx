@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { Monospace } from "@cmd/ui-text";
+import { Paragraph } from "@cmd/ui-text";
 
 const abortedMessages = [
   `Ooops. Quelque chose est cassé. Bravo Guillaume.`,
@@ -16,5 +16,5 @@ const randomAbortedMessage = () =>
 export default function AbortedText() {
   const message = useMemo(randomAbortedMessage, []);
 
-  return <Monospace>{message}</Monospace>;
+  return <Paragraph>{message}</Paragraph>;
 }

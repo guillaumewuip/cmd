@@ -12,61 +12,57 @@ import {
   saveAutoplayChoice,
 } from "@cmd/domain-player";
 
-import { Small } from "@cmd/ui-text";
+import { H2, Small } from "@cmd/ui-text";
 
 import * as Button from "../components/Button";
-import Progress from "../components/Progress";
-import TrackText from "../components/TrackText";
+import {
+  Line as ProgressLine,
+  TotalTime,
+  TimePassed,
+} from "../components/Progress";
 import AbortedText from "../components/AbortedText";
 import Thumbnail from "../components/Thumbnail";
 
 import * as styles from "./Preview.css";
 
-function Player({
-  track,
+function PlayPause({ track }: { track: Track.Track }) {
+  return (
+    <>
+      {!Track.isInteractive(track) && <Button.Loading />}
+      {Track.isInteractive(track) &&
+        (Track.isPlaying(track) ? (
+          <Button.Pause trackName={track.title} onClick={playOrPause} />
+        ) : (
+          <Button.Play trackName={track.title} onClick={playOrPause} />
+        ))}
+    </>
+  );
+}
+
+function PrevNext({
   next,
   prev,
 }: {
-  track: Track.Track;
   next: Option.Option<Track.Track>;
   prev: Option.Option<Track.Track>;
 }) {
   return (
-    <div className={styles.player}>
-      <div className={styles.commandBar}>
-        <div className={styles.commandPrev}>
-          {Option.isSome(prev) && Track.isInitialized(prev.value) && (
-            <Button.Prev
-              onClick={play(prev.value)}
-              trackName={prev.value.title}
-            />
-          )}
-        </div>
-        <div className={styles.commandPlayPause}>
-          {!Track.isInteractive(track) && <Button.Loading size="medium" />}
-          {Track.isInteractive(track) &&
-            (Track.isPlaying(track) ? (
-              <Button.Pause
-                size="medium"
-                trackName={track.title}
-                onClick={playOrPause}
-              />
-            ) : (
-              <Button.Play
-                size="medium"
-                trackName={track.title}
-                onClick={playOrPause}
-              />
-            ))}
-        </div>
-        <div className={styles.commandNext}>
-          {Option.isSome(next) && Track.isInitialized(next.value) && (
-            <Button.Next
-              onClick={play(next.value)}
-              trackName={next.value.title}
-            />
-          )}
-        </div>
+    <div className={styles.commandBar}>
+      <div className={styles.commandPrev}>
+        {Option.isSome(prev) && Track.isInitialized(prev.value) && (
+          <Button.Prev
+            onClick={play(prev.value)}
+            trackName={prev.value.title}
+          />
+        )}
+      </div>
+      <div className={styles.commandNext}>
+        {Option.isSome(next) && Track.isInitialized(next.value) && (
+          <Button.Next
+            onClick={play(next.value)}
+            trackName={next.value.title}
+          />
+        )}
       </div>
     </div>
   );
@@ -90,11 +86,24 @@ function AutoPlay({ autoplayEnabled }: { autoplayEnabled: boolean }) {
   );
 }
 
+function Title({ track }: { track: Track.Track }) {
+  return (
+    <>
+      <H2 noMargin>{track.title}</H2>
+      {Track.hasTimeInfos(track) && (
+        <>
+          <TimePassed track={track} /> / <TotalTime track={track} />
+        </>
+      )}
+    </>
+  );
+}
+
 export function Preview() {
   const tracks = usePlayer();
 
   if (Tracks.isEmpty(tracks)) {
-    return null;
+    return <div className={`${styles.preview}`} />;
   }
 
   const { autoplayEnabled } = tracks;
@@ -106,29 +115,39 @@ export function Preview() {
 
   return (
     <div className={`${styles.preview}`}>
-      <div className={styles.thumbnail}>
-        <Thumbnail source={selectedTrack.source} />
+      <div className={styles.content}>
+        <div className={styles.thumbnail}>
+          <Thumbnail source={selectedTrack.source} />
+        </div>
+
+        <div className={styles.leftButtons}>
+          {!Track.isAborted(selectedTrack) && (
+            <PlayPause track={selectedTrack} />
+          )}
+        </div>
+
+        <div className={styles.title}>
+          {Track.isAborted(selectedTrack) ? (
+            <AbortedText />
+          ) : (
+            <Title track={selectedTrack} />
+          )}
+        </div>
+
+        <div className={styles.rightButtons}>
+          <PrevNext next={nextTrack} prev={prevTrack} />
+        </div>
+
+        <div className={styles.options}>
+          <AutoPlay autoplayEnabled={autoplayEnabled} />
+        </div>
       </div>
 
-      <div className={styles.text}>
-        <TrackText track={selectedTrack} />
+      <div className={styles.progress}>
+        {Track.isInitialized(selectedTrack) && (
+          <ProgressLine track={selectedTrack} />
+        )}
       </div>
-
-      {Track.isAborted(selectedTrack) ? (
-        <div className={styles.aborted}>
-          <AbortedText />
-        </div>
-      ) : (
-        <Player track={selectedTrack} prev={prevTrack} next={nextTrack} />
-      )}
-
-      <AutoPlay autoplayEnabled={autoplayEnabled} />
-
-      {Track.isInitialized(selectedTrack) && (
-        <div className={styles.progress}>
-          <Progress track={selectedTrack} />
-        </div>
-      )}
     </div>
   );
 }
