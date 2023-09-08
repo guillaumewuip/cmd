@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { posts, lastPost, PostContent } from "@cmd/posts";
@@ -72,10 +72,12 @@ export default async function Home() {
           </Paragraph>
         </Layout.SmallSection>
 
-        <Article
-          post={lastPost}
-          content={<PostContent post={lastPost} components={components} />}
-        />
+        <Suspense fallback={null}>
+          <Article
+            post={lastPost}
+            content={<PostContent post={lastPost} components={components} />}
+          />
+        </Suspense>
 
         <Layout.SmallSection>
           <H2>

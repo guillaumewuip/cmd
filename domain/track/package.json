@@ -13,12 +13,12 @@
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "tslib": "^2.6.0",
-    "typescript": "^5.1.6"
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "@fp51/opaque-union": "^1.0.0",
-    "fp-ts": "^2.16.0",
+    "fp-ts": "^2.16.1",
     "io-ts": "^2.2.20"
   }
 }
