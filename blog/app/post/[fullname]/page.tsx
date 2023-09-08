@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { posts, postFromId, PostContent, excerpt } from "@cmd/posts";
@@ -67,10 +67,12 @@ export default async function Page({
     <div>
       <Layout.Wrapper>
         <Header />
-        <Article
-          post={post}
-          content={<PostContent post={post} components={components} />}
-        />
+        <Suspense fallback={null}>
+          <Article
+            post={post}
+            content={<PostContent post={post} components={components} />}
+          />
+        </Suspense>
         <Footer />
         <span className={styles.nothing} />
       </Layout.Wrapper>
