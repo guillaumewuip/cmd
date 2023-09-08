@@ -7,11 +7,11 @@
   },
   "private": true,
   "dependencies": {
-    "@rushstack/eslint-config": "^3.3.2",
-    "eslint": "^8.45.0",
+    "@rushstack/eslint-config": "^3.3.3",
+    "eslint": "^8.48.0",
     "eslint-config-airbnb-typescript-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react": "^7.33.2",
     "prettier": "^2.8.8",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }
