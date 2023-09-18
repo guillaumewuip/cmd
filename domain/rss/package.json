@@ -14,7 +14,7 @@
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
-    "@types/node": "^18.17.14",
+    "@types/node": "^20.6.2",
     "typescript": "^5.2.2"
   },
   "dependencies": {

@@ -11,7 +11,7 @@
     "lint": "lib-lint \"src/**/*.@(js|ts|tsx)\""
   },
   "devDependencies": {
-    "@babel/core": "^7.22.15",
+    "@babel/core": "^7.22.20",
     "@cmd/eslint-config": "workspace:*",
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",

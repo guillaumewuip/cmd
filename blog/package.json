@@ -22,7 +22,7 @@
     "@cmd/ui-text": "workspace:*",
     "@cmd/ui-theme": "workspace:*",
     "@vanilla-extract/css": "^1.13.0",
-    "@vanilla-extract/next-plugin": "^2.3.0",
+    "@vanilla-extract/next-plugin": "^2.3.1",
     "@vercel/analytics": "^1.0.2",
     "date-fns": "^2.30.0",
     "fp-ts": "^2.16.1",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@cmd/tsconfig": "workspace:*",
-    "@types/node": "^18.17.14",
+    "@types/node": "^20.6.2",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "typescript": "^5.2.2"

@@ -15,7 +15,7 @@
     "@cmd/lib-builder": "workspace:*",
     "@cmd/tsconfig": "workspace:*",
     "@remark-embedder/core": "^3.0.2",
-    "@types/jsdom": "^21.1.2",
+    "@types/jsdom": "^21.1.3",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "contentlayer": "^0.3.4",
