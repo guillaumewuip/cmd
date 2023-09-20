@@ -58,4 +58,4 @@ export default function RootLayout({
   );
 }
 
-export const dynamic = "force-dynamic"; //  needed for bandcamp stream url that have a lifetime limit
+export const revalidate = 2; // 2s - needed for bandcamp stream url that have a lifetime limit
