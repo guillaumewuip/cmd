@@ -8,7 +8,6 @@ module.exports = withVanillaExtract({
     ignoreDuringBuilds: true,
   },
   experimental: {
-    appDir: true,
     typedRoutes: true,
   },
   webpack: (config) => {
