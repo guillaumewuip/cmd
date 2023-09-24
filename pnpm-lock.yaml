@@ -487,6 +487,9 @@ importers:
       fp-ts:
         specifier: ^2.16.1
         version: 2.16.1
+      react-content-loader:
+        specifier: ^6.2.1
+        version: 6.2.1(react@18.2.0)
     devDependencies:
       '@cmd/eslint-config':
         specifier: workspace:*
@@ -6149,6 +6152,15 @@ packages:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
       safe-buffer: 5.2.1
+    dev: false
+
+  /react-content-loader@6.2.1(react@18.2.0):
+    resolution: {integrity: sha512-6ONbFX+Hi3SHuP66JB8CPvJn372pj+qwltJV0J8z/8MFrq98I1cbFdZuhDWeQXu3CFxiiDTXJn7DFxx2ZvrO7g==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16.0.0'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-dom@18.2.0(react@18.2.0):

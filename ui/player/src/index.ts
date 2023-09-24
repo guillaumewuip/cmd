@@ -1,4 +1,4 @@
-import { TrackPlayer } from "./TrackPlayer";
+import { TrackPlayer, TrackPlayerSkeleton } from "./TrackPlayer";
 import { Preview } from "./Preview";
 
-export { TrackPlayer, Preview };
+export { TrackPlayer, TrackPlayerSkeleton, Preview };

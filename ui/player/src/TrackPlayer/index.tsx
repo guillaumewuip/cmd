@@ -14,6 +14,8 @@ import {
   SoundcloudClient,
 } from "./TrackPlayerClient";
 
+export { Skeleton as TrackPlayerSkeleton } from "./Skeleton";
+
 async function Soundcloud({
   embedableLink,
 }: {

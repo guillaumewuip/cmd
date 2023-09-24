@@ -26,6 +26,8 @@ import TrackBar from "./TrackBar";
 
 import { VisuallyAndAriaHidden } from "../components/Hidden";
 
+import { Skeleton } from "./Skeleton";
+
 function useTrack<S extends Source.Source>({
   embedableLink,
   source,
@@ -126,7 +128,9 @@ export function SoundcloudClient({
   }, [track]);
 
   return (
-    <div ref={container}>{track && <SoundCloudTrackBar track={track} />}</div>
+    <div ref={container}>
+      {track ? <SoundCloudTrackBar track={track} /> : <Skeleton />}
+    </div>
   );
 }
 
@@ -178,7 +182,9 @@ export function YoutubeClient({
   }, [track]);
 
   return (
-    <div ref={container}>{track && <YoutubeTrackBar track={track} />}</div>
+    <div ref={container}>
+      {track ? <YoutubeTrackBar track={track} /> : <Skeleton />}
+    </div>
   );
 }
 
@@ -220,5 +226,9 @@ export function BandcampClient({
     })();
   }, [track]);
 
-  return <div ref={container}>{track && <TrackBar id={track.id} />}</div>;
+  return (
+    <div ref={container}>
+      {track ? <TrackBar id={track.id} /> : <Skeleton />}
+    </div>
+  );
 }

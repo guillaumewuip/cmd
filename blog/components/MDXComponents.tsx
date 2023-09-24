@@ -12,7 +12,7 @@ import {
   Hr,
 } from "@cmd/ui-text";
 import { EmbedableLink } from "@cmd/domain-player";
-import { TrackPlayer } from "@cmd/ui-player";
+import { TrackPlayer, TrackPlayerSkeleton } from "@cmd/ui-player";
 
 export const components = {
   h1: (props: { children: React.ReactNode }) => <H1 {...props} />,
@@ -36,9 +36,8 @@ export const components = {
       );
     }
 
-    // TODO fallback
     return (
-      <Suspense fallback={null}>
+      <Suspense fallback={<TrackPlayerSkeleton />}>
         <TrackPlayer key={parsed.value.href} embedableLink={parsed.value} />
       </Suspense>
     );
