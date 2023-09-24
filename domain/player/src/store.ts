@@ -1,7 +1,8 @@
 import * as IO from "fp-ts/IO";
 import { pipe } from "fp-ts/function";
 
-import { useStore, createStore } from "zustand";
+import { createStore } from "zustand";
+import { useStoreWithEqualityFn } from "zustand/traditional";
 
 import { shallow } from "zustand/shallow";
 import * as Tracks from "./entities/Tracks";
@@ -29,7 +30,7 @@ export function usePlayer(
   selector: (state: Tracks.Tracks) => unknown = (state) => state,
   equalityFn: (a: unknown, b: unknown) => boolean = (a, b) => a === b
 ) {
-  return useStore(store, selector, equalityFn);
+  return useStoreWithEqualityFn(store, selector, equalityFn);
 }
 
 export { shallow as shallowEqual };
