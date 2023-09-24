@@ -73,8 +73,8 @@ export default async function Page({
 
         <Paragraph>
           <Small>
-            Le dernier <Code>cmd</Code> c'est <Link href="/">ici</Link> - les{" "}
-            <Code>cmd</Code> passés c'est <Link href="/posts">là</Link>
+            Le dernier <Code>cmd</Code>, c'est <Link href="/">ici</Link> - les{" "}
+            <Code>cmd</Code> passés, c'est <Link href="/posts">là</Link>
           </Small>
         </Paragraph>
 

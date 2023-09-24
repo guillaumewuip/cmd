@@ -32,7 +32,7 @@ export default async function Page() {
 
         <Paragraph>
           <Small>
-            Le dernier <Code>cmd</Code> c'est <Link href="/">ici</Link>
+            Le dernier <Code>cmd</Code>, c'est <Link href="/">ici</Link>
           </Small>
         </Paragraph>
 

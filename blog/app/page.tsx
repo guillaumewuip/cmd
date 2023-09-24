@@ -36,8 +36,8 @@ export default async function Home() {
 
         <Paragraph>
           <Small>
-            Le dernier <Code>cmd</Code> c'est ici - les <Code>cmd</Code> passés
-            c'est <Link href="/posts">là</Link>
+            Le dernier <Code>cmd</Code>, c'est ici - les <Code>cmd</Code>{" "}
+            passés, c'est <Link href="/posts">là</Link>
           </Small>
         </Paragraph>
 
