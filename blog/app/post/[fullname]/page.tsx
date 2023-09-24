@@ -1,10 +1,13 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { Suspense } from "react";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 import { posts, postFromId, PostContent, excerpt } from "@cmd/posts";
 
 import { Article } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
+import { Code, Paragraph, Small } from "@cmd/ui-text";
 
 import { Preview } from "@cmd/ui-player";
 
@@ -67,6 +70,14 @@ export default async function Page({
     <div>
       <Layout.Wrapper>
         <Header />
+
+        <Paragraph>
+          <Small>
+            Le dernier <Code>cmd</Code> c'est <Link href="/">ici</Link> - les{" "}
+            <Code>cmd</Code> passés c'est <Link href="/posts">là</Link>
+          </Small>
+        </Paragraph>
+
         <Suspense fallback={null}>
           <Article
             post={post}
