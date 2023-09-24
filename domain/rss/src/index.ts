@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 import { Feed } from "feed";
 
 import { Post } from "@cmd/domain-post";
@@ -14,11 +12,9 @@ const author = {
 export async function generateFeeds({
   siteBaseURL,
   postRelativeURL,
-  outputDir,
 }: {
   siteBaseURL: string;
   postRelativeURL: (post: Post.Post) => string;
-  outputDir: string;
 }) {
   const feed = new Feed({
     title: "cerfeuil et musique douce",
@@ -58,8 +54,9 @@ export async function generateFeeds({
     });
   }
 
-  fs.mkdirSync(outputDir, { recursive: true });
-  fs.writeFileSync(path.join(outputDir, "feed.xml"), feed.rss2());
-  fs.writeFileSync(path.join(outputDir, "atom.xml"), feed.atom1());
-  fs.writeFileSync(path.join(outputDir, "feed.json"), feed.json1());
+  return {
+    rss2: feed.rss2,
+    atom1: feed.atom1,
+    json1: feed.json1,
+  };
 }

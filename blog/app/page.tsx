@@ -7,7 +7,6 @@ import { posts, lastPost, PostContent } from "@cmd/posts";
 import { Article, Mosaic } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
 import { Paragraph, Code, H2, Link, Hr } from "@cmd/ui-text";
-import { generateFeeds } from "@cmd/domain-rss";
 
 import { Preview } from "@cmd/ui-player";
 import { Footer } from "../components/Footer";
@@ -29,12 +28,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  await generateFeeds({
-    siteBaseURL: BlogMetadata.site.url,
-    postRelativeURL: BlogMetadata.postUrl,
-    outputDir: "./public/rss",
-  });
-
   const cmds = posts.map((post) => ({
     image: post.image,
     relativeUrl: BlogMetadata.postUrl(post),
