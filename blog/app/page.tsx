@@ -34,12 +34,10 @@ export default async function Home() {
       <Layout.Wrapper>
         <Header />
 
-        <Paragraph>
-          <Small>
-            Le dernier <Code>cmd</Code>, c'est ici - les <Code>cmd</Code>{" "}
-            passés, c'est <Link href="/posts">là</Link>
-          </Small>
-        </Paragraph>
+        <Small>
+          Le dernier <Code>cmd</Code>, c'est ici - les <Code>cmd</Code> passés,
+          c'est <Link href="/posts">là</Link>
+        </Small>
 
         <Suspense fallback={null}>
           <Article

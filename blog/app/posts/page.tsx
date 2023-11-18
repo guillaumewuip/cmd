@@ -30,11 +30,9 @@ export default async function Page() {
       <Layout.Wrapper>
         <Header />
 
-        <Paragraph>
-          <Small>
-            Le dernier <Code>cmd</Code>, c'est <Link href="/">ici</Link>
-          </Small>
-        </Paragraph>
+        <Small>
+          Le dernier <Code>cmd</Code>, c'est <Link href="/">ici</Link>
+        </Small>
 
         <H2>
           Tous les <Code>cmd</Code> passées listées bien comme il faut ici même
