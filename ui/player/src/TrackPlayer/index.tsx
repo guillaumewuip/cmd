@@ -13,6 +13,7 @@ import {
   YoutubeClient,
   SoundcloudClient,
 } from "./TrackPlayerClient";
+import Aborted from "./Aborted";
 
 export { Skeleton as TrackPlayerSkeleton } from "./Skeleton";
 
@@ -26,7 +27,9 @@ async function Soundcloud({
   })();
 
   if (Either.isLeft(result)) {
-    throw result.left;
+    // eslint-disable-next-line no-console
+    console.log(result.left);
+    return <Aborted />;
   }
 
   return (
@@ -48,7 +51,9 @@ async function Bandcamp({
   })();
 
   if (Either.isLeft(result)) {
-    throw result.left;
+    // eslint-disable-next-line no-console
+    console.log(result.left);
+    return <Aborted />;
   }
 
   return (
