@@ -3,7 +3,7 @@ import React from "react";
 
 import { posts } from "@cmd/posts";
 import { Mosaic } from "@cmd/ui-article";
-import { H2, Code, Paragraph, Small } from "@cmd/ui-text";
+import { H2, Code, Small } from "@cmd/ui-text";
 
 import * as Layout from "@cmd/ui-layout";
 
