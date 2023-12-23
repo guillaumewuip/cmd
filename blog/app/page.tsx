@@ -9,9 +9,10 @@ import { Article } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
 
 import { Preview } from "@cmd/ui-player";
-import { Code, Paragraph, Small } from "@cmd/ui-text";
+import { Code, Paragraph } from "@cmd/ui-text";
+import { Header, Nav } from "@cmd/ui-header";
 import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
+
 import { components } from "../components/MDXComponents";
 
 import * as BlogMetadata from "../metadata";
@@ -34,10 +35,14 @@ export default async function Home() {
       <Layout.Wrapper>
         <Header />
 
-        <Small>
-          Le dernier <Code>cmd</Code>, c'est ici - les <Code>cmd</Code> passés,
-          c'est <Link href="/posts">là</Link>
-        </Small>
+        <Nav>
+          <Nav.Item active>
+            le dernier <Code>cmd</Code>
+          </Nav.Item>
+          <Nav.Item as={Link} href="/posts">
+            les <Code>cmd</Code> passés
+          </Nav.Item>
+        </Nav>
 
         <Suspense fallback={null}>
           <Article

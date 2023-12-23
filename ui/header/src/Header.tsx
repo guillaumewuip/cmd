@@ -1,3 +1,5 @@
+"use client";
+
 import { MainTitle } from "./MainTitle";
 
 import * as styles from "./Header.css";

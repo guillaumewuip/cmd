@@ -3,15 +3,15 @@ import React from "react";
 
 import { posts } from "@cmd/posts";
 import { Mosaic } from "@cmd/ui-article";
-import { H2, Code, Small } from "@cmd/ui-text";
+import { H2, Code } from "@cmd/ui-text";
 
 import * as Layout from "@cmd/ui-layout";
 
 import { Preview } from "@cmd/ui-player";
 
 import Link from "next/link";
+import { Header, Nav } from "@cmd/ui-header";
 import { Footer } from "../../components/Footer";
-import { Header } from "../../components/Header";
 
 import * as BlogMetadata from "../../metadata";
 
@@ -30,9 +30,14 @@ export default async function Page() {
       <Layout.Wrapper>
         <Header />
 
-        <Small>
-          Le dernier <Code>cmd</Code>, c'est <Link href="/">ici</Link>
-        </Small>
+        <Nav>
+          <Nav.Item as={Link} href="/">
+            le dernier <Code>cmd</Code>
+          </Nav.Item>
+          <Nav.Item active as={Link} href="/posts">
+            les <Code>cmd</Code> passés
+          </Nav.Item>
+        </Nav>
 
         <H2>
           Tous les <Code>cmd</Code> passées listées bien comme il faut ici même

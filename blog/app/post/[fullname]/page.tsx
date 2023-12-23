@@ -7,13 +7,13 @@ import { posts, postFromId, PostContent, excerpt } from "@cmd/posts";
 
 import { Article } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
-import { Code, Small } from "@cmd/ui-text";
+import { Code } from "@cmd/ui-text";
 
 import { Preview } from "@cmd/ui-player";
+import { Header, Nav } from "@cmd/ui-header";
 
 import * as SiteMetadata from "../../../metadata";
 import { Footer } from "../../../components/Footer";
-import { Header } from "../../../components/Header";
 import { components } from "../../../components/MDXComponents";
 
 import * as styles from "./fix.css";
@@ -71,10 +71,14 @@ export default async function Page({
       <Layout.Wrapper>
         <Header />
 
-        <Small>
-          Le dernier <Code>cmd</Code>, c'est <Link href="/">ici</Link> - les{" "}
-          <Code>cmd</Code> passés, c'est <Link href="/posts">là</Link>
-        </Small>
+        <Nav>
+          <Nav.Item as={Link} href="/">
+            le dernier <Code>cmd</Code>
+          </Nav.Item>
+          <Nav.Item as={Link} href="/posts">
+            les <Code>cmd</Code> passés
+          </Nav.Item>
+        </Nav>
 
         <Suspense fallback={null}>
           <Article
