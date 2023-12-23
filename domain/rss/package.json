@@ -18,7 +18,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@cmd/domain-post": "workspace:*",
+    "@cmd/domain-content": "workspace:*",
     "@cmd/posts": "workspace:*",
     "feed": "^4.2.2"
   }

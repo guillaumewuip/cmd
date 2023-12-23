@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import NextImage from "next/image";
 
 import { H1, Small } from "@cmd/ui-text";
-import { Post } from "@cmd/domain-post";
+import { Post } from "@cmd/domain-content";
 
 import { format, parseISO } from "date-fns";
 

@@ -1,6 +1,6 @@
 import { getMDXComponent } from "next-contentlayer/hooks";
 
-import { Post } from "@cmd/domain-post";
+import { Post } from "@cmd/domain-content";
 
 export async function PostContent({
   post,

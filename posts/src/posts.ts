@@ -1,6 +1,6 @@
 import { parseISO } from "date-fns";
 
-import { Post } from "@cmd/domain-post";
+import { Post } from "@cmd/domain-content";
 
 // eslint-disable-next-line import/extensions
 import { allPosts, Post as MarkdownPost } from "../.contentlayer/generated";

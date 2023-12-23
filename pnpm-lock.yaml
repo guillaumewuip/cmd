@@ -14,12 +14,12 @@ importers:
 
   blog:
     dependencies:
+      '@cmd/domain-content':
+        specifier: workspace:*
+        version: link:../domain/content
       '@cmd/domain-player':
         specifier: workspace:*
         version: link:../domain/player
-      '@cmd/domain-post':
-        specifier: workspace:*
-        version: link:../domain/post
       '@cmd/domain-rss':
         specifier: workspace:*
         version: link:../domain/rss
@@ -138,6 +138,21 @@ importers:
 
   dev-tools/tsconfig: {}
 
+  domain/content:
+    devDependencies:
+      '@cmd/eslint-config':
+        specifier: workspace:*
+        version: link:../../dev-tools/lib-linter
+      '@cmd/lib-builder':
+        specifier: workspace:*
+        version: link:../../dev-tools/lib-builder
+      '@cmd/tsconfig':
+        specifier: workspace:*
+        version: link:../../dev-tools/tsconfig
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   domain/player:
     dependencies:
       '@fp51/foldable-helpers':
@@ -190,26 +205,11 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  domain/post:
-    devDependencies:
-      '@cmd/eslint-config':
-        specifier: workspace:*
-        version: link:../../dev-tools/lib-linter
-      '@cmd/lib-builder':
-        specifier: workspace:*
-        version: link:../../dev-tools/lib-builder
-      '@cmd/tsconfig':
-        specifier: workspace:*
-        version: link:../../dev-tools/tsconfig
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-
   domain/rss:
     dependencies:
-      '@cmd/domain-post':
+      '@cmd/domain-content':
         specifier: workspace:*
-        version: link:../post
+        version: link:../content
       '@cmd/posts':
         specifier: workspace:*
         version: link:../../posts
@@ -263,9 +263,9 @@ importers:
 
   posts:
     dependencies:
-      '@cmd/domain-post':
+      '@cmd/domain-content':
         specifier: workspace:*
-        version: link:../domain/post
+        version: link:../domain/content
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
@@ -315,9 +315,9 @@ importers:
 
   ui/article:
     dependencies:
-      '@cmd/domain-post':
+      '@cmd/domain-content':
         specifier: workspace:*
-        version: link:../../domain/post
+        version: link:../../domain/content
       '@cmd/ui-text':
         specifier: workspace:*
         version: link:../text

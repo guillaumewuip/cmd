@@ -1,4 +1,4 @@
-import { Post } from "@cmd/domain-post";
+import { Post } from "@cmd/domain-content";
 
 export const site = {
   name: "cmd - cerfeuil et musique douce",

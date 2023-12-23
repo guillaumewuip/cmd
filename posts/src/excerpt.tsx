@@ -1,7 +1,7 @@
 import { getMDXComponent } from "next-contentlayer/hooks";
 import { JSDOM } from "jsdom";
 
-import { Post } from "@cmd/domain-post";
+import { Post } from "@cmd/domain-content";
 
 export const excerpt = async (post: Post.Post) => {
   const MDXContent = getMDXComponent(post.content);

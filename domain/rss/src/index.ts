@@ -1,6 +1,6 @@
 import { Feed } from "feed";
 
-import { Post } from "@cmd/domain-post";
+import { Post } from "@cmd/domain-content";
 import { posts, excerpt } from "@cmd/posts";
 
 const author = {

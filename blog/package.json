@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@cmd/domain-player": "workspace:*",
-    "@cmd/domain-post": "workspace:*",
+    "@cmd/domain-content": "workspace:*",
     "@cmd/domain-rss": "workspace:*",
     "@cmd/eslint-config": "workspace:*",
     "@cmd/posts": "workspace:*",

@@ -1,5 +1,5 @@
 {
-  "name": "@cmd/domain-post",
+  "name": "@cmd/domain-content",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
