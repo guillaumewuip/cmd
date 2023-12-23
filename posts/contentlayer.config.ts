@@ -60,7 +60,7 @@ const Image = defineNestedType(() => ({
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
-  filePathPattern: `**/*.md`,
+  filePathPattern: `posts/**/*.md`,
   contentType: "mdx", // using mdx to be able to inject a custom player
   fields: {
     title: {
@@ -112,7 +112,7 @@ const LinkToPlayerTransformer = {
 };
 
 export default makeSource({
-  contentDirPath: "posts",
+  contentDirPath: "content",
   documentTypes: [Post],
   mdx: {
     remarkPlugins: [
