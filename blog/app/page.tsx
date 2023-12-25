@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-import { lastPost, PostContent } from "@cmd/posts";
+import { Post, Content } from "@cmd/posts";
 
 import { Article } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: BlogMetadata.site.name,
     openGraph: {
       type: "website",
-      images: lastPost.image.src,
+      images: Post.last.image.src,
     },
   };
 }
@@ -46,8 +46,8 @@ export default async function Home() {
 
         <Suspense fallback={null}>
           <Article
-            post={lastPost}
-            content={<PostContent post={lastPost} components={components} />}
+            post={Post.last}
+            content={<Content post={Post.last} components={components} />}
           />
         </Suspense>
 

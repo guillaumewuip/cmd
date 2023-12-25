@@ -1,7 +1,7 @@
 import { Feed } from "feed";
 
-import { Post } from "@cmd/domain-content";
-import { posts, excerpt } from "@cmd/posts";
+import * as Content from "@cmd/domain-content";
+import { Post, excerpt } from "@cmd/posts";
 
 const author = {
   name: "Guillaume",
@@ -14,7 +14,7 @@ export async function generateFeeds({
   postRelativeURL,
 }: {
   siteBaseURL: string;
-  postRelativeURL: (post: Post.Post) => string;
+  postRelativeURL: (post: Content.Post.Post) => string;
 }) {
   const feed = new Feed({
     title: "cerfeuil et musique douce",
@@ -37,7 +37,7 @@ export async function generateFeeds({
 
   // for each posts, call excerpt and call feed.addItem
   // eslint-disable-next-line no-restricted-syntax
-  for (const post of posts) {
+  for (const post of Post.all) {
     // eslint-disable-next-line no-await-in-loop
     const postExcerpt = await excerpt(post);
 

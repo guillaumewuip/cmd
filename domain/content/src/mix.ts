@@ -1,6 +1,6 @@
 import { Image } from "./image";
 
-export type Post = Readonly<{
+export type Mix = Readonly<{
   /**
    * Unique identifier of the post
    */
@@ -17,6 +17,11 @@ export type Post = Readonly<{
   image: Image;
 
   /**
+   * Url to the mix
+   */
+  externalUrl: string;
+
+  /**
    * Date after which the post is considered published
    * ISO date
    */
@@ -28,6 +33,6 @@ export type Post = Readonly<{
   content: string;
 }>;
 
-export function create(post: Post): Post {
-  return post;
+export function create(mix: Mix): Mix {
+  return mix;
 }

@@ -1,12 +1,10 @@
 import { getMDXComponent } from "next-contentlayer/hooks";
 
-import { Post } from "@cmd/domain-content";
-
-export async function PostContent({
+export async function Content({
   post,
   components,
 }: {
-  post: Post.Post;
+  post: { content: string };
   components: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     h1: (props: any) => JSX.Element;

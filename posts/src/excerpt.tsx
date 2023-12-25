@@ -1,10 +1,8 @@
 import { getMDXComponent } from "next-contentlayer/hooks";
 import { JSDOM } from "jsdom";
 
-import { Post } from "@cmd/domain-content";
-
-export const excerpt = async (post: Post.Post) => {
-  const MDXContent = getMDXComponent(post.content);
+export const excerpt = async ({ content }: { content: string }) => {
+  const MDXContent = getMDXComponent(content);
 
   // importing in async to prevent "You're importing a component that imports
   // react-dom/server. To fix it, render or return the content directly as a

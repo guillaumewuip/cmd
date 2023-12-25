@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import NextImage from "next/image";
 
 import { H1, Small } from "@cmd/ui-text";
-import { Post } from "@cmd/domain-content";
+import * as DomainContent from "@cmd/domain-content";
 
 import { format, parseISO } from "date-fns";
 
@@ -16,7 +16,7 @@ function Column({ children }: { children: React.ReactNode }) {
   return <div className={styles.left}>{children}</div>;
 }
 
-function Image({ image }: { image: Post.Image }) {
+function Image({ image }: { image: DomainContent.Image.Image }) {
   return (
     <div className={styles.imageSection}>
       <div className={styles.imageContainer}>
@@ -50,7 +50,7 @@ export function Article({
   post,
   content,
 }: {
-  post: Post.Post;
+  post: DomainContent.Post.Post;
   content: ReactNode;
 }) {
   const publicationDate = format(parseISO(post.publishedAt), "dd/MM/yyyy");

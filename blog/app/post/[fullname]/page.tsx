@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-import { posts, postFromId, PostContent, excerpt } from "@cmd/posts";
+import { Post, Content, excerpt } from "@cmd/posts";
 
 import { Article } from "@cmd/ui-article";
 import * as Layout from "@cmd/ui-layout";
@@ -19,7 +19,7 @@ import { components } from "../../../components/MDXComponents";
 import * as styles from "./fix.css";
 
 export async function generateStaticParams() {
-  const params = posts.map((post) => ({
+  const params = Post.all.map((post) => ({
     fullName: post.id,
   }));
 
@@ -31,7 +31,7 @@ export async function generateMetadata({
 }: {
   params: { fullname: string };
 }): Promise<Metadata> {
-  const post = postFromId(params.fullname);
+  const post = Post.fromId(params.fullname);
 
   if (!post) {
     throw new Error(`Post not found: ${params.fullname}`);
@@ -60,7 +60,7 @@ export default async function Page({
 }: {
   params: { fullname: string };
 }) {
-  const post = postFromId(params.fullname);
+  const post = Post.fromId(params.fullname);
 
   if (!post) {
     throw new Error(`Post not found: ${params.fullname}`);
@@ -83,7 +83,7 @@ export default async function Page({
         <Suspense fallback={null}>
           <Article
             post={post}
-            content={<PostContent post={post} components={components} />}
+            content={<Content post={post} components={components} />}
           />
         </Suspense>
         <Footer />

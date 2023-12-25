@@ -101,6 +101,53 @@ export const Post = defineDocumentType(() => ({
   },
 }));
 
+export const Mix = defineDocumentType(() => ({
+  name: "Mix",
+  filePathPattern: `mixes/**/*.md`,
+  contentType: "mdx", // using mdx to be able to inject a custom player
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    image: {
+      type: "nested",
+      of: Image,
+      required: true,
+    },
+    externalUrl: {
+      type: "string",
+      required: true,
+    },
+  },
+  computedFields: {
+    id: {
+      type: "string",
+      resolve: (doc) => {
+        // eslint-disable-next-line no-underscore-dangle
+        const filename = doc._raw.flattenedPath;
+        return idFromFilename(filename);
+      },
+    },
+    relativeUrl: {
+      type: "string",
+      resolve: (doc) => {
+        // eslint-disable-next-line no-underscore-dangle
+        const filename = doc._raw.flattenedPath;
+        return `/${idFromFilename(filename)}`;
+      },
+    },
+    publishedAt: {
+      type: "string",
+      resolve: (doc) => {
+        // eslint-disable-next-line no-underscore-dangle
+        const filename = doc._raw.flattenedPath;
+        return dateFromFilename(filename).toISOString();
+      },
+    },
+  },
+}));
+
 const LinkToPlayerTransformer = {
   name: "MusicPlayer",
   shouldTransform() {
@@ -113,7 +160,7 @@ const LinkToPlayerTransformer = {
 
 export default makeSource({
   contentDirPath: "content",
-  documentTypes: [Post],
+  documentTypes: [Post, Mix],
   mdx: {
     remarkPlugins: [
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

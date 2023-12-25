@@ -3,13 +3,13 @@ import NextImage from "next/image";
 import * as ReadonlyArrayFP from "fp-ts/ReadonlyArray";
 import { pipe } from "fp-ts/function";
 
-import { Post } from "@cmd/domain-content";
+import { Image } from "@cmd/domain-content";
 import { Paragraph } from "@cmd/ui-text";
 
 import * as styles from "./Mosaic.css";
 
 type PostMetadata = {
-  image: Post.Image;
+  image: Image.Image;
   relativeUrl: string;
   title: string;
   id: string;

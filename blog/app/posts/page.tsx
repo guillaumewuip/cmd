@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 
-import { posts } from "@cmd/posts";
+import { Post } from "@cmd/posts";
 import { Mosaic } from "@cmd/ui-article";
 import { H2, Code } from "@cmd/ui-text";
 
@@ -18,7 +18,7 @@ import * as BlogMetadata from "../../metadata";
 import * as styles from "./fix.css";
 
 export default async function Page() {
-  const cmds = posts.map((post) => ({
+  const cmds = Post.all.map((post) => ({
     image: post.image,
     relativeUrl: BlogMetadata.postUrl(post),
     title: post.title,
