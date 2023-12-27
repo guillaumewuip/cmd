@@ -17,6 +17,10 @@ import * as BlogMetadata from "../../metadata";
 
 import * as styles from "./fix.css";
 
+export const metadata = {
+  title: `Tous les cmds - ${BlogMetadata.site.name}`,
+};
+
 export default async function Page() {
   const cmds = Post.all.map((post) => ({
     image: post.image,
