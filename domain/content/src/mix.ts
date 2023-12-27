@@ -1,6 +1,7 @@
 import { Image } from "./image";
 
 export type Mix = Readonly<{
+  type: "MIX";
   /**
    * Unique identifier of the post
    */
@@ -33,6 +34,6 @@ export type Mix = Readonly<{
   content: string;
 }>;
 
-export function create(mix: Mix): Mix {
-  return mix;
+export function create(mix: Omit<Mix, "type">): Mix {
+  return { type: "MIX", ...mix };
 }

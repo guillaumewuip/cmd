@@ -1,6 +1,8 @@
 import { Image } from "./image";
 
 export type Post = Readonly<{
+  type: "POST";
+
   /**
    * Unique identifier of the post
    */
@@ -28,6 +30,6 @@ export type Post = Readonly<{
   content: string;
 }>;
 
-export function create(post: Post): Post {
-  return post;
+export function create(post: Omit<Post, "type">): Post {
+  return { type: "POST", ...post };
 }

@@ -7,7 +7,7 @@ import * as BlogMetadata from "../../../metadata";
 export async function GET() {
   const { json1 } = await generateFeeds({
     siteBaseURL: BlogMetadata.site.url,
-    postRelativeURL: BlogMetadata.postUrl,
+    relativeURL: BlogMetadata.contentRelativeUrl,
   });
 
   return new NextResponse(json1());

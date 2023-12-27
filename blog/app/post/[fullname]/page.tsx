@@ -37,7 +37,9 @@ export async function generateMetadata({
     throw new Error(`Post not found: ${params.fullname}`);
   }
 
-  const url = `${SiteMetadata.site.url}${SiteMetadata.postUrl(post)}`;
+  const url = `${SiteMetadata.site.url}${SiteMetadata.contentRelativeUrl(
+    post
+  )}`;
   const imageUrl = `${SiteMetadata.site.url}${post.image.src}`;
 
   const title = `${post.title} - ${SiteMetadata.site.name}`;

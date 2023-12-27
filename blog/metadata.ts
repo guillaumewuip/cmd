@@ -1,4 +1,4 @@
-import { Post } from "@cmd/domain-content";
+import { Content } from "@cmd/domain-content";
 
 export const site = {
   name: "cmd - cerfeuil et musique douce",
@@ -14,4 +14,11 @@ export const author = {
   },
 };
 
-export const postUrl = (post: Post.Post) => `/post/${post.id}`;
+export const contentRelativeUrl = (content: Content) => {
+  switch (content.type) {
+    case "POST":
+      return `/post/${content.id}`;
+    case "MIX":
+      return `/mix/${content.id}`;
+  }
+};

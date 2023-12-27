@@ -53,6 +53,8 @@ const mixes = allMixes
   })
   .sort(mostRecentSorter);
 
+export const all = [...posts, ...mixes].sort(mostRecentSorter);
+
 export const Mix = {
   all: mixes,
   fromId: (id: string) => {

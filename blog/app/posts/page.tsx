@@ -20,7 +20,7 @@ import * as styles from "./fix.css";
 export default async function Page() {
   const cmds = Post.all.map((post) => ({
     image: post.image,
-    relativeUrl: BlogMetadata.postUrl(post),
+    relativeUrl: BlogMetadata.contentRelativeUrl(post),
     title: post.title,
     id: post.id,
   }));
