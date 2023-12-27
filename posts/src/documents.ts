@@ -2,12 +2,12 @@ import { parseISO } from "date-fns";
 
 import * as Content from "@cmd/domain-content";
 
-// eslint-disable-next-line import/extensions
 import {
   allPosts,
   Post as MarkdownPost,
   allMixes,
   Mix as MarkdownMix,
+  // eslint-disable-next-line import/extensions
 } from "../.contentlayer/generated";
 
 const mostRecentSorter = (
