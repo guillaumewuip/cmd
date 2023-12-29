@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 
-import { Post } from "@cmd/posts";
-import { Mosaic } from "@cmd/ui-article";
-import { H2, Code } from "@cmd/ui-text";
+import { Mix, Content } from "@cmd/posts";
+import { Item } from "@cmd/ui-article";
+import { H2, Paragraph, Code } from "@cmd/ui-text";
 
 import * as Layout from "@cmd/ui-layout";
 
@@ -12,23 +12,17 @@ import { Preview } from "@cmd/ui-player";
 import Link from "next/link";
 import { Header, Nav } from "@cmd/ui-header";
 import { Footer } from "../../components/Footer";
+import { components } from "../../components/MDXComponents";
 
 import * as BlogMetadata from "../../metadata";
 
 import * as styles from "./fix.css";
 
 export const metadata = {
-  title: `Tous les cmds - ${BlogMetadata.site.name}`,
+  title: `Tous les mixes - ${BlogMetadata.site.name}`,
 };
 
 export default async function Page() {
-  const cmds = Post.all.map((post) => ({
-    image: post.image,
-    relativeUrl: BlogMetadata.contentRelativeUrl(post),
-    title: post.title,
-    id: post.id,
-  }));
-
   return (
     <div>
       <Layout.Wrapper>
@@ -38,20 +32,30 @@ export default async function Page() {
           <Nav.Item as={Link} href="/">
             le dernier <Code>cmd</Code>
           </Nav.Item>
-          <Nav.Item active as={Link} href="/posts">
+          <Nav.Item as={Link} href="/posts">
             les <Code>cmd</Code> passés
           </Nav.Item>
-          <Nav.Item as={Link} href="/mixes">
+          <Nav.Item active as={Link} href="/mixes">
             les mixes
           </Nav.Item>
         </Nav>
 
         <H2>
-          Tous les <Code>cmd</Code> passées listées bien comme il faut ici même
-          :
+          <Code>cmd</Code> mixes
         </H2>
 
-        <Mosaic posts={cmds} />
+        <Paragraph>
+          Quelques mixes fait à droite à gauche, dans la pure tradition{" "}
+          <Code>cmd</Code> bien entendu.
+        </Paragraph>
+
+        {Mix.all.map((mix) => (
+          <Item
+            key={mix.id}
+            post={mix}
+            content={<Content post={mix} components={components} />}
+          />
+        ))}
 
         <Footer />
 

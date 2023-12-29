@@ -42,6 +42,9 @@ export default async function Home() {
           <Nav.Item as={Link} href="/posts">
             les <Code>cmd</Code> passés
           </Nav.Item>
+          <Nav.Item as={Link} href="/mixes">
+            les mixes
+          </Nav.Item>
         </Nav>
 
         <Suspense fallback={null}>
