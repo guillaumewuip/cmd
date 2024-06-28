@@ -8,7 +8,6 @@ export const paragraph = style({
   lineHeight: "1.5rem",
   marginBottom: vars.sizes.xs,
   color: vars.colors.text,
-  overflowWrap: "break-word",
 });
 
 export const small = style({
