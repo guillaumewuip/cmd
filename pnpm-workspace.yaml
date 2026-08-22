@@ -4,3 +4,7 @@ packages:
   - 'domain/*'
   - 'blog'
   - 'posts'
+allowBuilds:
+  contentlayer: true
+  esbuild: true
+  protobufjs: true
