@@ -10,6 +10,6 @@
     "pnpm": "11.x"
   },
   "devDependencies": {
-    "turbo": "^1.10.14"
+    "turbo": "^1.13.4"
   }
 }
